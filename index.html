@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Case of the Disappearing Penny</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: a bronze evidence room. Deep bronze-brown ground, file-paper notes threaded on a red string down the left,
+   a pinned exhibit plate on the right; full-width breakout bands and paper case summaries between cases. */
+:root {
+  /* Mood board: Evidence room + Silver to verdigris. Ground tones are the board's Bronze (#A86B3C) taken very dark. */
+  --ground: #211711;
+  --ground-2: #2C1F17;
+  --band: #2A1C13;
+  --paper: #EFE4CC;
+  --ink: #1F2A2E;
+  --bronze: #A86B3C;
+  --bronze-hi: #C98450;
+  --brass: #B98B2E;
+  --brass-hi: #D2A93E;
+  --red: #8C2F2B;
+  --red-hi: #C9524A;
+  --verdigris: #3F7A6B;
+  --verdigris-hi: #5FA08E;
+  --fine: #E4E6E8;
+  --worn: #AEB4B7;
+  --billon: #8A8D7E;
+  --slate: #4A5560;
+  --text: #EADFC8;
+  --muted: #B3A58E;
+  --rule: rgba(239,228,204,0.13);
+  --f-display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --f-type: "Special Elite", "Courier New", Courier, monospace;
+  --f-body: "Crimson Pro", Georgia, "Times New Roman", serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--ground); color: var(--text); font-family: var(--f-body); font-size: 19px; line-height: 1.55; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--ground); }
+a { color: var(--brass-hi); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--brass-hi); outline-offset: 3px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.paper {
+  background-color: var(--paper); color: var(--ink);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .30 0 0 0 0 .16 0 0 0 .2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.eyebrow { font-family: var(--f-type); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--brass-hi); }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; text-wrap: balance; letter-spacing: .02em; margin: 0; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--rule); }
+.hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-block: 80px 64px; }
+.hero h1 { font-size: clamp(42px, 6.6vw, 88px); line-height: 1.02; color: var(--paper); }
+.hero h1 span { display: block; color: var(--bronze-hi); }
+.hero .dek { font-size: 22px; max-width: 32em; margin: 22px 0 0; }
+.exhibitA { display: grid; justify-items: center; gap: 16px; }
+.exhibitA svg { width: min(330px, 78vw); height: auto; overflow: visible; }
+.tag { font-family: var(--f-type); font-size: 14px; line-height: 1.45; padding: 12px 16px 12px 28px; position: relative; max-width: 330px; }
+.tag::before { content: ""; position: absolute; left: 10px; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--ground); transform: translateY(-50%); box-shadow: inset 0 0 0 1.5px var(--red); }
+.tag b { font-weight: normal; color: var(--red); }
+.scroll-cue { font-family: var(--f-type); font-size: 13px; color: var(--muted); margin-top: 26px; display: flex; align-items: center; gap: 10px; }
+.scroll-cue::before { content: ""; width: 34px; border-top: 1.5px dashed var(--red-hi); }
+
+/* ---------- Personal narrative (prologue / epilogue) ---------- */
+.note-sec { padding-block: 72px; }
+.letter { max-width: 760px; margin: 0 auto; padding: 44px clamp(22px, 5vw, 64px) 48px; position: relative; }
+.letter .eyebrow { color: var(--red); }
+.letter h2 { font-size: clamp(26px, 3.4vw, 38px); color: var(--ink); margin: 8px 0 20px; }
+.letter p { font-size: 20px; margin: 0 0 1em; color: #2b2a26; }
+.letter p.lead::first-letter { font-family: var(--f-display); font-weight: 700; float: left; font-size: 3.4em; line-height: .9; padding: 6px 10px 0 0; color: var(--bronze); }
+.letter .sig { font-family: var(--f-type); font-size: 14px; color: #6b5c44; margin-top: 24px; }
+.letter::after { content: ""; position: absolute; top: -10px; right: 48px; width: 18px; height: 18px; border-radius: 50%; background: var(--red); box-shadow: 0 2px 0 rgba(0,0,0,.3), inset -3px -3px 0 rgba(0,0,0,.2); }
+
+/* ---------- Chapters ---------- */
+.chapter { padding-block: 72px 0; border-top: 1px solid var(--rule); }
+.chapter-head { max-width: 46em; }
+.chapter-head .case-no { font-family: var(--f-type); color: var(--verdigris-hi); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; }
+.chapter-head h2 { font-size: clamp(32px, 4.4vw, 54px); color: var(--paper); margin-top: 6px; }
+.chapter-head p { font-size: 20px; }
+
+.scrolly { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 44px; position: relative; }
+.steps { position: relative; padding-block: 16vh 40vh; }
+.steps::before { content: ""; position: absolute; left: 8px; top: 0; bottom: 0; border-left: 1.5px dashed rgba(201,82,74,.5); }
+.step { min-height: 86vh; display: flex; align-items: center; padding-left: 34px; position: relative; }
+.step::before { content: ""; position: absolute; left: 2px; top: 50%; width: 14px; height: 14px; border-radius: 50%; background: var(--ground); border: 2px solid var(--red-hi); transform: translateY(-50%); transition: background .3s; }
+.step.is-active::before { background: var(--red-hi); box-shadow: 0 0 0 4px rgba(201,82,74,.18); }
+.card { padding: 20px 22px; max-width: 29em; opacity: .45; transition: opacity .35s; }
+.step.is-active .card { opacity: 1; }
+.card .ex { font-family: var(--f-type); font-size: 12.5px; color: var(--red); letter-spacing: .06em; text-transform: uppercase; }
+.card h3 { font-size: 20px; color: var(--ink); margin: 6px 0 8px; }
+.card p { margin: 0 0 .7em; font-size: 18px; color: #2b2a26; }
+.card p:last-child { margin-bottom: 0; }
+.card .note { font-family: var(--f-type); font-size: 12.5px; color: #6b5c44; border-top: 1px dashed rgba(31,42,46,.3); padding-top: 8px; margin-top: 10px; }
+.figure { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 5vh); height: 90vh; min-height: 420px; }
+.figure .plate { position: absolute; inset: 0; background: var(--ground-2); border: 1px solid var(--rule); }
+.figure .plate .title { position: absolute; left: 16px; top: 12px; right: 16px; font-family: var(--f-type); font-size: 12.5px; color: var(--muted); letter-spacing: .04em; z-index: 2; }
+.figure svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* chart text */
+svg text { font-family: var(--f-type); fill: var(--muted); }
+.axis path, .axis line { stroke: var(--rule); }
+.axis text { font-size: 11.5px; fill: var(--muted); }
+.grid line { stroke: var(--rule); stroke-dasharray: 2 4; }
+.ann text { font-size: 12.5px; fill: var(--paper); paint-order: stroke; stroke: var(--ground-2); stroke-width: 4px; stroke-linejoin: round; }
+.ann line { stroke: var(--paper); stroke-width: .8; opacity: .7; }
+.ann circle { fill: none; stroke: var(--paper); stroke-width: 1.4; }
+.readout { font-size: 12.5px; fill: var(--paper); }
+.coin-legend { font-family: var(--f-display); font-weight: 700; letter-spacing: .12em; }
+.coin-mark { font-family: var(--f-display); font-weight: 700; }
+.lbl-sm { font-size: 11px; }
+.legend-k text { font-size: 11.5px; fill: var(--text); }
+
+/* ---------- Breakout bands ---------- */
+.breakout { background: var(--band); border-block: 1px solid var(--rule); padding-block: 64px 48px; margin-top: 24px; }
+.bo-head { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: 32px; }
+.bo-head .eyebrow { color: var(--muted); }
+.bo-title { font-size: clamp(34px, 5vw, 64px); line-height: 1.02; color: var(--paper); margin-top: 10px; }
+.bo-title em { font-style: normal; color: var(--bronze-hi); }
+.bo-dek { margin: 0; font-size: 18px; color: var(--text); max-width: 30em; }
+.bo-viz { position: relative; }
+.bo-viz svg { display: block; width: 100%; overflow: visible; }
+.bo-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 30px; margin-top: 26px; padding-top: 14px; border-top: 1px solid var(--rule); font-family: var(--f-type); font-size: 12.5px; color: var(--muted); }
+.bo-foot .key { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.bo-foot .key span { display: inline-flex; align-items: center; gap: 7px; }
+.bo-foot .key i { width: 12px; height: 12px; display: inline-block; }
+.bo-foot .key i.c { border-radius: 50%; }
+.bo-foot .src { max-width: 46em; text-align: right; }
+.replay { font-family: var(--f-type); font-size: 12.5px; color: var(--paper); background: transparent; border: 1px solid var(--rule); padding: 6px 12px; cursor: pointer; }
+.replay:hover { border-color: var(--brass-hi); color: var(--brass-hi); }
+
+/* ---------- Case summaries ---------- */
+.summary { padding-block: 56px 72px; }
+.folder { position: relative; padding: 34px clamp(20px, 3.5vw, 40px) 30px; margin-top: 22px; }
+.folder .tab { position: absolute; top: -26px; left: 0; padding: 6px 18px 4px; font-family: var(--f-type); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--red); background: var(--paper); }
+.sum-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 36px; align-items: start; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid rgba(31,42,46,.25); }
+.tile { padding: 14px 14px 14px 0; border-bottom: 1px solid rgba(31,42,46,.25); min-width: 0; }
+.tile:nth-child(odd) { border-right: 1px solid rgba(31,42,46,.25); }
+.tile:nth-child(even) { padding-left: 16px; }
+.tile .v { font-family: var(--f-display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tile .v.down { color: var(--red); }
+.tile .k { font-family: var(--f-type); font-size: 12.5px; color: #5b5444; margin-top: 4px; }
+.sum-text h3 { font-size: 22px; color: var(--ink); margin-bottom: 10px; }
+.sum-text p { margin: 0 0 1em; font-size: 18px; color: #2b2a26; }
+.spark { width: 100%; height: 110px; display: block; margin-top: 6px; }
+.spark text { fill: #5b5444; font-size: 11px; }
+
+/* ---------- Close ---------- */
+.close { padding-block: 72px 30px; border-top: 1px solid var(--rule); }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 36px; }
+.pair figure { margin: 0; display: grid; justify-items: center; gap: 18px; }
+.pair svg { width: min(250px, 62vw); height: auto; overflow: visible; }
+.pair figcaption { max-width: 26em; padding: 18px 20px; }
+.pair figcaption h3 { font-size: 19px; color: var(--ink); }
+.pair figcaption p { margin: .4em 0 0; font-size: 17.5px; color: #2b2a26; }
+.final { text-align: center; padding-block: 20px 40px; }
+.cta { display: inline-flex; align-items: center; gap: 12px; margin-top: 10px; padding: 16px 28px; font-family: var(--f-display); font-weight: 700; font-size: 18px; letter-spacing: .06em; color: var(--ink); background: var(--brass-hi); text-decoration: none; box-shadow: 0 0 0 1px var(--brass), 0 0 0 5px var(--ground), 0 0 0 6px var(--brass); transition: background .2s; }
+.cta:hover { background: var(--paper); }
+.final .sub { font-family: var(--f-type); font-size: 13px; color: var(--muted); margin-top: 16px; }
+.sources { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--rule); font-family: var(--f-type); font-size: 12.5px; color: var(--muted); columns: 2; column-gap: 40px; }
+.sources p { margin: 0 0 .7em; break-inside: avoid; }
+.sources a { color: var(--worn); }
+
+@media (max-width: 880px) {
+  body { font-size: 18px; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 52px 44px; gap: 28px; }
+  .scrolly { display: flex; flex-direction: column; }
+  .figure { order: -1; top: env(safe-area-inset-top, 0px); height: 56vh; min-height: 320px; z-index: 0; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); }
+  .steps { z-index: 2; padding-block: 0 30vh; margin-top: -10vh; }
+  .steps::before, .step::before { display: none; }
+  .step { min-height: 88vh; align-items: flex-end; padding-left: 0; }
+  .card { opacity: 1; box-shadow: 0 8px 22px rgba(0,0,0,.45); }
+  .bo-head, .sum-grid, .pair { grid-template-columns: minmax(0, 1fr); }
+  .bo-foot .src { text-align: left; }
+  .sources { columns: 1; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card, .step::before { transition: none; } }
+</style>
+</head>
+<body>
+<!-- ======================= HERO ======================= -->
+<header class="hero">
+  <canvas id="guilloche" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">A case file</div>
+      <h1>The Case of the <span>Disappearing Penny</span></h1>
+      <p class="dek">Aaaaaaa aaa aa aaaa aaaaa aa aaaaaaaaa aaaaa aaaaa aaaa aa aaaaaaaa aaa aaaaa aaaa. Aaaaa aaaa aaaaa aa aaaa aaa aaa aaaaaaaaa aaaaaaaaa aaa. A aaaaa aaaaaaaaa aaaaaa aaaaaaaa a aaaaaa a aaa.</p>
+      <div class="scroll-cue">Scroll to open the file</div>
+    </div>
+    <div class="exhibitA">
+      <svg id="coinA" viewBox="-130 -130 260 260" role="img" aria-label="Sketch of a worn bronze coin with traces of silver"></svg>
+      <div class="tag paper"><b>Exhibit A.</b> Aaaaa aa a aa aaaa aaaa aa aaaa aaaaaaaa aaaaa aaaa aaaaaaaaa aaaaaaaaa. Aa a aaaa aa aa aaaaaaaaa aaaaaa aaa aa.</div>
+    </div>
+  </div>
+</header>
+
+<!-- ======================= PROLOGUE ======================= -->
+<section class="note-sec">
+  <div class="wrap">
+    <article class="letter paper">
+      <div class="eyebrow">Prologue</div>
+      <h2>Aaaa Aaaaaa Aaaa Aaaaa Aaa</h2>
+      <p class="lead">Aaa aaaaa aaaaa aaaaaaaaa aaa aaaaaaaaa aaa. Aaaaa aaaa aaaa aaaa a aa aaa aaaaaa aaaaaaa a a. Aaaa aaaaaaaaa aaaaa a aaa a aaaaaaaaa a. Aaa aaa aaa aa aaaaa aaaa aaa aaaaaaa aaaaaaa aaaaaa aaaaa aa aa aaaaa a. Aaaaaaaa aaaaa aaaaaaaaa aaaaaaa aaaa a aaaa aa aaaaaaa a. A aaa a aaaaaaaa aaaaaaaa aaa aaa aaaaa. A aaaa aaaaa a aaaaa aa aaaaa aa aaaaaaaa aaaaa aa a aaa.</p>
+      <p>Aaa a aaaaa aaa aaaaa aaaaaa a aaaaaaaa aaaa aaaaaaaa. Aaaaaaa a aaaa aa aaaa aaaaaaa aaaaaaaaa aaaa a aaaaaa. Aaa aaaaa aa aaaa a aa aa aaa aa aaaaaaa a a aaaaa aaaaaaaaa. Aa aaaa a a aaaaaaaa aaa aaaaaa aaaaaa aaaaaa aaaa aaa. Aa aaaaa a aaa aaa aaaa aa a aaaaa. Aa aaaaaaaaa a aaaaa aaaaaa aaaa aa a. Aaaaa aaaaaaa a aa aa aaaaa aaa aa aaaa aaa aaaaa aaaaaaa. A aaaaa aaaaaa aaa aaa aaaaa aa aa aaaaaaaaa aaa aa aaaa.</p>
+      <p>Aaaaaaa aaaaaaaa aaaa aaaaa aa aaaaa a aa aaa aaaaa. Aaaaaa a aaaaaaaa a aaa aaa aa a aaaaaaaaa aaa a aaaa. Aaaa aaa a aaaa aa aaaaa aaa aaa aaaa aaaaa. Aaaaaaaa aaa aaaaaa aaaaa aaa aaaa aa aaaaaaaa a. Aaaaa aaaa aa a aaaaaaaaa aaaaaaaa aaaaaaaa aa a aaa a. Aa aaaaa a aaaaaaaaa aaa aaaaa aaaaaaaaa aaa aaaaa aaaa aaaaaaaaa aaaaa.</p>
+      <p>A aaaaa a aaaaa aaaaa aaaaaaaa aaaaa aa aaaaa a a aa aaaaa aaaaa aa. A aaaaa aa a a aaaaaaa a. Aaa aaa aaaa aaaa aaaaa aaaaaa aaaaa a aaa aaa aaa aa aa. A a aaaaaaaaa a aaaaaaaa.</p>
+      <div class="sig">Aaaa Aaaaa Aaaaaaa</div>
+    </article>
+  </div>
+</section>
+
+<!-- ======================= CASE I ======================= -->
+<section class="chapter" id="rome">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no">Case I · Rome</div>
+      <h2>The denarius</h2>
+      <p>Aaa aa a aaa aaaa aa aaa a aaaaaaaa aaa aaa aa aa. Aaaaaaaaa aaa a aaaaa aaaaaaa aa aaaaa aa aaaaa aaa aaaaaaa. Aa aaa aaaa a aa aaaaaaaa.</p>
+    </div>
+    <div class="scrolly" data-chapter="rome">
+      <div class="steps">
+        <div class="step"><div class="card paper"><div class="ex">Exhibit I-a · 27 BC to AD 14</div><h3>Aaaa Aaaaaaa Aaaa</h3><p>Aaaaa a aaaaa aaaaaaaa aaaaa aaaaaaaaa aaaaaa aa aaaaaaaa aaa aaaaa aaaaaa aaa. Aaa aaa aaa a aaa aaa aaaaa aaaaa. Aaaa aaa aa a a aaaa aa aaaaaaaaa aaa aa aaaaaaaaa aaa. Aaaaaaaa aaaaaaaaa aaaaa aaaaa aaa a aa aa aaaa a aaaaa aaaaaa aa. Aa aaaa a a aaaaaaaaa a.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit I-b · AD 64</div><h3>Aaaaaa Aaaa Aaaaa Aa</h3><p>Aaa aaaaa aa aaaaaa aaa aa aaaaa a aaa aaaa aaa aaaaa. Aaaaa aaa aaa aaa aaa aaaaa aaaaaaaa aaaa aaaaaaa aaaaaaa aaa aaaa aaaaa aa aaaaaaaa aaaaa. A aaaaa aa a a aaaaaaa aaaaaaa aaa aaaaaaa aaa aaaa aaaa aa aa aaaaaaaa aaaa. Aa aaaaa a aaa a aaaaaaa aaaaaaaaa aaaa aaaaaaaaa aaa aaaaaaa. Aaaaaaaaa.</p><div class="note">Aaaa aaa a aaaa aaa aaaaaa aa aaaa aaaaaa a. Aaaaaaaaa aaa aaaa aaaa aa aaa a aa aa aaa.</div></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit I-c · AD 82 to 85</div><h3>Aaaa Aaaaa Aaaaaaa Aaaaaaa</h3><p>Aaaa aaa aa aaa aaaa aaa aa a aaa aa aaaaaaaa aa aaa aaa aaaaaaaaa. Aaa a aaaaa aaa aaaaa aaa aaa aa aaaa a aaaaa aaa. Aaaa aaaaaa aaaaaaa aa aa aaaaa aaa aa aaaa. Aa aaa aa aaaa a aa aa aaa aaaaaaaa aaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit I-d · AD 107 to 211</div><h3>Aaaaaa Aaaaa Aaaaa Aaa Aaa</h3><p>Aaaaaaaa aaa aaa aaaaaaaa aaaaaaaaa a a aaaa aa aaaa aa aa. Aaaaaaaa aaa aaa aa aaaa aaaaaa aaa aaa aa aaaaaaaa aaaaaa aaaaa. Aa aaa aaa aaaa aaa a aaaaa aaaaa aaa. Aaaaaaa aaa aaaaa aa a aaa aaaa aa aaaa aaaaaaaa aaaa aa aaa aa. Aaaaa aaaaaaa aaaaaaaaa aaaa aaa aaaaa aa aaa aaaa. Aaaaa a.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit I-e · AD 215 to 241</div><h3>Aaaaa Aa Aa Aaaaaa Aaaaaaa</h3><p>Aaa a aaaa aaaaa a aa aaa. Aa aa aaaaaaaa a aaaa aaa aa aaaaaaaa aaaa aaaaa. Aaaaa aaaaaaa aaaaa a a aaaaa aaaaaa aaaa aaaaaaa aaaa aaaaaa aaaaaaa aa aaaaaaaa aaaaaa aaa. Aa aaaaa aaa aaa a aaaaa aaaaa aaaaa. Aaaa aaaaaaaa aaa aaaa aaaaaaaaa aa aaa. Aa aaaaaa aaaa aa aa aaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit I-f · AD 253 to 301</div><h3>Aaaa Aa</h3><p>Aa aaaaaa aaa a aaaa aaa aa. Aaaa aaa aaaaa aaaa aa aaaa aaaaaaaa. A aaaaaaaaa aaaaaaa aa aaaaaaaaa aaaa aaaaaaaaa aaaaa aa aaa a aaa aaa aaaaaaa aaaaaaaa. Aa aaa aaaaa aaaa aaaaaaa aaaaa aaaa aaaaaaaa aaa. Aaa aaaaaaaa aaa aaaa aaaaaaaaa aa aaaaaaaa aaaaaaaaa aaaaaaaa a. Aa aaa aaaaaa aa aaa aaaaaaa aaaa. Aaa aa aaaaaaaaa aaaaa aa.</p><div class="note">Aaaaaa aa aaaaaaa a a aaa aaa. Aaa aa a aa a aaaaaaa aa aa aa.</div></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit I-g · Source criticism</div><h3>Aaaaaa Aaa Aaaaa Aaaaaaa</h3><p>Aa aaaa aa a aaaa aa aaaaaa. Aaaaaaa aaa aaaaaaa aaaa aaa aaa aaaaa aaaaaa a aaaaa. Aaa aaaaaaaa aa aaaaa aaaaaaaaa aaaaaaa a aaaaa. Aaaaaaaaa aaaaaa aaaaaaaa aaa aaa a aaa aa aa aaaaa aaaaaa. Aaaa aaa aaaaa a a aa aa aaa aaaa aaaa aa. Aaaaaaaa aaa aa aaaa aaaaaaaa aaaa aa aaaaa aaa aaaaaa aaaaaaa aaa aa aaaaa aaaaaaa.</p><div class="note">Aaa aaaa aaaaaa aa aa aaa aaaa aaaaaa. Aaaa aaaa aaa aaaaaaaa aaaa aaaa aaaaa a aaa aaaaaaaa.</div></div></div>
+      </div>
+      <div class="figure"><div class="plate"><div class="title">Silver fineness of the denarius by reign · % silver</div><svg></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="breakout" id="bo-rome">
+  <div class="wrap">
+    <div class="bo-head">
+      <div><div class="eyebrow">27 BC to c. AD 300 · silver content by reign</div><h2 class="bo-title">The coin that turned to <em>bronze</em></h2></div>
+      <p class="bo-dek">Aaaaaaaa aaa aaaaaaaaa aaaaa aa aaaaaa a aaaaaaaa aaaaa aaaa aaaaa aaaaa aaa. Aaaaaa aaaa aaaaa aaaaaaa aaaaaaaa a aaaaaaaaa a aaa a a aaaa a aaa aa. Aaa aa aa aaa aa aa.</p>
+    </div>
+    <div class="bo-viz" id="vizMelt"></div>
+    <div class="bo-foot">
+      <div class="key"><span><i class="c" style="background:var(--fine)"></i>Silver</span><span><i class="c" style="background:var(--bronze)"></i>Base metal</span><span><i class="c" style="border:1px dashed var(--paper)"></i>Estimated from texts</span><button type="button" class="replay" data-replay="melt">Replay</button></div>
+      <div class="src">Source: D.R. Walker, The Metrology of the Roman Silver Coinage (1976-78). Values after AD 253 are midpoints of recorded ranges.</div>
+    </div>
+  </div>
+</section>
+
+<section class="summary">
+  <div class="wrap">
+    <div class="folder paper">
+      <div class="tab">Case I · Summary</div>
+      <div class="sum-grid">
+        <div class="tiles">
+          <div class="tile"><div class="v">98%</div><div class="k">Augustan fineness, 27 BC</div></div>
+          <div class="tile"><div class="v down">~5%</div><div class="k">Gallienus, AD 260s</div></div>
+          <div class="tile"><div class="v">~300 yrs</div><div class="k">From standard to wash</div></div>
+          <div class="tile"><div class="v">3</div><div class="k">Attempted recoveries: Domitian, Pertinax, Macrinus</div></div>
+        </div>
+        <div class="sum-text"><h3>Aaaa Aaaa Aaaaaa Aaaaaa Aa</h3><p>Aaa aaaa aaaaa aaaaa aa aaaaaaa a aaaaa aaa aaaaa aaaaaaa aaa aaaaa aaaaaaa aaaaaaaaa aaaaaaaa. Aaaaaa aaa a a aaaaaaa a aaaa a aaaaa aaaa aaaaa aaaaa. Aaaaa aaaa aa aa aa aaa aaa a aaaaa aaaaa aaaaaaa. Aaaaaaaaa aa aaaaaa aaaaaaa aaaaaaaa aaaa a. Aa aaaaaa a aa aaaaaa aaa aa aa aaaaa aaaaaaaaa aaaaaaaaa aaaaa aaaaaaa aaaaa. A aaaaaaa aaaaaaaa aaaaa.</p><svg class="spark" data-key="rome" data-m="fine" role="img" aria-label="Sparkline of Roman fineness"></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CASE II ======================= -->
+<section class="chapter" id="britain">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no">Case II · Britain</div>
+      <h2>Gold staters</h2>
+      <p>Aa aa aaaaa aaaaa aaa aaaaaa aa aaaaaaaa aa aaaaaaaa aaaaa aaa a aa aaa. Aaa aaaaaaaa aaaaa aa aaaaaaa aa aaaaaaaaa aaaa. Aaaa aaa aaa aaa a.</p>
+    </div>
+    <div class="scrolly" data-chapter="celtic">
+      <div class="steps">
+        <div class="step"><div class="card paper"><div class="ex">Exhibit II-a · c. 125 BC</div><h3>Aa Aa Aaaaa</h3><p>Aa aa aaaaaaaaa aaa aaa aaa aaaaaaaa aaaaaa aa aaa aaaaaaaaa. Aa aaa aaaaaa aaaaaaaa aaaaa aaaaa aaa a aaaaaaaa aa aaaaaaa aaaaaa aa aa aaa. A aaaaaaa a aa aaaaaaa aaaa aaa a aa aa aaaaa aaa aaaaaaaaa aa aaaaaaaaa aa. Aaa aaaaa aaa aaaaaaaaa aa aaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit II-b · c. 100 to 75 BC</div><h3>Aaaaa Aaaaaa Aaaaaaa Aaaa Aaaaa</h3><p>A aa a aaa aaaaaaaa a aaaaaaaaa aaaaaaaa aaaaa aaaa aa aaaaa aaaa a aaa. A aaa aaaaaaaa aa a aaa aaa aaaaa a aa aaaaaa aaa aaaa aaaaaaaa aa aaaa. Aaaaaaaa aaa a aa aaa aa a aa aaaaaaaaa aaa aaaa aaaaaaaa aa. Aaa aaaaaaa aaa aaa aa aaa aaa aaaaaaaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit II-c · 58 to 50 BC</div><h3>Aaaa Aaaaa Aaaaa Aaaaa</h3><p>Aaaaaaaa aaa aa aaaa aaaaaaaa aaaaaaaaa aaaaaa a aa aaaaaaa aaaaa a aaaa aa aaaaaaaa aaaa. Aa a aaaaaa aaaaaaaa aaaa aaaaaa aaaaa aaaaaaaa a aaaa. Aaaaaaa aa aaaaa aaaa aaaaaaaaa aaaaaaaaa aaa a aaaaaa aaa aaaaaa aa aaaaaaaa a. Aa aaaaaaaa aaaaaaaaa aaaaa aaa aaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit II-d · after 50 BC</div><h3>Aaaaaa Aaaa Aaa</h3><p>Aaaa aaa aaa aaaaa aa a aaaaa aaa a aaaaaaaaa aaaaaaaaa aaa aaa. Aaa aaaaa a aa aaaaa aa aaa aaaaa aaaaaaaaa aaaaa. Aaaaaaaaa aa aaa aaa aaaa aaaa aaaa aaaaa aaaaaaa aa aaaaa aaaaaa. Aaaaaaaaa a a aa aaa aaaaa aaaaaaaa aaaaa. A aaaaa a aaa aaaaaaaa aa aa aa aaa aaaaaa. Aaaaaa aa a.</p><div class="note">Aa aaa aaa aaaaaaaa aa aaa a. Aa aaaaaaa aaaaaaa aaaaaaaa aa aaaa aaaaa aaaaaaaa aaaaa. A aaaaaaaa aa aa aaaa aaaaaaaa.</div></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit II-e · 1st century AD</div><h3>Aaa Aaaaa Aaaaaa</h3><p>Aaaaaaaa a aaaaaaa aaaaaaaa aaa a aa aa a aaa. A aaaaaaaaa aaaaaaaa aaaaaa aaaaa aaa aaa aa aaa aa aaaaaaaa aaaa aa. Aaaa aa aaaa aaaa aaaaaaaaa aaaaa aaaaaaaa a aa aa a aa aaaa aaaa aa. Aaaa aa a aaaaaaaaa aaaa aaaaaaa aaaaaa aa aa aaa aaa aaaaa aaa. Aaa aaaa aaaa aaaaaaaaa aa aaaa aaaaaa aaaaaaaa aaaa aa aa.</p><div class="note">Aaaa aaaaaaaa aaaaaa aaaaaaaaa aaa aaa aaaaaaaaa aaaaaaa aaaa aaaaaaaaa aaaaaaaaa aaaaaaaa. A aaaaaaaaa.</div></div></div>
+      </div>
+      <div class="figure"><div class="plate"><div class="title">Stater alloy, % by weight · and stater weight, g</div><svg></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="breakout" id="bo-celtic">
+  <div class="wrap">
+    <div class="bo-head">
+      <div><div class="eyebrow">Three staters · alloy by electron microprobe</div><h2 class="bo-title">A stater in <em>100 parts</em></h2></div>
+      <p class="bo-dek">Aaaaaaaaa aaaaaaaa aaaaa aaaaaa aaaaaaaaa a aaa aaaaa aaaaaaa aaaa. Aa aaaaaaa aaaaaaaa aaaaaa aaa aaaaa a aaa aaaaaaaa a aaaaa aaaaa aaaaa. A aaaaaa aa a aaaa aa aaaaaaaa.</p>
+    </div>
+    <div class="bo-viz" id="vizCeltWaffle"></div>
+    <div class="bo-foot">
+      <div class="key"><span><i style="background:var(--brass-hi)"></i>Gold</span><span><i style="background:var(--fine)"></i>Silver</span><span><i style="background:var(--bronze)"></i>Copper</span><button type="button" class="replay" data-replay="celt">Replay</button></div>
+      <div class="src">Source: Van Arsdell, Celtic Coinage of Britain, 3rd ed. online. 58-50 BC figures are bounds (gold under 60%, silver over 30%).</div>
+    </div>
+  </div>
+</section>
+
+<section class="summary">
+  <div class="wrap">
+    <div class="folder paper">
+      <div class="tab">Case II · Summary</div>
+      <div class="sum-grid">
+        <div class="tiles">
+          <div class="tile"><div class="v">75%</div><div class="k">Gold, Gallo-Belgic A/B, c. 125 BC</div></div>
+          <div class="tile"><div class="v down">20%</div><div class="k">Gold, EISV and VEP CORF, 1st c. AD</div></div>
+          <div class="tile"><div class="v">5.4 g</div><div class="k">Stater weight by c. 10 BC, from 7.8 g</div></div>
+          <div class="tile"><div class="v down">70%</div><div class="k">Copper in the last staters</div></div>
+        </div>
+        <div class="sum-text"><h3>Aaa Aaaaa Aaa Aaaaaaa</h3><p>Aaa aaa a aaaaaaaa aaaa aaaa aaaa aa aaaa aaaaa aaaaa. Aaaaa aaaaaaa aaaaa aaaaaaaaa aaaa a aaaaaaaa aaaaaaaaa aaaa aa aaaaa aaa a aa aaa aa. Aaaaaaa aaaaaaaa a aa a aaaaaa aaaaa aaaaa a aa aaaa aaaaaa aaa aaaaaa aa aa. Aaaaaaaaa aa aa aaaaaaaaa a aaaaa a aaaaa aaaaa aaaaaaa aaa aaaa aaaaa aaaa. Aaa aaaa aaaaa.</p><svg class="spark" data-key="celtic" data-m="gold" role="img" aria-label="Sparkline of stater gold content"></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CASE III ======================= -->
+<section class="chapter" id="alexandria">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no">Case III · Alexandria</div>
+      <h2>Ptolemaic bronze</h2>
+      <p>Aaa aa aa aaaaaaaa aaaa aaaa aaaaaaaaa aaaaaaa aaaa aaa aaaaaaaa aaaaaa aaa. Aaaaaaa a aaa aaaaa aaaaa aaaaaaaaa aaaa a aaaa aaaaaa aaaa. Aaaaaaaa aa a aaaaa a aaa aa aa.</p>
+    </div>
+    <div class="scrolly" data-chapter="ptol">
+      <div class="steps">
+        <div class="step"><div class="card paper"><div class="ex">Exhibit III-a · late 3rd to early 2nd c. BC</div><h3>Aaaaaaa Aaa Aaaaaa Aaaaaa</h3><p>A aa aaaaaaa aa aa a aaaaaaaa aaaa. Aaaa aaa a aaaaaa aaa aa a aaaaaaaa aa aaaaaaaaa aaaaaaaa aaaaaaaaa aaa aaaa aaaaa a. Aa aaaaa aaa aaaa a aaaaaaaaa aaaa a. Aaa aaaa a aaa aa aa aaaa aaaaa aaaaaa aaaaa aaaaaaaa aaaaaa aa aaaaaaa. Aa aaaaaaa a aa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit III-b · 2nd c. BC</div><h3>Aaaaaa Aaaa Aaaa Aaaaaaa Aaaa</h3><p>Aa aaa aaaaaaaaa aaaaaaaa aaaaa aaa aaaaaaaaa aaaaaaaaa aaaaaaa aaaaaaaaa aa aaaaaa aaaaaaaaa a. A aaaa aaa aaa aa aaaa aaa aaaaaaaaa a aaa aaaaaaaaa aa a. Aaaaaaaaa aaaa aa aaaaaaa a aaaaaaaaa aaa aaaa aaaaaaaa aaaa. Aaa aaaa aaaaa aaaaa aaaaaaaa aa aaaa aaaaa aaaaa aaaaaaa aaaaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit III-c · 2nd c. BC</div><h3>Aaaa Aaaaaaa Aaa</h3><p>Aa aaaaaaaaa aa aaaa aaaa aaaaa aaaa. Aaaaaaaa aaaa aa a aaaaaaaa aaaaa aa aaa a. Aa aaaaa aaaaaaaa a aa a aaa aaaaaaaaa aa aaaaa aaaaaaaa aaaa. Aaaaaaaa aaaa aaaa aaaaaaaaa aa aaaaaa aaaaa aaaaaaaaa aaaaaaaaa aaa aaa aaaaa aaaa aaaaa a. Aaaaa aa aa aa aaa a aaaa a aaaaa aa aa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit III-d · c. 168 to 163 BC</div><h3>Aa Aaaaaaa Aaaaaaa Aaaaaa</h3><p>Aaaaaa aaaaa aaaaa aaaaaa aaaaaaaa aaaaa aaaaaa aaaaaa aaaaaa aa. Aaaaa aaaaa aa aa aaaaaaaaa aaaaaa aaa aa a aa aa aaaaa a aaaaaaaa. Aaaa aaaaa aaaaaaaa aaaaa aa a aaa aaa aaaaaa aaa. Aaaaa aaa aaaaaaaaa aaaaaaaaa aaaaaa aaaa aaaaaaa aa aa aaaaaa. A aaa.</p><div class="note">Aaaaaaaa aaa aaaaa aaaaaaa aa aaaaaa a aaaa aa a aaaaaa a aa aa aa. Aaaaaaaa aa aaaa.</div></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit III-e · 115 BC to 30 BC</div><h3>Aaaa Aaaaaaa Aaa Aaa Aaaaaaa</h3><p>Aa aaaa aaaa aaa aaaaa aa aaaaaaa aa aaa aaa aaaaaa aaaaa. Aaaaaaaa aaaaaaaa aaaaaa aaaaaaa a a aaaaaaaa aaaaa aa aaaaa aaaa aaaaa aaaaaaaaa. Aaaaa aaaaaaa aa a aa aa a aaaaaa aaaa aaa aa. Aaa aaaaaaaaa aaa aaaaaaaa a aaa aa aaaaaaaa aaaaaaa aaa aaaaaa aaa aaaaaa aaaaaa. Aaaaaaaa aa aa aaa aaaa aa.</p></div></div>
+      </div>
+      <div class="figure"><div class="plate"><div class="title">Ptolemaic bronze · mean weight (g) against face value (units)</div><svg></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="breakout" id="bo-ptol">
+  <div class="wrap">
+    <div class="bo-head">
+      <div><div class="eyebrow">Zeus Ammon and Cleopatra VII · drawn to relative weight</div><h2 class="bo-title">Same god, <em>half the bronze</em></h2></div>
+      <p class="bo-dek">Aaaaa aaaaaaaaa a aa aaaa aaaaaaa aaa aaa aaa aa. Aa aaaaaa aa aaaa a aaa aaaa a aaaa aaaaa aaaaa aaa aaaaaa aaa aaa. Aaa aaaaaaaa aaaaaaaaa aaaa aaaa.</p>
+    </div>
+    <div class="bo-viz" id="vizPtolScale"></div>
+    <div class="bo-foot">
+      <div class="key"><span>Coin area is proportional to mean weight</span><button type="button" class="replay" data-replay="ptol">Replay</button></div>
+      <div class="src">Source: A Metrological Survey of Ptolemaic Bronze Coins II (AJN 2021), Tables 1-2. Svoronos numbers.</div>
+    </div>
+  </div>
+</section>
+
+<section class="summary">
+  <div class="wrap">
+    <div class="folder paper">
+      <div class="tab">Case III · Summary</div>
+      <div class="sum-grid">
+        <div class="tiles">
+          <div class="tile"><div class="v">0.385 g</div><div class="k">Bronze per unit, Standard 3</div></div>
+          <div class="tile"><div class="v down">0.187 g</div><div class="k">Low point, Classes 2 and 3, c. 168-163 BC</div></div>
+          <div class="tile"><div class="v down">-51%</div><div class="k">Deepest cut against Standard 3</div></div>
+          <div class="tile"><div class="v">100 → 120</div><div class="k">Units on the same Sv1424B coin</div></div>
+        </div>
+        <div class="sum-text"><h3>Aaaaaaa Aaaaa Aaaaaaa Aaaaa</h3><p>Aa aaa a aaa aaa aaaaa aaaaaa aa a aaaaaaaa aa aaaaaaaaa aaa aaaaa. Aaaa aaaaa aaa aaaaaa aa aaaaaa aa aaaaa aaaaa. Aa aaa aaaaaa aa aaaa a aa aaaa aaaaaa aa aa a aaaa. Aaaaaaaa aaaaaaa a aaa aaa aaa aaaaaa aaa a. Aaaaa aaa aaa aaaaa aaaa aaaaaaaa aa aaa aaaaaaaa aaaaaaaaa aaa a. Aaaaa aaa aa a aaaaa.</p><svg class="spark" data-key="ptol" data-m="gpu" role="img" aria-label="Sparkline of bronze per unit"></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CASE IV ======================= -->
+<section class="chapter" id="london">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no">Case IV · London</div>
+      <h2>The Tudor penny</h2>
+      <p>Aaaaaaaaa aaaaaaaa aaaaaa aa a aaaa aaa. A aaaaa aa aaaaaaa aaaaaaaa aaaaaaa a aaaa aaa aaaa aaaaaa aaaaa aaa aaaaaaaa aaaa. Aaaaaa aaa aaaaaa aaaaa a a aaaaaaa aaaaaaa.</p>
+    </div>
+    <div class="scrolly" data-chapter="tudor">
+      <div class="steps">
+        <div class="step"><div class="card paper"><div class="ex">Exhibit IV-a · 5 November 1526</div><h3>Aaaaa Aaaa</h3><p>A aa aaaa aaaaaa aaa aa a aa. Aaaaa aaaa aaaaaaaaa aaa aaaa aaaaaaaaa aaaaaaaaa aaa aaaaa aaaaaa a aaaaaaa aaa aaa aaa. Aaaaaaaa a a aa a a aaaa aaaaaaaa a aaaa aaaaaaaaa aa. Aa aa aaaa aaaa aaa aaaaaaaa aa. Aaa aaaa a aaa a aaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit IV-b · 1542 to 1546</div><h3>Aaa Aaaaaa Aaaaa</h3><p>Aaaaa aaaa aaaa a aaaaaaa aaaaaaa aaaaaaaaa aaaaaa aaa aaa. Aaaaa aa aaaaaaa aaaaaaaa aaaa aaa aaaaaa aaaaaa aa. Aaaaaaaa aaaaa a aaaa aa aaaa aaaa aa. Aaaa aaaa aaaaa aaa aaaa aaa aaa aaa aaaaaaaaa aaaaa aaaaaa a. A aaaaa aaa a aaaa aaaaaaaa aaaaaaa aaaaa aaaaa aa aaaa aaaaaaaa aaaaaaa a aaa aaaa. Aaaaaaaaa aaa a.</p><div class="note">A aaaaaaaa aaaaaaaa aaaaa aaaaaaaaa aaaaaaaaa aa aaaa aaa aaaaa aaaaaaaa a aaaaaaaaa aa aaaaa a. Aa aa a aaaaa aaaaaaaa aaa aaaa aa a aaaaaaaaa.</div></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit IV-c · 15 April 1551</div><h3>Aaa Aa Aaa Aaaaaaa</h3><p>Aaaaa aaaaaaa aaa aaaaaaaa aaaaaaaaa aaaaaa aaa aa. Aaaaaaa aaaaaaa a aaaaa aaaaaaaa aa aaa aaa aaaa a aaa aa a aa aaa. A aaa aaaaaaa aaaa aaa aaaaa aaaa aaaaa aaaa aaaaa. Aaaaaaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit IV-d · October 1551 to June 1553</div><h3>Aaa Aaaaaa Aaaaaa</h3><p>Aaa aa aaaaaa aaaa aaaa aaa aaa aa a aaaaa aaaaaaaaa aaa. Aaaaaaaaa aaaa aaa aaaa aa aaa aaa aaaaaaaaa aaaaaaaaa aaaaaaa aaaaaaa aaa aaa aaaa a aaaaaa. Aaa a aaaaa aaaaaaa aaaaaaa aaaa aaaaaaaa aaa aaaaaaaaa aaaa aaa aaa aaaaa. Aaaaaa aaaaaa aa aaa aaaa aa aaaaaaaa aaaaaaa aaaaaa. Aaaa aa aaaaa aaaaaaa aaa aaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit IV-e · 1553 to 1601</div><h3>Aa Aa Aaaaa Aa</h3><p>Aa aaa aaaaaaaa a aaaaa aaa aa aaaaa aaaaaaaa aa aaa aaaaaaaaa aaa. Aaaaa aaa aaa a a aaaaa aa aaaaaaa aa aaaaaaa. Aa aaaaaaa aaaaa aaaaaaaa aaa a aaaaaaa aaaaa aaa aaaa aaaa aaaaaaaaa. Aaaa aaaaaa aaaaaa aaaaaaaaa aaaa aaaaa aaaaaa aaaaaaaaa. A aaaaa aaaaaa a aaaaaaaaa a aaaaaaaaa aaaaa aaaa. Aaa aaaaa aaa a aa aaaa aaaaaaaaa aa.</p></div></div>
+      </div>
+      <div class="figure"><div class="plate"><div class="title">Tower Mint fineness, % silver · fine silver in one penny, g</div><svg></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="breakout" id="bo-tudor">
+  <div class="wrap">
+    <div class="bo-head">
+      <div><div class="eyebrow">1526 to 1601 · fine silver in one penny</div><h2 class="bo-title">What's left <em>inside the penny</em></h2></div>
+      <p class="bo-dek">Aaaaa aaaa aa aaa aaaa aaaaaa aaaaaaaaa a a aa aa aaaaaa aaa aaaaa aaaaaaa aaaaaaaaa. Aaaaaa a aa aa aaaaaaaaa a aaa a aaa a aaaaa aaaaaaaaa aaaaa aaaaaaa.</p>
+    </div>
+    <div class="bo-viz" id="vizPennies"></div>
+    <div class="bo-foot">
+      <div class="key"><span><i class="c" style="background:var(--fine)"></i>Fine silver (area to scale)</span><span><i class="c" style="border:1px dashed var(--brass-hi)"></i>The 1526 penny, 0.639 g</span><button type="button" class="replay" data-replay="pennies">Replay</button></div>
+      <div class="src">Source: Munro (2010), Toronto Economics WP 417, from Challis's indentures.</div>
+    </div>
+  </div>
+</section>
+
+<section class="summary">
+  <div class="wrap">
+    <div class="folder paper">
+      <div class="tab">Case IV · Summary</div>
+      <div class="sum-grid">
+        <div class="tiles">
+          <div class="tile"><div class="v">92.5%</div><div class="k">Sterling, 1526 indenture</div></div>
+          <div class="tile"><div class="v down">25%</div><div class="k">Low point, April 1551</div></div>
+          <div class="tile"><div class="v">0.464 g</div><div class="k">Fine silver per penny in 1601, from 0.639 g</div></div>
+          <div class="tile"><div class="v down">-27%</div><div class="k">Silver never recovered after restoration</div></div>
+        </div>
+        <div class="sum-text"><h3>Aaaaa Aaaa Aaa Aaaaa Aa</h3><p>Aaaaaaaa aa aaaa aaaaaaaaa aaa aaa aaaa a aaaaa aaaaaaaa aaaaaaaaa. Aaaaa a aaaaaaaaa aaa aaaa aaaaaaaa aaaaaaaa aa aaaaa aa aaaaaaa aa aaa aaaa. Aaaaaa aaaa aaa aa a aaaaaaaaa aaaaaaaa aaaaa a aaaa aaaaa aaa aaaaa aaa aa aaa. Aaaaa aaaaa aaa aaaaa aaa aaaaaa a aa. Aaaaa a aaaaaaaaa a aaa aa aaaaaaaaa aaa. Aaaaaaaa aaaa aaaaaa.</p><svg class="spark" data-key="tudor" data-m="penny" role="img" aria-label="Sparkline of fine silver per penny"></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= RED STRING ======================= -->
+<section class="chapter" id="string">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no">Connecting the cases</div>
+      <h2>The red string</h2>
+      <p>A a aaaaaaa aa aa aaa aaa aaaaaaaaa aaaaaa aa aaaa aaaaa aaaaa aaaaaaaa aaaaaaaaa aaaa. Aaaaaa aaaa aa aaa aaaa aaaa aaa aaaaaaa aaaa aaa. Aaaaa aaaa.</p>
+    </div>
+    <div class="scrolly" data-chapter="string">
+      <div class="steps">
+        <div class="step"><div class="card paper"><div class="ex">The board</div><h3>Aaaa Aaaaaaa Aaaaaa Aa</h3><p>Aaaaaaa a a a aaaa aaa a aa a. Aaaaa aaaaa aaa aa aaaaaaa aaa aaa a a aaaaaa aaaaaaaa a aaaaa a aaaaa. A aaaaa aaa aa aaaaaaaaa aaa aaa aaaa aaaa aaaaaa aaaaaa. Aaaa aaaaaaa aa aaaaaaa aaaaaaa aaa aaaa aaa aaa aaa aaaaaaaaa aaaaa aaaaaaaaa.</p><div class="note">Aaaaaaaaa aaaa aaa aaaa aaaaa a aa aaaa aaaa aa aaaaaaa aaaaa. Aaaaa aaaa aaa a aaaaaaaaa aaaaa.</div></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Where each case ends</div><h3>Aaaaa Aa Aaaaaa Aaaaa</h3><p>Aaa a aaaaaaaa aaa aaaaaaaaa aaaa aaaaa a aa aa. Aaaaaaaaa aaa aa aaaaaaaa aaaaaaa aaa aaaaaaaa aaaaa. A aaa aa a aaaa a aaaaaaaa. A a aaa aaaa aaaa aaaaa aaaaa aaaa aaa aaaa aa aaaaaaaaa aaaa aaaaaaaa aaa aaaa. Aaa aaaa a aaaa aa aaaaa aaaa a aaa.</p></div></div>
+      </div>
+      <div class="figure"><div class="plate"><div class="title">Each series indexed to its first value = 100 · years since that value</div><svg></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CASE V ======================= -->
+<section class="chapter" id="washington">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no" style="color:var(--red-hi)">Case V · Unsealed</div>
+      <h2>The dollar in your pocket</h2>
+      <p>Aaaa a a aaaaaa aaaa aaaaa a aaaaaaaaa aaa a. Aa aaaa aaaaa aa aaaaa aa aaaa aaaa aaaa aaa aaaaa aaa a aaaaaa. A aaa aaa aaa aaaaaaaa aaaaa aaaa aaaa aaaaaaaa aaa aaaaa aaaaaaa aaaaaaaa aaaaaaa.</p>
+    </div>
+    <div class="scrolly" data-chapter="macro">
+      <div class="steps">
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-a · 1913 to 1929</div><h3>Aaaaaa Aa Aaaa Aaa</h3><p>Aaa aaa aaaaa aaa aaaaa aaaa aaaa aaaaa aaa aaa aaa a aaaa. Aaa aa a aaaaaaa aaa aaaa aaaa a aaaaaaaa aaaaaa aaa aaaaaaaa aaa aaa aaa aaa. Aaaaaaaaa aa aaaa aaaaaaa aaaaa aaaaaa aaaaa aaa aa aaaa aaa aaa aaa. Aa aaa aaaaa aa aaaaa aaaaaaaa aaaaaaa aaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-b · 1930 to 1945</div><h3>Aaaaaaa Aaaa Aaaaaaa Aa</h3><p>A aaaa aa aaaaa aaaa aa a aa aaaaa aaaaa aaa a aa aa aaaaa aaaaa. Aaa aaaaaaa aaaaa aaaaaaa aa aaaaaaaaa aaa aaaaaaaa aa aaaaaaa aaaaaaa a a aaaaaaa aaaaaaa. Aaa aaa aaa aaaaa aa aaa aaa aaaaaaaaa aaaaaa. Aaaa aa aaaaaaaa aaaaaaaa aaaa aaaaaaaa aaa aa aaaa aa aaaa aaaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-c · 1946 to 1971</div><h3>Aaaaaa Aa Aaaa Aaaaaa</h3><p>Aaaaaaaaa aa aaaaaaaaa a a aaaa aaaa a aaaaaaa aaa aaa aaaaaaa aaaaa a. Aa a aaaaaaa aaaaaa aaaa aaa aa aaaaaaaa aa aa a. Aaaa aa aaaaa aaa a a aaa aaaaaaaa aaaaaaaaa aaaaa aaaa. Aaaaaaa aaa aaa aa aa aaaaa aa a aaaaaa. Aa aaaa a.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-d · 1972 to 2025</div><h3>Aaaa Aa</h3><p>Aaaaaa aaaaaaaaa aaaa a aa a aa aaaaaa aaaaaaaaa aaa aaa aaaaaa. A aaaaa aa aaaaaaaa aaaa a aa aaa aaaaaaa aaaaaa aaaaaaaa. Aaaaaaaa aa aa aaa aaaaaa aaaaaaaaa a aaa aaaa aaa aaaa aa aaaaa aaaa aa aaaaaaaa. Aaaa aaaaaaa aaaaaa aaaa aaaaaaaa aaaaaaaa aaaaa aaaaa a aaaaaaaaa aaa aaaaa aaaa aaaa. Aaaa aa a.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-e · Back to the board</div><h3>Aaaaa Aa Aaaa Aaaaa</h3><p>A aa aaa aa aaaaaa aaaaaaa aaa aaa aaaa. Aaaaa aaa aaa aaaaa aaaa aaa aaaaaaaaa. Aaaaa aaaaaaaaa aaaaaaa aaaaa aa aaaaa aa aaaa a aaa aaaa aaaaa. Aaaa aaa aaa aaaaaa aaa aaa aaaaaaaa aa. Aaaa aa aaaa aaaaaaaa aaa aaaaa aaaaaaaa aaaa aaaaaa aaa.</p><div class="note">Aaaaa aaaaaaaaa aaa aaaaa aaaaaaa aa aaaaaaa aaaaaaa a a aa aa aa. A aaa aaaaaaa aaaa a aaaa aa.</div></div></div>
+      </div>
+      <div class="figure"><div class="plate"><div class="title" id="macroTitle">Purchasing power of the US dollar · 1913 = 100</div><svg></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="breakout" id="bo-us">
+  <div class="wrap">
+    <div class="bo-head">
+      <div><div class="eyebrow">1913 to 2025 · CPI-U purchasing power</div><h2 class="bo-title">One dollar, <em>a hundred cents</em></h2></div>
+      <p class="bo-dek">Aaa aaaaa aaaaaaa aa aaaaaaaaa aaaaaaa aa aa aaaaa aaa. A aa aaaa aaaa aaaaaaa aaaa aa aa aaaaa aaa aaaaaaaa aaa aaaaaaaaa aaaaa aa aaaaaaaa. Aaaaa aaa aa aa.</p>
+    </div>
+    <div class="bo-viz" id="vizCents"></div>
+    <div class="bo-foot">
+      <div class="key"><span><i class="c" style="background:var(--bronze-hi)"></i>Cents of 1913 buying power still in the dollar</span><span><i class="c" style="border:1px solid var(--muted)"></i>Gone</span><button type="button" class="replay" data-replay="cents">Replay</button></div>
+      <div class="src">Source: US Bureau of Labor Statistics, CPI-U annual averages. 1913 dollar = 100 cents.</div>
+    </div>
+  </div>
+</section>
+
+<section class="summary">
+  <div class="wrap">
+    <div class="folder paper">
+      <div class="tab">Case V · Summary</div>
+      <div class="sum-grid">
+        <div class="tiles">
+          <div class="tile"><div class="v">$32.52</div><div class="k">2025 dollars to buy what $1 bought in 1913</div></div>
+          <div class="tile"><div class="v down">3.1%</div><div class="k">Purchasing power left, 2025</div></div>
+          <div class="tile"><div class="v">13.5%</div><div class="k">Peak annual inflation, 1980</div></div>
+          <div class="tile"><div class="v">112 yrs</div><div class="k">1913 to 2025</div></div>
+        </div>
+        <div class="sum-text"><h3>Aaaaaaa Aaaa Aaaaa Aaaaaa Aaaa</h3><p>Aaaaaaaaa aaaaa aaa aaaaaaa aaaaaaaaa aa a aaaaaaaaa aaa aaa aa aaaaa a. A aaaaa aaaa aaaaaaaaa aaaaa aaaaaa aa aaaa aaaaa a aaaaa aaa aaaaaaa aaa. Aaaa aaaaaa aaaaaaa aaaaaaaa a aaaaaaa a. Aaaaaaa a aaaaaaa aa aa aaaaaa a aa aaaa aaaa aaa aa aaa. Aa aaaaaa a aaa aaaaaaaaa aaa a a a aaaaaaa aa aaa aaaaaaaaa aaaa a.</p><svg class="spark" data-key="us" data-m="pp" role="img" aria-label="Sparkline of dollar purchasing power"></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CLOSE ======================= -->
+<section class="close">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no">The last exhibit</div>
+      <h2>Two coins with a thin skin</h2>
+      <p>Aaaaaa aaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaa a aaaaaaaaa aaa aaa aaaaaaaaa aaaaaaaa aaaaa a aaaaa aaaa. Aaa aaaaa a aaaaaaa a aaa aa. Aaa aaa.</p>
+    </div>
+    <div class="pair">
+      <figure>
+        <svg id="coinT" viewBox="-110 -110 220 220" role="img" aria-label="Sketch of the Tetricus antoninianus"></svg>
+        <figcaption class="paper"><div class="eyebrow" style="color:var(--red)">Exhibit A, again</div><h3>Antoninianus of Tetricus I · AD 270 to 273</h3><p>Aaaaaaaaa aaaaa a a aaaaaaaa aaaaaa aaaa aaaaaaaa aaaa aa aaaaaaaa aaaaaaaa aaaaaa aaa a aaa. Aaaa aaaaaaa aaaaaaaa aaaaaaaa aaaaaaaaa aaaaaaa aaa a. Aaaaa aaa aaa aa aa aaaaaaaa.</p></figcaption>
+      </figure>
+      <figure>
+        <svg id="coinL" viewBox="-110 -110 220 220" role="img" aria-label="Sketch of a copper-plated zinc cent with zinc showing through"></svg>
+        <figcaption class="paper"><div class="eyebrow" style="color:var(--red)">Exhibit Z</div><h3>US one-cent piece · 1982 to 2025</h3><p>Aaa aa aa aaa aaaa aaaa aa aaaaaaaa aa aaaaa aa aaaa aaaaaaaaa. Aaaaa a aa a a aaaaaaa aaaaaaa a aaaa aaaa aaaa aaaaaaaa aaaaaaaa aa aaaa. Aaaaaaaaa aaaaaaa aaaaaa aaaa aaaaaaaaa aaaa.</p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= EPILOGUE ======================= -->
+<section class="note-sec">
+  <div class="wrap">
+    <article class="letter paper">
+      <div class="eyebrow">Epilogue</div>
+      <h2>Aa Aaaaaaa Aaa Aa</h2>
+      <p class="lead">Aa aaa aa aa aa aaaaa aaaaaaaaa aaaa a aaaaa aaaa aa. Aaaaa aaaaaaaaa aa aaaaaaaa aaaaa aaaaaa a aaaaaaaaa a a aaaaaaaaa aa aaaaaaaaa aaaaaaaaa aaaaaaaa. Aaa aaaaaa aaaaaaaa aaa aa aaaa aaaaa aaa. Aaaaaaaa aaa aaaaaaaaa aaaaa aaa aaa aa aa aaaaaaaaa aaa aaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaa. Aa aaaaaaaa aaaaaaaaa aaaa aaaaa aaaa aaa aa aaaa aaa aaaaaaaa aaaaaaa aaaaaaaaa aa aaaa. Aaaaaa aa aaa a aaaaa aa.</p>
+      <p>Aaaa aa aaaaaaaaa aaaaaaa aaaaa aa aaa aaaaa aa a aaaaaa. A aaa aa aa aaaaaaa aaa aaa aaa. Aaaa aaaaaaa aaaa aaaaaaaa aa aaaaaaa aaa aaaaaaaa aaaaa a aaaaaaa. A aaaa aaaa aaaaa aaaaa aa aaaaa aaaaaaaaa aaa aaaa aaa aa. Aaaa aa aa aa aaa aaa aaa a aa aaaaaa aa aaaaaaaaa a aaaaa. Aaa a aaaaaaa aaaa aaaaaaaa a aa aa aaa aaaaaaa aaaaaaaaa a. Aaaa aa a aa aaaaa aa aaaaaaaaa aaaaaaa aaaaaaaa aaaa aaaaaa aaaaaaaaa.</p>
+      <p>Aaaaa aaaaaaaaa aaa aaaaa aaa aaaaaaaa aaa aaaaa. Aaa aaa a a aaaa aaaa aa aaaa aa aaaa aa aaaaa a aa aaaaa. Aa aa aaaa aaaaaaaa a aaaaaaaaa aaaaa. Aaa aaaaaaaa aa aaa aa aaaaaaa aa aa aaa aaaaaaaa aaa aaaaaaaa aaa. Aaaaaaaaa aaaaa aaa aaaa a aaaaaaa aaa aaaaaaaaa aa.</p>
+      <div class="sig">Aaaa Aaa Aaaa</div>
+    </article>
+    <div class="final">
+      <div class="eyebrow" style="color:var(--red-hi);margin-bottom:12px">Case closed</div>
+      <a class="cta" href="explore.html">Open the evidence room →</a>
+      <div class="sub">Compare any two cases, break coins into parts, and read every row of the data.</div>
+    </div>
+    <div class="sources">
+      <p><b>Rome.</b> D.R. Walker, <i>The Metrology of the Roman Silver Coinage</i>, 3 vols (1976-78), XRF surface analysis. K. Butcher &amp; M. Ponting, <i>Oxford Journal of Archaeology</i> 24.2 (2005), AAS/ICP-AES on drilled samples.</p>
+      <p><b>Britain.</b> R.D. Van Arsdell, <a href="https://vanarsdellcelticcoinageofbritain.com/background-pages_ccb3/manufacturing_methods_2_ccb3.html" target="_blank" rel="noopener">Celtic Coinage of Britain, 3rd ed. online, Manufacturing Methods p.2</a>.</p>
+      <p><b>Alexandria.</b> <a href="https://www.academia.edu/83883614/A_Metrological_Survey_of_Ptolemaic_Bronze_Coins_II_Alexandria_First_and_Second_Centuries_BC" target="_blank" rel="noopener">A Metrological Survey of Ptolemaic Bronze Coins II</a>, <i>AJN</i> (2021), Tables 1-4.</p>
+      <p><b>London.</b> C.E. Challis, "Appendix 2: Mint Contracts, 1279-1817," <i>A New History of the Royal Mint</i> (CUP 1992), pp. 717-728. J. Munro (2010), University of Toronto Economics Working Paper 417.</p>
+      <p><b>Washington.</b> US Bureau of Labor Statistics, CPI-U annual averages, 1913-2025. Final penny: <a href="https://thegrio.com/2025/11/12/us-mint-presses-final-pennies/" target="_blank" rel="noopener">theGrio, 12 Nov 2025</a>.</p>
+      <p><b>Exhibit A.</b> Antoninianus of Tetricus I, Hampshire Cultural Trust. Coins on this page are sketches, not photographs.</p>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="common.js"></script>
+<script>
+(function () {
+  const P = window.PENNY;
+  const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DUR = REDUCED ? 0 : 900;
+  const C = { paper: "#EFE4CC", muted: "#B3A58E", red: "#C9524A", brass: "#D2A93E", fine: "#E4E6E8", ground: "#211711", ground2: "#2C1F17", bronze: "#A86B3C", bronzeHi: "#C98450" };
+
+  /* ---------- helpers ---------- */
+  function mk(el) {
+    const svg = d3.select(el).select("svg");
+    svg.selectAll("*").remove();
+    const r = el.getBoundingClientRect();
+    const w = Math.max(280, r.width), h = Math.max(300, r.height);
+    svg.attr("viewBox", `0 0 ${w} ${h}`);
+    return { svg, w, h, narrow: w < 560 };
+  }
+  function wrapLines(t, max) {
+    const words = t.split(" "), lines = []; let cur = "";
+    words.forEach(wd => { if ((cur + " " + wd).trim().length > max && cur) { lines.push(cur); cur = wd; } else cur = (cur + " " + wd).trim(); });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function ann(g, a, px, py, bounds, maxc) {
+    const grp = g.append("g").attr("class", "ann");
+    const lines = wrapLines(a.t, maxc);
+    const tw = Math.max(...lines.map(l => l.length)) * 7.1;
+    let tx = px + a.dx, ty = py + a.dy, anchor = a.anchor || (a.dx < 0 ? "end" : "start");
+    if (anchor === "start" && tx + tw > bounds[1]) { anchor = "end"; tx = Math.min(tx, bounds[1]); if (tx - tw < bounds[0]) tx = bounds[0] + tw; }
+    if (anchor === "end" && tx - tw < bounds[0]) { anchor = "start"; tx = Math.max(bounds[0], tx - tw); if (tx + tw > bounds[1]) tx = bounds[1] - tw; }
+    const th = lines.length * 15;
+    ty = Math.max(bounds[2] + 12, Math.min(bounds[3] - th, ty));
+    grp.append("line").attr("x1", px).attr("y1", py).attr("x2", tx).attr("y2", ty - 4);
+    grp.append("circle").attr("cx", px).attr("cy", py).attr("r", 4.5);
+    const tx_ = grp.append("text").attr("x", tx).attr("y", ty + 8).attr("text-anchor", anchor);
+    lines.forEach((l, i) => tx_.append("tspan").attr("x", tx).attr("dy", i ? 15 : 0).text(l));
+    return grp;
+  }
+  const T = (sel, anim, d) => (anim && DUR ? sel.transition().duration(d || DUR) : sel);
+  function hatch(svg, id, col) {
+    const p = svg.append("defs").append("pattern").attr("id", id).attr("width", 6).attr("height", 6).attr("patternUnits", "userSpaceOnUse").attr("patternTransform", "rotate(45)");
+    p.append("rect").attr("width", 6).attr("height", 6).attr("fill", "#3a2a1f");
+    p.append("line").attr("x1", 0).attr("y1", 0).attr("x2", 0).attr("y2", 6).attr("stroke", col).attr("stroke-width", 1.4);
+  }
+  function legendRow(g, items, x, y) {
+    const lg = g.append("g").attr("class", "legend-k").attr("transform", `translate(${x},${y})`);
+    items.forEach((it, i) => {
+      const r = lg.append("g").attr("transform", `translate(0,${i * 18})`).attr("class", it.cls || "");
+      r.append("line").attr("x1", 0).attr("x2", 22).attr("y1", 0).attr("y2", 0).attr("stroke", it.color).attr("stroke-width", it.w || 2.2).attr("stroke-dasharray", it.dash || null);
+      r.append("text").attr("x", 30).attr("dy", "0.35em").text(it.label);
+    });
+    return lg;
+  }
+
+  /* ======================= ROME ======================= */
+  function buildRome(el) {
+    const { svg, w, h, narrow } = mk(el);
+    const m = { t: 44, r: 18, b: 36, l: 44 };
+    const x = d3.scaleLinear([-35, 305], [m.l, w - m.r]);
+    const y = d3.scaleLinear([0, 105], [h - m.b, m.t]);
+    const W = P.romeWalker;
+    svg.append("g").attr("class", "grid").selectAll("line").data([25, 50, 75, 100]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y).attr("y2", y);
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 25, 50, 75, 100]).tickFormat(d => d + "%").tickSize(0)).call(g => g.select(".domain").remove());
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues(narrow ? [-27, 100, 200, 300] : [-27, 50, 100, 150, 200, 250, 300]).tickFormat(P.fmtYear).tickSizeOuter(0));
+    const clip = svg.append("defs").append("clipPath").attr("id", "romeClip").append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", x(14));
+    const data = svg.append("g").attr("clip-path", "url(#romeClip)");
+    const line = d3.line().x(d => x(d.mid)).y(d => y(d.pct));
+    const solid = W.filter(d => !d.approx);
+    const approx = [W.find(d => d.ruler === "Gordian III")].concat(W.filter(d => d.approx));
+    const silverPts = W.filter(d => d.ag).map(d => ({ mid: d.mid, pct: (d.ag / 3.81) * 100 }));
+    const silverPath = data.append("path").datum(silverPts).attr("d", line).attr("fill", "none").attr("stroke", C.brass).attr("stroke-width", 1.8).attr("stroke-dasharray", "5 4").attr("opacity", 0);
+    const wGroup = data.append("g");
+    wGroup.append("path").datum(solid).attr("d", line).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 2.4);
+    wGroup.append("path").datum(approx).attr("d", line).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 2.4).attr("stroke-dasharray", "3 4");
+    wGroup.selectAll("line.rng").data(W.filter(d => d.lo != null)).join("line").attr("class", "rng").attr("x1", d => x(d.mid)).attr("x2", d => x(d.mid)).attr("y1", d => y(d.lo)).attr("y2", d => y(d.hi)).attr("stroke", C.fine).attr("stroke-width", 6).attr("opacity", .35);
+    wGroup.selectAll("circle").data(W).join("circle").attr("cx", d => x(d.mid)).attr("cy", d => y(d.pct)).attr("r", 2.8).attr("fill", d => P.silverScale(d.pct / 100)).attr("stroke", C.ground).attr("stroke-width", .8)
+      .append("title").text(d => `${d.ruler} (${P.fmtYear(d.s)}-${P.fmtYear(d.e)}): ${d.pct}%${d.note ? ". " + d.note : ""}`);
+    const bp = svg.append("g").attr("opacity", 0);
+    bp.selectAll("line.seg").data(P.romeBP).join("line").attr("class", "seg").attr("x1", d => x(d.s) - (d.s === d.e ? 2 : 0)).attr("x2", d => x(d.e) + (d.s === d.e ? 2 : 0)).attr("y1", d => y(d.pct)).attr("y2", d => y(d.pct)).attr("stroke", C.red).attr("stroke-width", 4).attr("stroke-linecap", "round");
+    bp.selectAll("line.rg").data(P.romeBP.filter(d => d.lo != null)).join("line").attr("class", "rg").attr("x1", d => x(d.mid)).attr("x2", d => x(d.mid)).attr("y1", d => y(d.lo)).attr("y2", d => y(d.hi)).attr("stroke", C.red).attr("stroke-width", 1.4);
+    const lg = legendRow(svg, [
+      { label: "Fineness (Walker, surface XRF)", color: C.fine },
+      { label: "Silver per coin, % of Augustan 3.81 g", color: C.brass, dash: "5 4", w: 1.8, cls: "lg-silver" },
+      { label: "Drilled samples (Butcher & Ponting)", color: C.red, w: 4, cls: "lg-bp" }
+    ], m.l + 10, h - m.b - 70);
+    const R = Math.max(30, Math.min(62, w * 0.1));
+    const cg = svg.append("g").attr("transform", `translate(${w - m.r - R - 6},${m.t + R + 8})`);
+    const coin = P.makeCoin(cg, { r: R, value: .98, metal: "silver", legend: "CAESAR AVGVSTVS DIVI F", seed: 11 });
+    const readout = svg.append("text").attr("class", "readout").attr("text-anchor", narrow ? "end" : "middle").attr("x", narrow ? w - m.r : w - m.r - R - 6).attr("y", m.t + 2 * R + 30);
+    const annG = svg.append("g");
+    const maxc = narrow ? 22 : 30;
+    const bounds = [m.l + 4, w - m.r - 4, m.t, h - m.b - 4];
+    const A = [
+      { s: 0, x: -6.5, y: 98, dx: 26, dy: 58, t: "27 BC to AD 14: 3.89 g at 98% silver" },
+      { s: 1, x: 66, y: 93.5, dx: 18, dy: 34, t: "AD 64: weight cut to 3.18 g" },
+      { s: 1, x: 66, y: 78, dx: 22, dy: 64, t: "Silver per coin 2.97 g, down 22%" },
+      { s: 2, x: 83.5, y: 98, dx: 30, dy: 30, t: "AD 82: back to 98%. By 85, 93.5%" },
+      { s: 3, x: 165, y: 79, dx: -16, dy: -56, t: "Marcus Aurelius: 79%" },
+      { s: 3, x: 203.5, y: 56.5, dx: -24, dy: 64, t: "Severus, 196-211: 56.5%" },
+      { s: 4, x: 214.5, y: 51.5, dx: 20, dy: 84, t: "AD 215: the antoninianus" },
+      { s: 4, x: 241, y: 48, dx: 16, dy: -66, t: "Gordian III: 48%" },
+      { s: 5, x: 264, y: 5, dx: -30, dy: -74, t: "Gallienus: about 5%" },
+      { s: 5, x: 292.5, y: 5, dx: -6, dy: -132, t: "301: Edict on Maximum Prices" },
+      { s: 6, x: 202.5, y: 46.4, dx: -30, dy: 66, t: "Drilled samples 46%. Walker 56.5%" }
+    ];
+    const annEls = A.map(a => ({ a, el: ann(annG, a, x(a.x), y(a.y), bounds, maxc).attr("opacity", 0) }));
+    const S = [
+      { to: 14,  v: .98,  lg: "CAESAR AVGVSTVS DIVI F", rd: "Augustus · 98%" },
+      { to: 69,  v: .935, lg: "NERO CAESAR AVGVSTVS", rd: "Nero after 64 · 93.5%" },
+      { to: 107, v: .98,  lg: "IMP CAES DOMIT AVG GERM", rd: "Domitian 82-85 · 98%" },
+      { to: 212, v: .565, lg: "SEVERVS PIVS AVG", rd: "Severus 196-211 · 56.5%" },
+      { to: 243, v: .48,  lg: "IMP GORDIANVS PIVS FEL AVG", rd: "Gordian III · 48%" },
+      { to: 305, v: .04,  lg: "GALLIENVS AVG", rd: "Gallienus · about 5%" },
+      { to: 305, v: .04,  lg: "GALLIENVS AVG", rd: "Severus: 46% by drill" }
+    ];
+    return {
+      render(i, anim) {
+        const s = S[i];
+        T(clip, anim, 1200).attr("width", x(s.to) + 4);
+        T(silverPath, anim).attr("opacity", i >= 1 ? 0.9 : 0);
+        T(lg.select(".lg-silver"), anim).attr("opacity", i >= 1 ? 1 : 0.25);
+        T(lg.select(".lg-bp"), anim).attr("opacity", i === 6 ? 1 : 0.25);
+        T(bp, anim).attr("opacity", i === 6 ? 1 : 0);
+        T(wGroup, anim).attr("opacity", i === 6 ? 0.55 : 1);
+        coin.set(s.v, anim ? DUR : 0).legend(s.lg);
+        readout.text(s.rd);
+        annEls.forEach(({ a, el }) => T(el, anim, 500).attr("opacity", a.s === i ? 1 : 0));
+      }
+    };
+  }
+
+  /* ======================= BRITAIN ======================= */
+  function buildCeltic(el) {
+    const { svg, w, h, narrow } = mk(el);
+    hatch(svg, "hatchU", "#8A8D7E");
+    const m = { t: 66, r: 16, b: 30, l: 42 };
+    const coinCol = narrow ? 0 : Math.min(200, w * 0.26);
+    const cx1 = w - m.r - coinCol;
+    const topB = h * (narrow ? 0.58 : 0.6);
+    const ids = [1, 2, 5, 9, 7, 10];
+    const comp = ids.map(id => P.celtic.find(d => d.id === id));
+    const xb = d3.scaleBand(ids, [m.l, cx1]).padding(narrow ? 0.18 : 0.26);
+    const y = d3.scaleLinear([0, 100], [topB, m.t]);
+    svg.append("g").attr("class", "grid").selectAll("line").data([25, 50, 75, 100]).join("line").attr("x1", m.l).attr("x2", cx1).attr("y1", y).attr("y2", y);
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 50, 100]).tickFormat(d => d + "%").tickSize(0)).call(g => g.select(".domain").remove());
+    const cols = svg.append("g").selectAll("g").data(comp).join("g").attr("transform", d => `translate(${xb(d.id)},0)`).attr("opacity", 0);
+    const FILL = { au: "#D2A93E", ag: "#E4E6E8", cu: "#A86B3C", unk: "url(#hatchU)" };
+    cols.each(function (d) {
+      const g = d3.select(this);
+      const segs = [{ k: "au", v: d.au }, { k: "ag", v: d.ag }, { k: "cu", v: d.cu || 0 }];
+      const sum = segs.reduce((a, s) => a + s.v, 0);
+      if (100 - sum > 0.4) segs.push({ k: "unk", v: 100 - sum });
+      let acc = 0;
+      segs.forEach(s => {
+        const y0 = y(acc), y1 = y(acc + s.v); acc += s.v;
+        g.append("rect").attr("x", 0).attr("width", xb.bandwidth()).attr("y", y1).attr("height", Math.max(0, y0 - y1)).attr("fill", FILL[s.k]).attr("stroke", C.ground2).attr("stroke-width", 1)
+          .append("title").text(`${d.series}, ${d.label}: ${s.k === "unk" ? "not reported" : s.k.toUpperCase() + " " + s.v + "%"} · ${d.qual}`);
+        if (y0 - y1 > 15 && s.k !== "unk" && xb.bandwidth() > 26) {
+          const bound = (d.id === 2 || d.id === 5) ? (s.k === "au" ? "≤" : s.k === "ag" ? "≥" : "") : "";
+          g.append("text").attr("x", xb.bandwidth() / 2).attr("y", (y0 + y1) / 2).attr("dy", "0.35em").attr("text-anchor", "middle").attr("font-size", 11).attr("fill", s.k === "cu" ? "#F4E9D6" : "#1F2A2E").text(bound + Math.round(s.v));
+        }
+      });
+      if (d.single) g.append("rect").attr("x", -3).attr("y", m.t - 3).attr("width", xb.bandwidth() + 6).attr("height", topB - m.t + 6).attr("fill", "none").attr("stroke", C.red).attr("stroke-dasharray", "3 3");
+      const L1 = { 1: "125 BC", 2: "100 BC", 5: "58-50 BC", 9: "c. 55 BC", 7: "post-50 BC", 10: "1st c. AD" };
+      const L2 = { 1: "GB A/B", 2: "GB C", 5: "Gallic War", 9: "Whitwell", 7: "Inscribed", 10: "EISV, VEP" };
+      const fs = xb.bandwidth() < 46 ? 9 : 10.5;
+      g.append("text").attr("x", xb.bandwidth() / 2).attr("y", topB + 14).attr("text-anchor", "middle").attr("font-size", fs).text(L1[d.id]);
+      g.append("text").attr("x", xb.bandwidth() / 2).attr("y", topB + 27).attr("text-anchor", "middle").attr("font-size", fs - 0.5).attr("fill", d.single ? C.red : null).text(L2[d.id]);
+    });
+    const wy0 = topB + 44, wy1 = h - m.b;
+    const xw = d3.scaleLinear([-130, 35], [m.l, cx1]);
+    const yw = d3.scaleLinear([5, 8], [wy1, wy0 + 14]);
+    svg.append("text").attr("x", m.l).attr("y", wy0 + 4).attr("class", "lbl-sm").attr("fill", C.paper).text("Stater weight, g");
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(yw).tickValues([5, 6, 7, 8]).tickSize(0)).call(g => g.select(".domain").remove());
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${wy1})`).call(d3.axisBottom(xw).tickValues(narrow ? [-125, -50, 30] : [-125, -100, -75, -50, -25, 0, 25]).tickFormat(d => d === 0 ? "AD 1" : P.fmtYear(d)).tickSizeOuter(0));
+    const wpts = P.celtic.filter(d => d.wt != null && !d.single).sort((a, b) => a.year - b.year);
+    const wclip = svg.append("defs").append("clipPath").attr("id", "celtClip").append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", xw(-125) + 6);
+    const wg = svg.append("g").attr("clip-path", "url(#celtClip)");
+    wg.append("path").datum(wpts).attr("d", d3.line().x(d => xw(d.year)).y(d => yw(d.wt))).attr("fill", "none").attr("stroke", "#D2A93E").attr("stroke-width", 2);
+    wg.selectAll("circle").data(wpts).join("circle").attr("cx", d => xw(d.year)).attr("cy", d => yw(d.wt)).attr("r", 3.5).attr("fill", "#D2A93E").append("title").text(d => `${d.series}, ${d.label}: ${d.wt} g`);
+    const single = P.celtic.find(d => d.single);
+    wg.append("circle").attr("cx", xw(single.year)).attr("cy", yw(single.wt)).attr("r", 4).attr("fill", "none").attr("stroke", C.red).attr("stroke-dasharray", "2 2").append("title").text("Whitwell SF 3, single coin: 6.11 g");
+    const gw = svg.insert("g", ":first-child").attr("opacity", 0);
+    gw.append("rect").attr("x", xw(-58)).attr("width", xw(-50) - xw(-58)).attr("y", wy0 + 10).attr("height", wy1 - wy0 - 10).attr("fill", "rgba(201,82,74,.16)");
+    gw.append("text").attr("x", (xw(-58) + xw(-50)) / 2).attr("y", wy0 + 2).attr("text-anchor", "middle").attr("class", "lbl-sm").attr("fill", C.red).text("Gallic War");
+    const key = svg.append("g").attr("transform", `translate(${m.l + 2},${m.t - 24})`).attr("class", "legend-k");
+    [["Gold", "#D2A93E"], ["Silver", "#E4E6E8"], ["Copper", "#A86B3C"], ["Not reported", "url(#hatchU)"]].forEach((k, i) => {
+      const gx = key.append("g").attr("transform", `translate(${i * (narrow ? 66 : 82)},0)`);
+      gx.append("rect").attr("width", 11).attr("height", 11).attr("y", -6).attr("fill", k[1]).attr("stroke", C.ground2);
+      gx.append("text").attr("x", 16).attr("dy", "0.32em").text(narrow && i === 3 ? "N/R" : k[0]);
+    });
+    let coin = null, readout = null, read2 = null;
+    if (!narrow) {
+      const R = Math.min(58, coinCol * 0.36);
+      const ccx = cx1 + coinCol / 2 + 6, ccy = m.t + R + 20;
+      coin = P.makeCoin(svg.append("g").attr("transform", `translate(${ccx},${ccy})`), { r: R, value: .75, metal: "gold", seed: 23 });
+      readout = svg.append("text").attr("class", "readout").attr("text-anchor", "middle").attr("x", ccx).attr("y", ccy + R + 24);
+      read2 = svg.append("text").attr("class", "lbl-sm").attr("text-anchor", "middle").attr("x", ccx).attr("y", ccy + R + 42);
+    }
+    const S = [
+      { show: 1, to: -124, au: .75, rd: "c. 125 BC · 75% gold", rd2: "7.8 g" },
+      { show: 2, to: -74, au: .70, rd: "c. 100 BC · under 70%", rd2: "6.45 g by c. 75 BC" },
+      { show: 3, to: -49, au: .60, rd: "Gallic War · under 60%", rd2: "6.35 → 5.8 g", gw: 1 },
+      { show: 5, to: -9, au: .47, rd: "After 50 BC · 45-50%", rd2: "5.4 g by c. 10 BC" },
+      { show: 6, to: 35, au: .20, rd: "1st c. AD · 20% gold", rd2: "70% copper", lg: "VEP CORF" }
+    ];
+    return {
+      render(i, anim) {
+        const s = S[i];
+        cols.each(function (d, k) { T(d3.select(this), anim, 600).attr("opacity", k < s.show ? (k === s.show - 1 || (i === 3 && k === 3) ? 1 : 0.55) : 0); });
+        T(wclip, anim, 1000).attr("width", xw(s.to) + 6);
+        T(gw, anim).attr("opacity", s.gw ? 1 : 0);
+        if (coin) { coin.set(s.au, anim ? DUR : 0).legend(s.lg || ""); readout.text(s.rd); read2.text(s.rd2); }
+      }
+    };
+  }
+
+  /* ======================= ALEXANDRIA ======================= */
+  function buildPtol(el) {
+    const { svg, w, h, narrow } = mk(el);
+    const m = { t: 40, r: 22, b: 44, l: 46 };
+    const x = d3.scaleLinear([0, 128], [m.l, w - m.r]);
+    const y = d3.scaleLinear([0, 44], [h - m.b, m.t]);
+    svg.append("g").attr("class", "grid").selectAll("line").data([10, 20, 30, 40]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y).attr("y2", y);
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 10, 20, 30, 40]).tickFormat(d => d + " g").tickSize(0)).call(g => g.select(".domain").remove());
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues([0, 20, 40, 60, 80, 100, 120]).tickSizeOuter(0));
+    svg.append("text").attr("class", "lbl-sm").attr("x", w - m.r).attr("y", h - 8).attr("text-anchor", "end").text("Face value, units");
+    const S5 = P.ptolSeries;
+    const lineSel = svg.append("g").selectAll("g").data(S5).join("g").attr("opacity", 0);
+    lineSel.append("line").attr("x1", x(0)).attr("y1", y(0)).attr("x2", d => x(Math.min(124, 43 / d.gpu))).attr("y2", d => y(Math.min(124 * d.gpu, 43))).attr("stroke", C.bronzeHi).attr("stroke-width", 1.3);
+    lineSel.append("text").attr("x", d => x(Math.min(124, 43 / d.gpu)) + (d.gpu > 0.3 ? 6 : 4)).attr("y", d => y(Math.min(124 * d.gpu, 43)) + (d.gpu > 0.3 ? 4 : -6)).attr("font-size", 11).attr("fill", "#E0B48A").attr("text-anchor", d => (d.gpu > 0.3 ? "start" : "end")).text(d => d.gpu.toFixed(3) + " g/unit");
+    const rS = d3.scaleSqrt([0, 907], [2.5, narrow ? 11 : 15]);
+    const dots = svg.append("g").selectAll("circle").data(P.ptolCoins).join("circle")
+      .attr("cx", d => x(d.fv)).attr("cy", d => y(d.wt)).attr("r", d => rS(d.n))
+      .attr("fill", C.bronze).attr("stroke", "#F0C9A0").attr("stroke-width", .8).attr("opacity", 0);
+    dots.append("title").text(d => `${d.ref}, ${d.type}: ${d.fv} units, ${d.wt} g mean (n=${d.n}) · ${S5[d.o - 1].name}`);
+    const annG = svg.append("g");
+    const bounds = [m.l + 4, w - m.r - 4, m.t, h - m.b - 4];
+    const maxc = narrow ? 22 : 30;
+    const A = [
+      { s: 0, x: 100, y: 40.7, dx: -26, dy: 18, t: "Zeus Ammon, 100 units: 38.5-40.7 g" },
+      { s: 1, x: 100, y: 22.5, dx: -20, dy: -86, t: "Sv1424B, 100 units: 22.5 g (n=907)" },
+      { s: 2, x: 120, y: 22.5, dx: -16, dy: -96, t: "Same coin, same 22.5 g, now 120 units" },
+      { s: 3, x: 120, y: 23.4, dx: -24, dy: -92, t: "Kleopatra inscription, c. 168-163 BC" },
+      { s: 4, x: 80, y: 17.2, dx: 16, dy: -84, t: "Cleopatra VII, Π = 80 units: 17.2 g" },
+      { s: 4, x: 5, y: 1.25, dx: 30, dy: -40, t: "Class 5: 5 units at 1.1-1.25 g" }
+    ];
+    const annEls = A.map(a => ({ a, el: ann(annG, a, x(a.x), y(a.y), bounds, maxc).attr("opacity", 0) }));
+    const drop = svg.append("g").attr("opacity", 0);
+    drop.append("line").attr("x1", x(100)).attr("x2", x(100)).attr("y1", y(40)).attr("y2", y(23.6)).attr("stroke", C.red).attr("stroke-width", 1.6).attr("stroke-dasharray", "4 3");
+    drop.append("path").attr("d", `M${x(100) - 5},${y(24.6)} L${x(100)},${y(23.4)} L${x(100) + 5},${y(24.6)}`).attr("fill", "none").attr("stroke", C.red).attr("stroke-width", 1.6);
+    const slide = svg.append("g").attr("opacity", 0);
+    slide.append("line").attr("x1", x(101.5)).attr("x2", x(118)).attr("y1", y(22.5)).attr("y2", y(22.5)).attr("stroke", C.red).attr("stroke-width", 1.6).attr("stroke-dasharray", "4 3");
+    slide.append("path").attr("d", `M${x(117)},${y(22.5) - 5} L${x(118.5)},${y(22.5)} L${x(117)},${y(22.5) + 5}`).attr("fill", "none").attr("stroke", C.red).attr("stroke-width", 1.6);
+    const R = Math.max(28, Math.min(54, w * 0.085));
+    const ccx = m.l + R + 22, ccy = m.t + R + 8;
+    const coin = P.makeCoin(svg.append("g").attr("transform", `translate(${ccx},${ccy})`), { r: R, value: 1, metal: "bronze", legend: "ΠΤΟΛΕΜΑΙΟΥ ΒΑΣΙΛΕΩΣ", seed: 31 });
+    const readout = svg.append("text").attr("class", "readout").attr("x", ccx + R + 16).attr("y", ccy - 4);
+    const readout2 = svg.append("text").attr("class", "lbl-sm").attr("x", ccx + R + 16).attr("y", ccy + 14);
+    const S = [
+      { on: [1], rd: "Standard 3", rd2: "0.385 g per unit", v: 1 },
+      { on: [2, 3], rd: "Standard 4", rd2: "0.22 g per unit · -42%", v: .57 },
+      { on: [4], rd: "Standard 5", rd2: "0.19 g per unit · -50%", v: .5 },
+      { on: [5, 6], rd: "Classes 2 & 3", rd2: "0.187 g per unit · low point", v: .49 },
+      { on: [7, 8, 9], rd: "Classes 4 to 6", rd2: "0.21 to 0.24 g per unit", v: .57, mk: "Π", lg: "ΚΛΕΟΠΑΤΡΑΣ ΒΑΣΙΛΙΣΣΗΣ" }
+    ];
+    let last = -1;
+    return {
+      render(i, anim) {
+        const s = S[i];
+        const past = new Set(S.slice(0, i).flatMap(t => t.on)), now = new Set(s.on);
+        T(lineSel, anim, 600).attr("opacity", d => (now.has(d.o) ? 1 : past.has(d.o) ? 0.22 : 0));
+        lineSel.select("text").attr("opacity", d => (now.has(d.o) ? 1 : 0));
+        const act = S5.filter(d => now.has(d.o) && d.gpu < 0.3).map(d => ({ d, y: y(Math.min(124 * d.gpu, 43)) - 6 })).sort((a, b) => a.y - b.y);
+        for (let k = 1; k < act.length; k++) if (act[k].y - act[k - 1].y < 13) act[k].y = act[k - 1].y + 13;
+        act.forEach(a => lineSel.filter(d => d === a.d).select("text").attr("y", a.y));
+        dots.interrupt();
+        const moved = d => d.o === 4 && d.ref === "Sv1424B";
+        const sliding = i === 2 && anim && last !== 2 && DUR;
+        if (sliding) dots.filter(moved).attr("cx", x(100)).attr("opacity", 1).transition().delay(400).duration(1400).attr("cx", x(120));
+        else dots.filter(moved).attr("cx", x(120));
+        T(dots.filter(d => !(moved(d) && sliding)), anim, 600).attr("opacity", d => (now.has(d.o) ? 0.95 : past.has(d.o) ? 0.14 : 0));
+        T(drop, anim).attr("opacity", i === 1 ? 1 : 0);
+        T(slide, anim).attr("opacity", i === 2 ? 1 : 0);
+        annEls.forEach(({ a, el }) => T(el, anim, 500).attr("opacity", a.s === i ? 1 : 0));
+        coin.set(s.v, anim ? DUR : 0).mark(s.mk || "").legend(s.lg || "ΠΤΟΛΕΜΑΙΟΥ ΒΑΣΙΛΕΩΣ");
+        readout.text(s.rd); readout2.text(s.rd2);
+        last = i;
+      }
+    };
+  }
+
+  /* ======================= LONDON ======================= */
+  function buildTudor(el) {
+    const { svg, w, h, narrow } = mk(el);
+    const m = { t: 66, r: 20, b: 34, l: 50 };
+    const span = w - m.l - m.r;
+    const x = d3.scaleLinear([1524, 1541, 1554, 1604], [m.l, m.l + span * 0.18, m.l + span * 0.7, w - m.r]);
+    const topB = h * 0.5;
+    const y = d3.scaleLinear([0, 100], [topB, m.t + 4]);
+    const y2 = d3.scaleLinear([0, 0.7], [h - m.b, topB + 56]);
+    svg.append("rect").attr("x", x(1541)).attr("width", x(1554) - x(1541)).attr("y", m.t - 6).attr("height", h - m.b - m.t + 6).attr("fill", "rgba(239,228,204,0.035)");
+    svg.append("text").attr("class", "lbl-sm").attr("x", x(1547.5)).attr("y", m.t - 12).attr("text-anchor", "middle").attr("font-size", 10).text("scale expanded 1541-1554");
+    svg.append("g").attr("class", "grid").selectAll("line").data([25, 50, 75, 100]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y).attr("y2", y);
+    svg.append("g").attr("class", "grid").selectAll("line").data([0.2, 0.4, 0.6]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y2).attr("y2", y2);
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 25, 50, 75, 100]).tickFormat(d => d + "%").tickSize(0)).call(g => g.select(".domain").remove());
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y2).tickValues([0, 0.2, 0.4, 0.6]).tickFormat(d => d + " g").tickSize(0)).call(g => g.select(".domain").remove());
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues(narrow ? [1526, 1544, 1551, 1560, 1601] : [1526, 1542, 1544, 1546, 1551, 1553, 1560, 1601]).tickFormat(d3.format("d")).tickSizeOuter(0));
+    svg.append("text").attr("class", "lbl-sm").attr("fill", C.paper).attr("x", m.l + 6).attr("y", m.t - 12).text("Fineness");
+    svg.append("text").attr("class", "lbl-sm").attr("fill", C.paper).attr("x", m.l + 6).attr("y", topB + 44).text("Fine silver in one penny");
+    const clip = svg.append("defs").append("clipPath").attr("id", "tudClip").append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", x(1527.5));
+    const g = svg.append("g").attr("clip-path", "url(#tudClip)");
+    const F = P.tudor.filter(d => d.pct != null);
+    const fine = F.concat([{ t: 1604, pct: 92.5 }]);
+    const step = d3.line().x(d => x(d.t)).y(d => y(d.pct)).curve(d3.curveStepAfter);
+    const a = fine.filter(d => d.t <= 1546.5), b = fine.filter(d => d.t >= 1551.29);
+    const TC = "#5FA08E";
+    g.append("path").datum(a.concat([{ t: 1546.5 + 0.001, pct: 33.33 }])).attr("d", step).attr("fill", "none").attr("stroke", TC).attr("stroke-width", 2.4);
+    g.append("path").datum([{ t: 1546.5, pct: 33.33 }, { t: 1551.29, pct: 33.33 }]).attr("d", d3.line().x(d => x(d.t)).y(d => y(d.pct))).attr("fill", "none").attr("stroke", TC).attr("stroke-width", 2).attr("stroke-dasharray", "3 4");
+    g.append("path").datum(b).attr("d", step).attr("fill", "none").attr("stroke", TC).attr("stroke-width", 2.4);
+    g.selectAll("circle.f").data(F).join("circle").attr("class", "f").attr("cx", d => x(d.t)).attr("cy", d => y(d.pct)).attr("r", 3.6).attr("fill", d => P.silverScale(d.pct / 100)).attr("stroke", C.ground)
+      .append("title").text(d => `${d.date}, ${d.mon}: ${d.ev}. ${d.oz} = ${d.pct}%${d.note ? ". " + d.note : ""}`);
+    g.append("line").attr("x1", x(1542.37) - 6).attr("x2", x(1542.37) + 6).attr("y1", y(77.08)).attr("y2", y(77.08)).attr("stroke", C.red).attr("stroke-width", 2).append("title").text("Munro's reading of the 1542 indenture: 77.08%");
+    const PN = P.tudor.filter(d => d.pg != null);
+    svg.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y2(0.639)).attr("y2", y2(0.639)).attr("stroke", C.brass).attr("stroke-dasharray", "2 4").attr("opacity", .7);
+    svg.append("text").attr("x", w - m.r - 4).attr("y", y2(0.639) - 6).attr("text-anchor", "end").attr("class", "lbl-sm").attr("fill", C.brass).text("1526 penny: 0.639 g");
+    const pl = d3.line().x(d => x(d.t)).y(d => y2(d.pg));
+    g.append("path").datum(PN.slice(0, 2)).attr("d", pl).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 1.2).attr("stroke-dasharray", "2 5").attr("opacity", .5);
+    g.append("path").datum(PN.slice(1)).attr("d", pl).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 1.6).attr("opacity", .65);
+    g.selectAll("circle.p").data(PN).join("circle").attr("class", "p").attr("cx", d => x(d.t)).attr("cy", d => y2(d.pg)).attr("r", 4.5).attr("fill", d => P.silverScale(d.pg / 0.639)).attr("stroke", C.ground)
+      .append("title").text(d => `${d.date}, ${d.mon}: ${d.ev}. ${d.pg} g fine silver`);
+    const annG = svg.append("g");
+    const bounds = [m.l + 4, w - m.r - 4, m.t, h - m.b - 4];
+    const maxc = narrow ? 20 : 28;
+    const A = [
+      { s: 0, x: 1526.85, y: 92.5, dx: 20, dy: 40, t: "1526: sterling, 92.5%", p: 1 },
+      { s: 1, x: 1546.5, y: 33.33, dx: 18, dy: 30, t: "1546: 4 oz, one third silver", p: 1 },
+      { s: 1, x: 1542.37, y: 77.08, dx: 14, dy: -14, t: "Munro reads 77%", p: 1 },
+      { s: 2, x: 1551.29, y: 0.108, dx: 18, dy: -50, t: "0.108 g: one sixth of 1526", p: 2 },
+      { s: 3, x: 1551.78, y: 0.477, dx: -14, dy: -26, t: "Oct 1551: fine penny 0.477 g", p: 2, anchor: "end" },
+      { s: 3, x: 1553.45, y: 0.259, dx: 16, dy: 34, t: "Base issues continue to 1553", p: 2 },
+      { s: 4, x: 1560.85, y: 0.48, dx: 18, dy: 40, t: "1560: 0.48 g, 27% below 1526", p: 2 }
+    ];
+    const annEls = A.map(a => ({ a, el: ann(annG, a, x(a.x), a.p === 2 ? y2(a.y) : y(a.y), bounds, maxc).attr("opacity", 0) }));
+    const R = Math.max(26, Math.min(48, w * 0.075));
+    const ccx = w - m.r - R - 8, ccy = topB - R - 18;
+    const coin = P.makeCoin(svg.append("g").attr("transform", `translate(${ccx},${ccy})`), { r: R, value: .925, metal: "silver", legend: "H D G ROSA SINE SPINA", seed: 41 });
+    const readout = svg.append("text").attr("class", "readout").attr("text-anchor", "end").attr("x", ccx - R - 10).attr("y", ccy + 4);
+    const S = [
+      { to: 1528, v: .925, lg: "H D G ROSA SINE SPINA", rd: "1526 · 92.5%" },
+      { to: 1547.2, v: .333, lg: "H D G ROSA SINE SPINA", rd: "1546 · 33%" },
+      { to: 1551.5, v: .2, lg: "E D G ROSA SINE SPINA", rd: "1551 · 25%" },
+      { to: 1553.55, v: .3, lg: "E D G ROSA SINE SPINA", rd: "1553 · base pennies" },
+      { to: 1604, v: .925, lg: "E D G ROSA SINE SPINA", rd: "1560 · 92.5% again" }
+    ];
+    return {
+      render(i, anim) {
+        const s = S[i];
+        T(clip, anim, 1200).attr("width", x(s.to) + 6);
+        coin.set(s.v, anim ? DUR : 0).legend(s.lg);
+        readout.text(s.rd);
+        annEls.forEach(({ a, el }) => T(el, anim, 500).attr("opacity", a.s === i ? 1 : 0));
+      }
+    };
+  }
+
+  /* ======================= RED STRING + MACRO ======================= */
+  const BOARD = [{ key: "rome", m: "fine" }, { key: "celtic", m: "gold" }, { key: "ptol", m: "gpu" }, { key: "tudor", m: "penny" }]
+    .map(s => Object.assign(s, { pts: P.indexed(s.key, s.m), meta: P.SERIES[s.key] }));
+  const USPTS = P.indexed("us", "pp");
+
+  function buildString(el) {
+    const { svg, w, h, narrow } = mk(el);
+    const m = { t: 40, r: narrow ? 70 : 110, b: 36, l: 44 };
+    const x = d3.scaleLinear([0, 335], [m.l, w - m.r]);
+    const y = d3.scaleLinear([0, 112], [h - m.b, m.t]);
+    svg.append("g").attr("class", "grid").selectAll("line").data([25, 50, 75]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y).attr("y2", y);
+    svg.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y(100)).attr("y2", y(100)).attr("stroke", C.paper).attr("stroke-opacity", .35);
+    svg.append("text").attr("class", "lbl-sm").attr("x", w - m.r).attr("y", y(100) - 6).attr("text-anchor", "end").text("starting value = 100");
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 25, 50, 75, 100]).tickSize(0)).call(g => g.select(".domain").remove());
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues([0, 50, 100, 150, 200, 250, 300]).tickFormat(d => d + (d === 300 ? " yrs" : "")).tickSizeOuter(0));
+    const line = d3.line().x(d => x(d.el)).y(d => y(d.y));
+    const paths = svg.append("g").selectAll("path").data(BOARD).join("path").attr("d", d => line(d.pts)).attr("fill", "none").attr("stroke", d => d.meta.color).attr("stroke-width", 2.2).attr("stroke-linejoin", "round");
+    paths.each(function () { const L = this.getTotalLength(); d3.select(this).attr("stroke-dasharray", `${L} ${L}`).attr("stroke-dashoffset", 0); });
+    const ends = BOARD.map(d => { const p = d.pts[d.pts.length - 1]; return { d, x: x(p.el), y: y(p.y), v: p.y }; });
+    const labels = svg.append("g").selectAll("text").data(ends).join("text").attr("x", e => e.x + 8).attr("y", e => e.y + 4).attr("fill", e => e.d.meta.color).attr("font-size", 12).text(e => e.d.meta.name);
+    const sorted = ends.slice().sort((a, b) => a.x - b.x);
+    const thread = svg.append("path").attr("d", d3.line().curve(d3.curveCatmullRom.alpha(0.6))(sorted.map(e => [e.x, e.y]))).attr("fill", "none").attr("stroke", C.red).attr("stroke-width", 1.6);
+    const TL = thread.node().getTotalLength();
+    thread.attr("stroke-dasharray", `${TL} ${TL}`).attr("stroke-dashoffset", TL);
+    const pins = svg.append("g").selectAll("g").data(ends).join("g").attr("transform", e => `translate(${e.x},${e.y})`).attr("opacity", 0);
+    pins.append("circle").attr("r", 6).attr("fill", C.red).attr("stroke", C.ground2).attr("stroke-width", 1.5);
+    pins.append("circle").attr("r", 2).attr("cx", -1.5).attr("cy", -1.5).attr("fill", "#f2b0a6");
+    const tags = svg.append("g").selectAll("g").data(ends).join("g").attr("opacity", 0).attr("transform", e => `translate(${e.x + 8},${e.y + 10})`);
+    tags.append("rect").attr("width", 50).attr("height", 18).attr("fill", C.paper).attr("transform", "rotate(-3)");
+    tags.append("text").attr("x", 25).attr("y", 13).attr("text-anchor", "middle").attr("font-size", 11.5).attr("fill", "#1F2A2E").attr("transform", "rotate(-3)").text(e => Math.round(e.v));
+    let drawn = false;
+    return {
+      render(i, anim) {
+        if (!drawn && anim && DUR) paths.each(function (d, k) { const L = this.getTotalLength(); d3.select(this).attr("stroke-dashoffset", L).transition().delay(k * 250).duration(1600).attr("stroke-dashoffset", 0); });
+        drawn = true;
+        T(thread, anim, 1400).attr("stroke-dashoffset", i >= 1 ? 0 : TL);
+        T(pins, anim, 600).attr("opacity", i >= 1 ? 1 : 0);
+        T(tags, anim, 600).attr("opacity", i >= 1 ? 1 : 0);
+        T(labels, anim, 400).attr("dy", i >= 1 ? -12 : 0);
+      }
+    };
+  }
+
+  function buildMacro(el) {
+    const { svg, w, h, narrow } = mk(el);
+    const m = { t: 40, r: narrow ? 64 : 104, b: 36, l: 44 };
+    const x = d3.scaleLinear([0, 112], [m.l, w - m.r]);
+    const y = d3.scaleLinear([0, 112], [h - m.b, m.t]);
+    svg.append("g").attr("class", "grid").selectAll("line").data([25, 50, 75, 100]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y).attr("y2", y);
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 25, 50, 75, 100]).tickSize(0)).call(g => g.select(".domain").remove());
+    const xAxis = svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`);
+    const axTime = s => d3.axisBottom(s).tickValues(narrow ? [0, 30, 58, 87, 112] : [0, 17, 30, 58, 67, 87, 112]).tickFormat(d => 1913 + d).tickSizeOuter(0);
+    const axEl = s => d3.axisBottom(s).tickValues([0, 50, 100, 150, 200, 250, 300]).tickFormat(d => d + (d === 300 ? " yrs" : "")).tickSizeOuter(0);
+    xAxis.call(axTime(x));
+    const line = d3.line().x(d => x(d.el)).y(d => y(d.y));
+    const area = d3.area().x(d => x(d.el)).y0(y(0)).y1(d => y(d.y));
+    const clip = svg.append("defs").append("clipPath").attr("id", "macClip").append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", x(16));
+    const ancient = svg.append("g").attr("opacity", 0);
+    const anc = ancient.selectAll("path").data(BOARD).join("path").attr("fill", "none").attr("stroke", d => d.meta.color).attr("stroke-width", d => d.key === "rome" ? 2.4 : 1.6).attr("opacity", d => d.key === "rome" ? 1 : 0.45).attr("d", d => line(d.pts));
+    const ancLbl = ancient.selectAll("text").data(BOARD).join("text").attr("font-size", 11.5).attr("fill", d => d.meta.color).text(d => d.meta.name);
+    const ug = svg.append("g").attr("clip-path", "url(#macClip)");
+    const uArea = ug.append("path").datum(USPTS).attr("d", area).attr("fill", "rgba(201,82,74,.14)");
+    const uLine = ug.append("path").datum(USPTS).attr("d", line).attr("fill", "none").attr("stroke", C.red).attr("stroke-width", 2.6);
+    const usLbl = svg.append("text").attr("fill", C.red).attr("font-size", 12).attr("opacity", 0).text("US dollar");
+    const annG = svg.append("g");
+    const bounds = [m.l + 4, w - m.r - 4, m.t, h - m.b - 4];
+    const maxc = narrow ? 22 : 30;
+    const byYear = yr => USPTS.find(d => +d.label === yr);
+    const A = [
+      { s: 0, yr: 1920, dx: 24, dy: -46, t: "1920: prices doubled since 1915" },
+      { s: 1, yr: 1933, dx: 20, dy: -40, t: "1930-33: deflation" },
+      { s: 1, yr: 1943, dx: 20, dy: 46, t: "1943: zinc-coated steel cents" },
+      { s: 2, yr: 1971, dx: 18, dy: -70, t: "15 Aug 1971: gold window closes" },
+      { s: 3, yr: 1980, dx: 16, dy: -66, t: "1980: 13.5% inflation" },
+      { s: 3, yr: 2025, dx: -24, dy: -74, t: "2025: 3.1% of 1913 power" }
+    ].map(a => Object.assign(a, { x: a.yr - 1913, y: byYear(a.yr).y }));
+    const annEls = A.map(a => ({ a, el: ann(annG, a, x(a.x), y(a.y), bounds, maxc).attr("opacity", 0) }));
+    const R0 = Math.max(26, Math.min(56, w * 0.09));
+    const pcx = w - m.r - R0 + (narrow ? 30 : 60), pcy = m.t + R0 + 10;
+    const pg = svg.append("g").attr("transform", `translate(${pcx},${pcy})`);
+    pg.append("circle").attr("r", R0).attr("fill", "none").attr("stroke", C.bronzeHi).attr("stroke-dasharray", "3 3").attr("opacity", .6);
+    const pennyG = pg.append("g");
+    P.makeCoin(pennyG, { r: R0, value: 1, metal: "zinc", legend: "IN GOD WE TRUST", seed: 53 });
+    const pRead = svg.append("text").attr("class", "readout").attr("text-anchor", narrow ? "end" : "middle").attr("x", narrow ? w - 10 : pcx).attr("y", pcy + R0 + 22);
+    const cmpAnn = svg.append("g").attr("opacity", 0);
+    const S = [{ to: 1929 }, { to: 1945 }, { to: 1971 }, { to: 2025 }, { to: 2025, cmp: true }];
+    let mode = "time";
+    return {
+      render(i, anim) {
+        const s = S[i];
+        const yrIdx = byYear(s.to).y;
+        const cmp = !!s.cmp;
+        const x2 = d3.scaleLinear(cmp ? [0, 335] : [0, 112], [m.l, w - m.r]);
+        const l2 = d3.line().x(d => x2(d.el)).y(d => y(d.y));
+        const a2 = d3.area().x(d => x2(d.el)).y0(y(0)).y1(d => y(d.y));
+        const newMode = cmp ? "cmp" : "time";
+        if (newMode !== mode || !anim) {
+          T(xAxis, anim, 1200).call(cmp ? axEl(x2) : axTime(x2));
+          T(uLine, anim, 1200).attr("d", l2);
+          T(uArea, anim, 1200).attr("d", a2);
+          T(anc, anim, 1200).attr("d", d => l2(d.pts));
+          ancLbl.attr("x", d => x2(d.pts[d.pts.length - 1].el) + 6).attr("y", d => y(d.pts[d.pts.length - 1].y) + (d.key === "rome" ? 14 : 4));
+          mode = newMode;
+        }
+        T(clip, anim, 1200).attr("width", x2(s.to - 1913) + 6);
+        T(ancient, anim, 900).attr("opacity", cmp ? 1 : 0);
+        usLbl.attr("x", x2(112) + 6).attr("y", y(USPTS[USPTS.length - 1].y) - 6);
+        T(usLbl, anim).attr("opacity", cmp ? 1 : 0);
+        annEls.forEach(({ a, el }) => T(el, anim, 500).attr("opacity", !cmp && a.s === i ? 1 : 0));
+        cmpAnn.selectAll("*").remove();
+        if (cmp) {
+          const rEnd = BOARD[0].pts[BOARD[0].pts.length - 1];
+          [[x2(rEnd.el), y(rEnd.y), C.fine], [x2(112), y(USPTS[USPTS.length - 1].y), C.red]].forEach(([px, py, col]) =>
+            cmpAnn.append("circle").attr("cx", px).attr("cy", py).attr("r", 6).attr("fill", "none").attr("stroke", col).attr("stroke-width", 1.6));
+          const tw = narrow ? 168 : 214, tx = w - m.r - tw + (narrow ? 40 : 70), ty = m.t + 6;
+          const tag = cmpAnn.append("g").attr("transform", `translate(${tx},${ty}) rotate(-1.5)`);
+          tag.append("rect").attr("width", tw).attr("height", 62).attr("fill", C.paper);
+          tag.append("circle").attr("cx", 10).attr("cy", 31).attr("r", 3.5).attr("fill", C.ground2).attr("stroke", "#8C2F2B");
+          tag.append("text").attr("x", 22).attr("y", 24).attr("font-size", narrow ? 11 : 12.5).attr("fill", "#1F2A2E").text("Rome, ~300 yrs: 98% → ~5%");
+          tag.append("text").attr("x", 22).attr("y", 44).attr("font-size", narrow ? 11 : 12.5).attr("fill", "#8C2F2B").text("Dollar, 112 yrs: 100 → 3");
+        }
+        T(pg, anim).attr("opacity", cmp ? 0 : 1);
+        T(pRead, anim).attr("opacity", cmp ? 0 : 1);
+        T(cmpAnn, anim, 700).attr("opacity", cmp ? 1 : 0);
+        document.getElementById("macroTitle").textContent = cmp ? "The dollar on the red-string board · indexed to 100 · years elapsed" : "Purchasing power of the US dollar · 1913 = 100";
+        T(pennyG, anim).attr("transform", `scale(${Math.sqrt(yrIdx / 100)})`);
+        pRead.text(`${s.to}: ${yrIdx.toFixed(0)}¢ of 1913 value`);
+      }
+    };
+  }
+
+  /* ======================= BREAKOUTS ======================= */
+  function vizBox(id, h) {
+    const box = d3.select("#" + id); box.selectAll("*").remove();
+    const w = Math.max(280, box.node().clientWidth);
+    const svg = box.append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("height", h);
+    return { svg, w, h };
+  }
+  const BO = {};
+
+  // Rome: melting coins, one per reign
+  BO.melt = () => {
+    const pick = ["Augustus", "Tiberius to Nero (early)", "Nero (post-reform)", "Vespasian to Titus", "Domitian (reform)", "Trajan to Hadrian", "Antoninus Pius", "Marcus Aurelius (late)", "Commodus (late)", "Pertinax", "Septimius Severus (late)", "Caracalla", "Severus Alexander (early)", "Gordian I & II", "Valerian & Gallienus", "Gallienus (sole reign)", "Claudius II Gothicus", "Diocletian era"];
+    const short = { "Tiberius to Nero (early)": "Tiberius-Nero", "Nero (post-reform)": "Nero, 64", "Vespasian to Titus": "Vespasian", "Domitian (reform)": "Domitian, 82", "Trajan to Hadrian": "Trajan-Hadrian", "Antoninus Pius": "Ant. Pius", "Marcus Aurelius (late)": "M. Aurelius", "Commodus (late)": "Commodus", "Septimius Severus (late)": "Sept. Severus", "Severus Alexander (early)": "Sev. Alexander", "Valerian & Gallienus": "Valerian", "Gallienus (sole reign)": "Gallienus", "Claudius II Gothicus": "Claudius II", "Diocletian era": "Diocletian" };
+    const rows = pick.map(n => P.romeWalker.find(d => d.ruler === n));
+    const box = d3.select("#vizMelt"); const w0 = box.node().clientWidth;
+    const cols = w0 > 900 ? 9 : w0 > 620 ? 6 : 3;
+    const cw = w0 / cols, r = Math.min(42, cw * 0.32), ch = r * 2 + 64;
+    const { svg } = vizBox("vizMelt", Math.ceil(rows.length / cols) * ch);
+    const coins = rows.map((d, i) => {
+      const g = svg.append("g").attr("transform", `translate(${(i % cols) * cw + cw / 2},${Math.floor(i / cols) * ch + r + 6})`);
+      const c = P.makeMelt(g, { r, frac: d.pct / 100, est: !!d.approx });
+      g.append("text").attr("y", r + 22).attr("text-anchor", "middle").attr("font-size", 11.5).attr("fill", C.paper).text(short[d.ruler] || d.ruler);
+      g.append("text").attr("y", r + 46).attr("text-anchor", "middle").style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 21)
+        .attr("fill", d.approx ? C.bronzeHi : C.paper).text((d.approx && d.ruler === "Diocletian era" ? "~" : "") + d.pct + "%");
+      g.append("title").text(`${d.ruler}, ${P.fmtYear(d.s)}-${P.fmtYear(d.e)}: ${d.lo != null ? d.lo + "-" + d.hi : d.pct}% silver${d.note ? ". " + d.note : ""}`);
+      return { c, d };
+    });
+    return () => coins.forEach(({ c, d }, i) => { c.set(1, 0); c.set(d.pct / 100, 1100, 120 + i * 90); });
+  };
+
+  // Britain: staters in 100 parts
+  BO.celt = () => {
+    const sets = [
+      { id: 1, t: "c. 125 BC", s: "Gallo-Belgic A/B · 7.8 g" },
+      { id: 5, t: "58-50 BC", s: "Gallic War type · bounds" },
+      { id: 10, t: "1st c. AD", s: "EISV & VEP CORF · 7 coins" }
+    ].map(o => Object.assign(o, { d: P.celtic.find(c => c.id === o.id) }));
+    const box = d3.select("#vizCeltWaffle"); const w0 = box.node().clientWidth;
+    const n = w0 < 620 ? 1 : 3;
+    const cw = w0 / n, size = Math.min(230, cw - 40);
+    const rowsN = Math.ceil(sets.length / n), ch = size + 92;
+    const { svg } = vizBox("vizCeltWaffle", rowsN * ch);
+    const ws = sets.map((o, i) => {
+      const g = svg.append("g").attr("transform", `translate(${(i % n) * cw + (cw - size) / 2},${Math.floor(i / n) * ch})`);
+      const wf = P.makeWaffle(g, { size, gap: 3 });
+      const parts = [{ v: o.d.au, color: "#D2A93E" }, { v: o.d.ag, color: "#E4E6E8" }, { v: o.d.cu, color: "#A86B3C" }];
+      wf.set(parts);
+      g.append("text").attr("y", size + 34).style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 30).attr("fill", "#D2A93E").text(o.d.au + "% gold");
+      g.append("text").attr("y", size + 56).attr("font-size", 13).attr("fill", C.paper).text(o.t);
+      g.append("text").attr("y", size + 74).attr("font-size", 11.5).text(o.s + " · Cu " + o.d.cu + "%");
+      return { wf, parts };
+    });
+    return () => ws.forEach(({ wf, parts }, i) => { wf.set([], 0); setTimeout(() => wf.set(parts, 300, 9), i * 350); });
+  };
+
+  // Alexandria: coins at relative weight
+  BO.ptol = () => {
+    const items = [
+      { t: "Standard 3", ref: "Sv1423 Horn A", wt: 40.7, fv: 100 },
+      { t: "Standard 4", ref: "Sv1424B", wt: 22.5, fv: 100 },
+      { t: "Standard 5", ref: "Sv1424B, re-tariffed", wt: 22.5, fv: 120 },
+      { t: "Cleopatra VII", ref: "Sv1871, Π mark", wt: 17.2, fv: 80 }
+    ];
+    const box = d3.select("#vizPtolScale"); const w0 = box.node().clientWidth;
+    const n = w0 < 620 ? 2 : 4;
+    const cw = w0 / n, Rmax = Math.min(110, cw * 0.42);
+    const ch = Rmax * 2 + 96;
+    const { svg } = vizBox("vizPtolScale", Math.ceil(items.length / n) * ch);
+    const coins = items.map((d, i) => {
+      const r = Rmax * Math.sqrt(d.wt / 40.7);
+      const cx = (i % n) * cw + cw / 2, base = Math.floor(i / n) * ch + Rmax * 2;
+      const g = svg.append("g").attr("transform", `translate(${cx},${base - r})`);
+      g.append("circle").attr("r", Rmax).attr("cy", r - Rmax).attr("fill", "none").attr("stroke", "rgba(239,228,204,.25)").attr("stroke-dasharray", "3 4");
+      const inner = g.append("g");
+      P.makeCoin(inner, { r, value: Math.min(1, (d.wt / d.fv) / 0.407), metal: "bronze", legend: i === 3 ? "ΚΛΕΟΠΑΤΡΑΣ ΒΑΣΙΛΙΣΣΗΣ" : "ΠΤΟΛΕΜΑΙΟΥ ΒΑΣΙΛΕΩΣ", seed: 31 + i }).mark(i === 3 ? "Π" : "");
+      const tx = svg.append("g").attr("transform", `translate(${cx},${base + 28})`).attr("text-anchor", "middle");
+      tx.append("text").style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 24).attr("fill", C.paper).text(d.wt + " g");
+      tx.append("text").attr("y", 22).attr("font-size", 12.5).attr("fill", C.bronzeHi).text(d.fv + " units · " + (d.wt / d.fv).toFixed(3) + " g/unit");
+      tx.append("text").attr("y", 40).attr("font-size", 11.5).text(d.t + " · " + d.ref);
+      return { inner, r };
+    });
+    return () => coins.forEach(({ inner }, i) => { inner.attr("transform", "scale(0.01)").transition().delay(i * 260).duration(900).ease(d3.easeBackOut).attr("transform", "scale(1)"); });
+  };
+
+  // London: fine silver inside each penny
+  BO.pennies = () => {
+    const rows = P.tudor.filter(d => d.pg != null);
+    const box = d3.select("#vizPennies"); const w0 = box.node().clientWidth;
+    const n = w0 > 900 ? 8 : w0 > 620 ? 4 : 2;
+    const cw = w0 / n, R = Math.min(56, cw * 0.36), ch = R * 2 + 100;
+    const { svg } = vizBox("vizPennies", Math.ceil(rows.length / n) * ch);
+    const discs = rows.map((d, i) => {
+      const g = svg.append("g").attr("transform", `translate(${(i % n) * cw + cw / 2},${Math.floor(i / n) * ch + R + 6})`);
+      g.append("circle").attr("r", R).attr("fill", "#3a2a1f").attr("stroke", "#5a4030").attr("stroke-width", 3);
+      g.append("circle").attr("r", R * 0.86).attr("fill", "none").attr("stroke", C.brass).attr("stroke-dasharray", "2 3").attr("opacity", .8);
+      const rr = R * 0.86 * Math.sqrt(d.pg / 0.639);
+      const disc = g.append("circle").attr("r", rr).attr("fill", P.silverScale(Math.min(1, d.pg / 0.639 + 0.25))).attr("stroke", "#fff").attr("stroke-opacity", .3);
+      g.append("text").attr("y", R + 24).attr("text-anchor", "middle").style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 20).attr("fill", C.paper).text(d.pg.toFixed(3) + " g");
+      g.append("text").attr("y", R + 44).attr("text-anchor", "middle").attr("font-size", 12).attr("fill", "#5FA08E").text(d.date.replace(/^\d+ /, ""));
+      g.append("text").attr("y", R + 60).attr("text-anchor", "middle").attr("font-size", 11).attr("fill", C.paper).text(d.mon);
+      g.append("text").attr("y", R + 76).attr("text-anchor", "middle").attr("font-size", 11).text(Math.round((d.pg / 0.639) * 100) + "% of 1526");
+      g.append("title").text(`${d.date}, ${d.mon}: ${d.ev}`);
+      return { disc, rr };
+    });
+    return () => discs.forEach(({ disc, rr }, i) => disc.attr("r", R * 0.86).transition().delay(200 + i * 160).duration(1000).attr("r", rr));
+  };
+
+  // Washington: 100 cents, draining by year
+  BO.cents = () => {
+    const box = d3.select("#vizCents"); const w0 = box.node().clientWidth;
+    const narrow = w0 < 620;
+    const cols = narrow ? 10 : 20, rowsN = 100 / cols;
+    const yrW = narrow ? 0 : 220;
+    const gridW = Math.min(w0 - yrW, narrow ? w0 : 900);
+    const cell = gridW / cols, r = cell * 0.4;
+    const h = rowsN * cell + (narrow ? 90 : 10);
+    const { svg } = vizBox("vizCents", h);
+    const ox = narrow ? (w0 - gridW) / 2 : yrW;
+    const cents = svg.append("g").attr("transform", `translate(${ox},${narrow ? 84 : 0})`).selectAll("circle").data(d3.range(100)).join("circle")
+      .attr("cx", i => (i % cols) * cell + cell / 2).attr("cy", i => Math.floor(i / cols) * cell + cell / 2).attr("r", r);
+    const yr = svg.append("text").attr("x", narrow ? w0 / 2 : 0).attr("y", narrow ? 44 : 64).attr("text-anchor", narrow ? "middle" : "start").style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", narrow ? 40 : 64).attr("fill", C.paper);
+    const sub = svg.append("text").attr("x", narrow ? w0 / 2 : 0).attr("y", narrow ? 70 : 100).attr("text-anchor", narrow ? "middle" : "start").attr("font-size", 13).attr("fill", C.bronzeHi);
+    function paint(year) {
+      const d = P.us.find(u => u.year === year);
+      const left = Math.round(d.idx);
+      cents.attr("fill", i => (i < left ? C.bronzeHi : "none")).attr("stroke", i => (i < left ? "#6b3f22" : "rgba(239,228,204,.28)")).attr("stroke-width", 1);
+      yr.text(year); sub.text(left + " of 100 cents left");
+    }
+    paint(2025);
+    let timer = null;
+    return () => {
+      if (timer) timer.stop();
+      if (REDUCED) return paint(2025);
+      paint(1913);
+      timer = d3.timer(el => { const y = Math.min(2025, 1913 + Math.floor(el / 45)); paint(y); if (y >= 2025) timer.stop(); });
+    };
+  };
+
+  /* ---------- sparklines in summaries ---------- */
+  function sparks() {
+    d3.selectAll("svg.spark").each(function () {
+      const svg = d3.select(this); svg.selectAll("*").remove();
+      const w = this.clientWidth || 400, h = 110, m = { t: 14, r: 46, b: 18, l: 4 };
+      svg.attr("viewBox", `0 0 ${w} ${h}`);
+      const pts = P.indexed(this.dataset.key, this.dataset.m);
+      const x = d3.scaleLinear(d3.extent(pts, p => p.x), [m.l, w - m.r]);
+      const y = d3.scaleLinear([0, d3.max(pts, p => p.y)], [h - m.b, m.t]);
+      svg.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y(100)).attr("y2", y(100)).attr("stroke", "rgba(31,42,46,.25)").attr("stroke-dasharray", "2 3");
+      svg.append("path").datum(pts).attr("d", d3.area().x(p => x(p.x)).y0(y(0)).y1(p => y(p.y))).attr("fill", "rgba(168,107,60,.16)");
+      svg.append("path").datum(pts).attr("d", d3.line().x(p => x(p.x)).y(p => y(p.y))).attr("fill", "none").attr("stroke", "#A86B3C").attr("stroke-width", 2);
+      const f = pts[0], l = pts[pts.length - 1];
+      svg.append("circle").attr("cx", x(l.x)).attr("cy", y(l.y)).attr("r", 4).attr("fill", "#8C2F2B");
+      svg.append("text").attr("x", x(l.x) + 7).attr("y", y(l.y) + 4).text(Math.round(l.y));
+      svg.append("text").attr("x", m.l).attr("y", h - 3).text(P.fmtYear(f.x));
+      svg.append("text").attr("x", w - m.r).attr("y", h - 3).attr("text-anchor", "end").text(P.fmtYear(l.x));
+      svg.append("text").attr("x", w - m.r + 7).attr("y", y(100) + 4).text("100");
+    });
+  }
+
+  /* ---------- static coins ---------- */
+  function staticCoins() {
+    const a = d3.select("#coinA"); a.selectAll("*").remove();
+    const ca = P.makeCoin(a.append("g"), { r: 112, value: .02, metal: "silver", legend: "IMP C TETRICVS P F AVG", seed: 7 });
+    if (!REDUCED) { ca.set(.55, 0); setTimeout(() => ca.set(.02, 2600), 500); }
+    const t = d3.select("#coinT"); t.selectAll("*").remove();
+    P.makeCoin(t.append("g"), { r: 96, value: .02, metal: "silver", legend: "IMP C TETRICVS P F AVG", seed: 7 });
+    const l = d3.select("#coinL"); l.selectAll("*").remove();
+    P.makeCoin(l.append("g"), { r: 96, value: 1, metal: "zinc", legend: "IN GOD WE TRUST", seed: 53 }).mark("1¢");
+    l.append("defs").append("clipPath").attr("id", "lcClip").append("circle").attr("r", 96);
+    const wear = l.append("g").attr("clip-path", "url(#lcClip)");
+    [[34, -30, 18, 11, 20], [-46, 38, 13, 8, -30], [10, 60, 9, 6, 60]].forEach(([cx, cy, rx, ry, r]) =>
+      wear.append("ellipse").attr("cx", cx).attr("cy", cy).attr("rx", rx).attr("ry", ry).attr("transform", `rotate(${r} ${cx} ${cy})`).attr("fill", "#A9B0B2").attr("stroke", "#7c8486").attr("stroke-width", 1));
+  }
+
+  /* ---------- scroll engine ---------- */
+  const BUILDERS = { rome: buildRome, celtic: buildCeltic, ptol: buildPtol, tudor: buildTudor, string: buildString, macro: buildMacro };
+  const chapters = [];
+  document.querySelectorAll(".scrolly").forEach(sc => {
+    const name = sc.dataset.chapter;
+    const fig = sc.querySelector(".figure");
+    const ch = { cur: 0, api: null };
+    ch.build = () => { ch.api = BUILDERS[name](fig); ch.api.render(ch.cur, false); };
+    chapters.push(ch);
+    const steps = [...sc.querySelectorAll(".step")];
+    steps[0].classList.add("is-active");
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const i = steps.indexOf(en.target);
+      steps.forEach((s, k) => s.classList.toggle("is-active", k === i));
+      if (i !== ch.cur && ch.api) { ch.cur = i; ch.api.render(i, true); }
+    }), { rootMargin: "-48% 0px -48% 0px" });
+    steps.forEach(s => io.observe(s));
+  });
+
+  // breakouts: rendered complete at rest; replay their animation when they first come into view
+  const play = {};
+  function buildBreakouts() { Object.keys(BO).forEach(k => { play[k] = BO[k](); }); }
+  const seen = new Set();
+  const boIo = new IntersectionObserver(entries => entries.forEach(en => {
+    const k = en.target.querySelector("[data-replay]").dataset.replay;
+    if (en.isIntersecting && !seen.has(k) && !REDUCED) { seen.add(k); play[k] && play[k](); }
+  }), { threshold: 0.35 });
+  document.querySelectorAll(".breakout").forEach(b => boIo.observe(b));
+  document.querySelectorAll("[data-replay]").forEach(b => b.addEventListener("click", () => play[b.dataset.replay] && play[b.dataset.replay]()));
+
+  function buildAll() { chapters.forEach(c => c.build()); buildBreakouts(); sparks(); }
+  function start() {
+    buildAll(); staticCoins();
+    P.guilloche(document.getElementById("guilloche"), { color: "rgba(95,160,142,0.28)", color2: "rgba(201,132,80,0.30)" });
+  }
+  let rt, lastW = window.innerWidth;
+  window.addEventListener("resize", () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      if (Math.abs(window.innerWidth - lastW) < 2 && window.innerWidth < 880) return;
+      lastW = window.innerWidth;
+      buildAll(); P.guilloche(document.getElementById("guilloche"), { color: "rgba(95,160,142,0.28)", color2: "rgba(201,132,80,0.30)" });
+    }, 200);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+</body>
+</html>
