@@ -7,7 +7,7 @@
 <title>The Evidence Room</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
 /* Layout: the evidence room on a bronze ground. Case tags on the left rail, the comparison board on the right,
    then full-width exhibits: melting coins, coins in 100 parts, bronze at true weight, the race, the loss sheet and the ledger. */
@@ -130,9 +130,34 @@ footer { padding-block: 30px 50px; font-family: var(--f-type); font-size: 13px; 
   .waffles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---------- Designer's annotations: slate panel, IBM Plex, deliberately outside the story's warm palette ---------- */
+.anno { --a-bg: #4A5560; --a-fg: #E4E6E8; --a-dim: #C3C9CC; --a-line: rgba(228,230,232,.35);
+  background: var(--a-bg); color: var(--a-fg); font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; font-size: 15px; line-height: 1.55;
+  border: 1px dashed var(--a-line); padding: 16px 20px 16px; margin-block: 22px 30px; max-width: 62em; position: relative; }
+.anno .anno-tag { display: inline-flex; align-items: center; gap: 8px; font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 11.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: #1F2A2E; background: #E4E6E8; padding: 3px 8px; margin-bottom: 10px; }
+.anno .anno-tag::before { content: "✎"; font-size: 12px; letter-spacing: 0; }
+.anno p { margin: 0 0 .6em; color: var(--a-fg); font-size: 15px; }
+.anno p:last-child { margin-bottom: 0; }
+.anno ul { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 4px; border-top: 1px solid var(--a-line); padding-top: 10px; }
+.anno li { color: var(--a-dim); font-size: 13.5px; }
+.anno li b { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--a-fg); margin-right: 8px; }
+.anno ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; }
+.anno ol li { color: var(--a-fg); font-size: 14px; }
+.anno-band { background: #3A434B; border-bottom: 1px solid rgba(228,230,232,.18); padding-block: 6px; }
+.anno-band .anno { background: transparent; border: 0; padding-inline: 0; margin-block: 14px; }
+body.no-anno .anno, body.no-anno .anno-band { display: none; }
+.anno-toggle { position: fixed; z-index: 20; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+  background: #4A5560; color: #E4E6E8; border: 1px solid rgba(228,230,232,.5); padding: 9px 14px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.4); }
+.anno-toggle:hover { background: #E4E6E8; color: #1F2A2E; }
+.anno-toggle[aria-pressed="false"] { opacity: .75; }
 </style>
 </head>
 <body>
+<div class="anno-band"><div class="wrap"><aside class="anno" aria-label="Annotation: How the Evidence Room works"><div class="anno-tag">Annotation · How the Evidence Room works</div><p>The exploratory companion to the story. Where the case file is guided and told in order, this page is open: readers choose the cases, measures and moments, and every figure links back to its source row. All five cases are named here because the story has already revealed them.</p><p>The exhibits run from broad comparison to raw data:</p><ol><li><b>Compare the cases</b>: all series indexed to 100 by years elapsed, or side by side in their own units and calendars; switch measures per case and hover for the source.</li><li><b>The melting coins</b>: one coin per record for any case, filled with what remains.</li><li><b>Break a coin into 100 pieces</b>: four 10&nbsp;x&nbsp;10 grids; pick any moment for each.</li><li><b>Bronze at true weight</b>: every Ptolemaic standard at relative size; click one to lay out all its denominations.</li><li><b>The race to the bottom</b>: all cases start on the same day; press play to run the years.</li><li><b>Rate of loss</b>: sortable table of first, lowest, years to half and annual rate.</li><li><b>The ledger</b>: every row from the source files with method and confidence.</li></ol><ul><li><b>Data</b>The same figures as the story, from common.js; the original spreadsheets ship in the data folder.</li><li><b>Memory</b>Case selections are remembered in this browser only.</li><li><b>Reading</b>Use the ✎ button at the bottom right to hide these annotations.</li></ul></aside>
+</div></div>
 <header>
   <div class="wrap">
     <div>
@@ -247,6 +272,7 @@ footer { padding-block: 30px 50px; font-family: var(--f-type); font-size: 13px; 
   <div class="wrap">Sources: Walker 1976-78; Butcher &amp; Ponting 2005 (OJA 24.2); Van Arsdell, Celtic Coinage of Britain 3rd ed. online; AJN 2021 Metrological Survey of Ptolemaic Bronze Coins II; Challis 1992, App. 2; Munro 2010 (Toronto WP 417); BLS CPI-U. <a href="./">Return to the case file</a>.</div>
 </footer>
 
+<button type="button" class="anno-toggle" id="annoToggle" aria-pressed="true">✎ Annotations: on</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="common.js"></script>
 <script>
@@ -680,6 +706,17 @@ footer { padding-block: 30px 50px; font-family: var(--f-type); font-size: 13px; 
   let rt;
   window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { update(false); drawMelt(false); drawParts(false); drawWeight(false); drawWeightDetail(false); }, 200); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+
+<script>
+(function () {
+  const btn = document.getElementById("annoToggle");
+  let on = true;
+  try { on = localStorage.getItem("pennyAnno") !== "off"; } catch (e) {}
+  function apply() { document.body.classList.toggle("no-anno", !on); btn.setAttribute("aria-pressed", String(on)); btn.textContent = "✎ Annotations: " + (on ? "on" : "off"); }
+  btn.addEventListener("click", () => { on = !on; try { localStorage.setItem("pennyAnno", on ? "on" : "off"); } catch (e) {} apply(); window.dispatchEvent(new Event("resize")); });
+  apply();
 })();
 </script>
 </body>

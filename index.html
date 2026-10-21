@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Special+Elite&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
 /* Layout: a bronze evidence room. Deep bronze-brown ground, file-paper notes threaded on a red string down the left,
    a pinned exhibit plate on the right; full-width breakout bands and paper case summaries between cases. */
@@ -181,9 +181,34 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
   .sources { columns: 1; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card, .step::before { transition: none; } }
+
+/* ---------- Designer's annotations: slate panel, IBM Plex, deliberately outside the story's warm palette ---------- */
+.anno { --a-bg: #4A5560; --a-fg: #E4E6E8; --a-dim: #C3C9CC; --a-line: rgba(228,230,232,.35);
+  background: var(--a-bg); color: var(--a-fg); font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; font-size: 15px; line-height: 1.55;
+  border: 1px dashed var(--a-line); padding: 16px 20px 16px; margin-block: 22px 30px; max-width: 62em; position: relative; }
+.anno .anno-tag { display: inline-flex; align-items: center; gap: 8px; font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 11.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: #1F2A2E; background: #E4E6E8; padding: 3px 8px; margin-bottom: 10px; }
+.anno .anno-tag::before { content: "✎"; font-size: 12px; letter-spacing: 0; }
+.anno p { margin: 0 0 .6em; color: var(--a-fg); font-size: 15px; }
+.anno p:last-child { margin-bottom: 0; }
+.anno ul { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 4px; border-top: 1px solid var(--a-line); padding-top: 10px; }
+.anno li { color: var(--a-dim); font-size: 13.5px; }
+.anno li b { font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--a-fg); margin-right: 8px; }
+.anno ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; }
+.anno ol li { color: var(--a-fg); font-size: 14px; }
+.anno-band { background: #3A434B; border-bottom: 1px solid rgba(228,230,232,.18); padding-block: 6px; }
+.anno-band .anno { background: transparent; border: 0; padding-inline: 0; margin-block: 14px; }
+body.no-anno .anno, body.no-anno .anno-band { display: none; }
+.anno-toggle { position: fixed; z-index: 20; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace; font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+  background: #4A5560; color: #E4E6E8; border: 1px solid rgba(228,230,232,.5); padding: 9px 14px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.4); }
+.anno-toggle:hover { background: #E4E6E8; color: #1F2A2E; }
+.anno-toggle[aria-pressed="false"] { opacity: .75; }
 </style>
 </head>
 <body>
+<div class="anno-band"><div class="wrap"><aside class="anno" aria-label="Annotation: How this page works"><div class="anno-tag">Annotation · How this page works</div><p>A scrollytelling case file in seven movements: a personal <b>prologue</b>, four historical cases (I&nbsp;Rome, II&nbsp;Britain, III&nbsp;Alexandria, IV&nbsp;London), <b>the red string</b> that compares them, the sealed <b>Case V</b> (the US dollar) and a personal <b>epilogue</b>.</p><p>Every case repeats the same three beats so readers learn the pattern once: (1) a <b>sticky chart</b> that changes as the paper notes scroll past it, (2) a full-width <b>breakout</b> visual that restates the case at a glance, and (3) a paper <b>summary folder</b> with headline figures. Cultures are not named until each case opens, and the dollar is withheld until the end so the macro point lands as the reveal.</p><ul><li><b>Colour</b>Silver to verdigris is the data language: lighter means purer metal, bronze and green mean the coin is failing. Bronze, brass, file paper and the red string carry the story. These slate notes sit outside both palettes.</li><li><b>Type</b>Cinzel for titles (Roman inscriptions), Special Elite for evidence tags and chart labels (the investigator's typewriter), Crimson Pro for narrative.</li><li><b>Copy</b>Narrative paragraphs are placeholder text made of the letter a, pending the author's draft. Headings, dates, chart labels, figures and sources are real.</li><li><b>Reading</b>Use the ✎ button at the bottom right to hide these annotations for a clean read.</li></ul></aside>
+</div></div>
 <!-- ======================= HERO ======================= -->
 <header class="hero">
   <canvas id="guilloche" aria-hidden="true"></canvas>
@@ -193,6 +218,8 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h1>The Case of the <span>Disappearing Penny</span></h1>
       <p class="dek">Aaaaaaa aaa aa aaaa aaaaa aa aaaaaaaaa aaaaa aaaaa aaaa aa aaaaaaaa aaa aaaaa aaaa. Aaaaa aaaa aaaaa aa aaaa aaa aaa aaaaaaaaa aaaaaaaaa aaa. A aaaaa aaaaaaaaa aaaaaa aaaaaaaa a aaaaaa a aaa.</p>
       <div class="scroll-cue">Scroll to open the file</div>
+      <aside class="anno" aria-label="Annotation: Opening"><div class="anno-tag">Annotation · Opening</div><p>Introduces Exhibit A, an antoninianus of Tetricus I at about 2% silver, without explaining it. The coin animates from bright silver to corroded bronze on load: the whole story in one object, before the reader knows what they are looking at.</p></aside>
+
     </div>
     <div class="exhibitA">
       <svg id="coinA" viewBox="-130 -130 260 260" role="img" aria-label="Sketch of a worn bronze coin with traces of silver"></svg>
@@ -204,6 +231,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 <!-- ======================= PROLOGUE ======================= -->
 <section class="note-sec">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Prologue"><div class="anno-tag">Annotation · Prologue</div><p>The author's personal narrative (placeholder). A first-person, human entry point before any data appears. The paper sheet, pin and drop cap mark it as a letter rather than evidence, so it reads differently from the case notes that follow.</p></aside>
     <article class="letter paper">
       <div class="eyebrow">Prologue</div>
       <h2>Aaaa Aaaaaa Aaaa Aaaaa Aaa</h2>
@@ -224,6 +252,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h2>The denarius</h2>
       <p>Aaa aa a aaa aaaa aa aaa a aaaaaaaa aaa aaa aa aa. Aaaaaaaaa aaa a aaaaa aaaaaaa aa aaaaa aa aaaaa aaa aaaaaaa. Aa aaa aaaa a aa aaaaaaaa.</p>
     </div>
+        <aside class="anno" aria-label="Annotation: Case I · Rome · scrolling chart"><div class="anno-tag">Annotation · Case I · Rome · scrolling chart</div><p>Seven notes drive one chart: denarius fineness by reign from Walker's XRF data, 27 BC to AD 301. Each note reveals more of the line, swaps the annotation and re-colours the coin in the corner from silver toward verdigris.</p><p>Note I-b adds a dashed brass line for silver weight per coin, showing that Nero's reform hid the loss in weight. Note I-g overlays Butcher &amp; Ponting's drilled-sample results in red, the source-criticism beat for specialist readers.</p><ul><li><b>Data</b>Walker 1976-78 (34 reigns); Butcher &amp; Ponting 2005 (12 periods). Dashed segments and range bars are values recorded only as ranges.</li><li><b>Interaction</b>Scroll-driven; hover any point for the ruler, dates and note.</li></ul></aside>
     <div class="scrolly" data-chapter="rome">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit I-a · 27 BC to AD 14</div><h3>Aaaa Aaaaaaa Aaaa</h3><p>Aaaaa a aaaaa aaaaaaaa aaaaa aaaaaaaaa aaaaaa aa aaaaaaaa aaa aaaaa aaaaaa aaa. Aaa aaa aaa a aaa aaa aaaaa aaaaa. Aaaa aaa aa a a aaaa aa aaaaaaaaa aaa aa aaaaaaaaa aaa. Aaaaaaaa aaaaaaaaa aaaaa aaaaa aaa a aa aa aaaa a aaaaa aaaaaa aa. Aa aaaa a a aaaaaaaaa a.</p></div></div>
@@ -241,6 +270,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="breakout" id="bo-rome">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Breakout · melting coins"><div class="anno-tag">Annotation · Breakout · melting coins</div><p>One coin per reign; the silver band from the bottom is the fineness, base metal fills the rest. Restates Case I in a form readers grasp at a glance, inspired by a coin-tray layout. Dashed rings mark values known only from ranges in the texts.</p><ul><li><b>Motion</b>Coins drain in sequence the first time the band scrolls into view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">27 BC to c. AD 300 · silver content by reign</div><h2 class="bo-title">The coin that turned to <em>bronze</em></h2></div>
       <p class="bo-dek">Aaaaaaaa aaa aaaaaaaaa aaaaa aa aaaaaa a aaaaaaaa aaaaa aaaa aaaaa aaaaa aaa. Aaaaaa aaaa aaaaa aaaaaaa aaaaaaaa a aaaaaaaaa a aaa a a aaaa a aaa aa. Aaa aa aa aaa aa aa.</p>
@@ -255,6 +285,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="summary">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Case I · summary"><div class="anno-tag">Annotation · Case I · summary</div><p>Paper folder that closes the case: four headline figures, a short recap (placeholder) and a sparkline of fineness indexed to 100. Gives skimmers the takeaway and gives every reader a pause before the next culture is revealed.</p></aside>
     <div class="folder paper">
       <div class="tab">Case I · Summary</div>
       <div class="sum-grid">
@@ -278,6 +309,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h2>Gold staters</h2>
       <p>Aa aa aaaaa aaaaa aaa aaaaaa aa aaaaaaaa aa aaaaaaaa aaaaa aaa a aa aaa. Aaa aaaaaaaa aaaaa aa aaaaaaa aa aaaaaaaaa aaaa. Aaaa aaa aaa aaa a.</p>
     </div>
+        <aside class="anno" aria-label="Annotation: Case II · Britain · scrolling chart"><div class="anno-tag">Annotation · Case II · Britain · scrolling chart</div><p>Stacked bars break six staters into gold, silver and copper, revealed in date order; a lower panel tracks stater weight with the Gallic War shaded. The gold coin in the corner shifts toward copper as the alloy changes.</p><p>Hatched segments are metal the source did not report. The Whitwell coin is outlined in red because it is a single surface XRF reading with an assigned date.</p><ul><li><b>Data</b>Van Arsdell, Celtic Coinage of Britain (electron microprobe, SEM-EDS, metrology).</li><li><b>Interaction</b>Scroll-driven; hover segments for bounds and method.</li></ul></aside>
     <div class="scrolly" data-chapter="celtic">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit II-a · c. 125 BC</div><h3>Aa Aa Aaaaa</h3><p>Aa aa aaaaaaaaa aaa aaa aaa aaaaaaaa aaaaaa aa aaa aaaaaaaaa. Aa aaa aaaaaa aaaaaaaa aaaaa aaaaa aaa a aaaaaaaa aa aaaaaaa aaaaaa aa aa aaa. A aaaaaaa a aa aaaaaaa aaaa aaa a aa aa aaaaa aaa aaaaaaaaa aa aaaaaaaaa aa. Aaa aaaaa aaa aaaaaaaaa aa aaa.</p></div></div>
@@ -293,6 +325,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="breakout" id="bo-celtic">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Breakout · 100 parts"><div class="anno-tag">Annotation · Breakout · 100 parts</div><p>Three staters as 10&nbsp;x&nbsp;10 grids, filled gold first, then silver, then copper. Turns percentages into parts a reader can count, so copper taking over the coin is visible without reading a number.</p><ul><li><b>Motion</b>Cells fill in order on first view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">Three staters · alloy by electron microprobe</div><h2 class="bo-title">A stater in <em>100 parts</em></h2></div>
       <p class="bo-dek">Aaaaaaaaa aaaaaaaa aaaaa aaaaaa aaaaaaaaa a aaa aaaaa aaaaaaa aaaa. Aa aaaaaaa aaaaaaaa aaaaaa aaa aaaaa a aaa aaaaaaaa a aaaaa aaaaa aaaaa. A aaaaaa aa a aaaa aa aaaaaaaa.</p>
@@ -307,6 +340,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="summary">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Case II · summary"><div class="anno-tag">Annotation · Case II · summary</div><p>Same folder format as Case I so the rhythm is predictable: gold at the start and end, weight loss and the final copper share, with a sparkline of gold content.</p></aside>
     <div class="folder paper">
       <div class="tab">Case II · Summary</div>
       <div class="sum-grid">
@@ -330,6 +364,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h2>Ptolemaic bronze</h2>
       <p>Aaa aa aa aaaaaaaa aaaa aaaa aaaaaaaaa aaaaaaa aaaa aaa aaaaaaaa aaaaaa aaa. Aaaaaaa a aaa aaaaa aaaaa aaaaaaaaa aaaa a aaaa aaaaaa aaaa. Aaaaaaaa aa a aaaaa a aaa aa aa.</p>
     </div>
+        <aside class="anno" aria-label="Annotation: Case III · Alexandria · scrolling chart"><div class="anno-tag">Annotation · Case III · Alexandria · scrolling chart</div><p>A scatter of Ptolemaic bronze types: face value across, mean weight up, dot size by specimens weighed. The slope of each line from the origin is grams of bronze per unit of value, so a flatter line means a debased standard.</p><p>Note III-c animates one coin, Sv1424B, sliding from 100 to 120 units at the same 22.5 g: debasement by decree, with no new metal struck.</p><ul><li><b>Data</b>AJN 2021 metrological survey, 39 types, Svoronos numbers. Only Classes 2, 4 and 6 are dated; the rest are placed by series order.</li><li><b>Interaction</b>Scroll-driven; hover any dot for catalogue number, weight and n.</li></ul></aside>
     <div class="scrolly" data-chapter="ptol">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit III-a · late 3rd to early 2nd c. BC</div><h3>Aaaaaaa Aaa Aaaaaa Aaaaaa</h3><p>A aa aaaaaaa aa aa a aaaaaaaa aaaa. Aaaa aaa a aaaaaa aaa aa a aaaaaaaa aa aaaaaaaaa aaaaaaaa aaaaaaaaa aaa aaaa aaaaa a. Aa aaaaa aaa aaaa a aaaaaaaaa aaaa a. Aaa aaaa a aaa aa aa aaaa aaaaa aaaaaa aaaaa aaaaaaaa aaaaaa aa aaaaaaa. Aa aaaaaaa a aa.</p></div></div>
@@ -345,6 +380,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="breakout" id="bo-ptol">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Breakout · true weight"><div class="anno-tag">Annotation · Breakout · true weight</div><p>Four coins drawn with area proportional to mean weight; the dashed ring is the 40.7 g Standard 3 coin. Makes the cut physical: the same Zeus Ammon type at nearly half the bronze, then re-tariffed upward.</p><ul><li><b>Motion</b>Coins scale up in sequence on first view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">Zeus Ammon and Cleopatra VII · drawn to relative weight</div><h2 class="bo-title">Same god, <em>half the bronze</em></h2></div>
       <p class="bo-dek">Aaaaa aaaaaaaaa a aa aaaa aaaaaaa aaa aaa aaa aa. Aa aaaaaa aa aaaa a aaa aaaa a aaaa aaaaa aaaaa aaa aaaaaa aaa aaa. Aaa aaaaaaaa aaaaaaaaa aaaa aaaa.</p>
@@ -359,6 +395,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="summary">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Case III · summary"><div class="anno-tag">Annotation · Case III · summary</div><p>Headline figures for bronze per unit, the low point, the deepest cut and the re-tariffed coin, with a sparkline of grams per unit by series order.</p></aside>
     <div class="folder paper">
       <div class="tab">Case III · Summary</div>
       <div class="sum-grid">
@@ -382,6 +419,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h2>The Tudor penny</h2>
       <p>Aaaaaaaaa aaaaaaaa aaaaaa aa a aaaa aaa. A aaaaa aa aaaaaaa aaaaaaaa aaaaaaa a aaaa aaa aaaa aaaaaa aaaaa aaa aaaaaaaa aaaa. Aaaaaa aaa aaaaaa aaaaa a a aaaaaaa aaaaaaa.</p>
     </div>
+        <aside class="anno" aria-label="Annotation: Case IV · London · scrolling chart"><div class="anno-tag">Annotation · Case IV · London · scrolling chart</div><p>Two stacked panels share one timeline: Tower Mint indenture fineness (step line) above, fine silver in a single penny below, against the 1526 benchmark. The x-axis is expanded for 1541-1554 so the Great Debasement is readable.</p><p>Dashed segments mark stretches with no indenture in the file; the red tick in 1542 is Munro's alternative reading of an ambiguous indenture.</p><ul><li><b>Data</b>Challis 1992, App. 2 (indentures); Munro 2010 (penny fine silver).</li><li><b>Interaction</b>Scroll-driven; hover points for dates, wording and notes.</li></ul></aside>
     <div class="scrolly" data-chapter="tudor">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit IV-a · 5 November 1526</div><h3>Aaaaa Aaaa</h3><p>A aa aaaa aaaaaa aaa aa a aa. Aaaaa aaaa aaaaaaaaa aaa aaaa aaaaaaaaa aaaaaaaaa aaa aaaaa aaaaaa a aaaaaaa aaa aaa aaa. Aaaaaaaa a a aa a a aaaa aaaaaaaa a aaaa aaaaaaaaa aa. Aa aa aaaa aaaa aaa aaaaaaaa aa. Aaa aaaa a aaa a aaa.</p></div></div>
@@ -397,6 +435,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="breakout" id="bo-tudor">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Breakout · inside the penny"><div class="anno-tag">Annotation · Breakout · inside the penny</div><p>Each penny holds a silver disc sized to its fine silver; the dashed ring is the 1526 penny. Shows the low of 1551 and that even Elizabeth's restored penny never refilled the ring.</p><ul><li><b>Motion</b>Discs shrink from the 1526 size on first view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">1526 to 1601 · fine silver in one penny</div><h2 class="bo-title">What's left <em>inside the penny</em></h2></div>
       <p class="bo-dek">Aaaaa aaaa aa aaa aaaa aaaaaa aaaaaaaaa a a aa aa aaaaaa aaa aaaaa aaaaaaa aaaaaaaaa. Aaaaaa a aa aa aaaaaaaaa a aaa a aaa a aaaaa aaaaaaaaa aaaaa aaaaaaa.</p>
@@ -411,6 +450,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="summary">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Case IV · summary"><div class="anno-tag">Annotation · Case IV · summary</div><p>Sterling, the 1551 low, the 1601 penny and the permanent 27% loss, with a sparkline of fine silver per penny. Ends the historical cases.</p></aside>
     <div class="folder paper">
       <div class="tab">Case IV · Summary</div>
       <div class="sum-grid">
@@ -434,6 +474,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h2>The red string</h2>
       <p>A a aaaaaaa aa aa aaa aaa aaaaaaaaa aaaaaa aa aaaa aaaaa aaaaa aaaaaaaa aaaaaaaaa aaaa. Aaaaaa aaaa aa aaa aaaa aaaa aaa aaaaaaa aaaa aaa. Aaaaa aaaa.</p>
     </div>
+        <aside class="anno" aria-label="Annotation: The red string · synthesis"><div class="anno-tag">Annotation · The red string · synthesis</div><p>The four cases on one board. Each series is indexed to 100 at its first record and plotted by years elapsed, so the shape and pace of loss can be compared across different metals and centuries. The second note draws the red string between where each case ends.</p><p>This is the hinge of the piece: it closes the historical section and teases the one file still sealed.</p><ul><li><b>Caution</b>The series measure different things (fineness, gold share, bronze per unit, silver per penny); the index compares shape, not quantity.</li></ul></aside>
     <div class="scrolly" data-chapter="string">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">The board</div><h3>Aaaa Aaaaaaa Aaaaaa Aa</h3><p>Aaaaaaa a a a aaaa aaa a aa a. Aaaaa aaaaa aaa aa aaaaaaa aaa aaa a a aaaaaa aaaaaaaa a aaaaa a aaaaa. A aaaaa aaa aa aaaaaaaaa aaa aaa aaaa aaaa aaaaaa aaaaaa. Aaaa aaaaaaa aa aaaaaaa aaaaaaa aaa aaaa aaa aaa aaa aaaaaaaaa aaaaa aaaaaaaaa.</p><div class="note">Aaaaaaaaa aaaa aaa aaaa aaaaa a aa aaaa aaaa aa aaaaaaa aaaaa. Aaaaa aaaa aaa a aaaaaaaaa aaaaa.</div></div></div>
@@ -452,6 +493,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h2>The dollar in your pocket</h2>
       <p>Aaaa a a aaaaaa aaaa aaaaa a aaaaaaaaa aaa a. Aa aaaa aaaaa aa aaaaa aa aaaa aaaa aaaa aaa aaaaa aaa a aaaaaa. A aaa aaa aaa aaaaaaaa aaaaa aaaa aaaa aaaaaaaa aaa aaaaa aaaaaaa aaaaaaaa aaaaaaa.</p>
     </div>
+        <aside class="anno" aria-label="Annotation: Case V · the macro reveal"><div class="anno-tag">Annotation · Case V · the macro reveal</div><p>The story's one step out of history: the US dollar's purchasing power from 1913 to 2025 (BLS CPI-U), indexed to 1913 = 100. A penny in the corner shrinks in area with the dollar's value.</p><p>Note V-e re-projects the dollar onto the red-string board beside Rome, the comparison the whole piece has been building toward.</p><ul><li><b>Caution</b>Purchasing power and metal content are different measures; the final note says so on the page.</li><li><b>Interaction</b>Scroll-driven; the x-axis animates from calendar years to years elapsed.</li></ul></aside>
     <div class="scrolly" data-chapter="macro">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit V-a · 1913 to 1929</div><h3>Aaaaaa Aa Aaaa Aaa</h3><p>Aaa aaa aaaaa aaa aaaaa aaaa aaaa aaaaa aaa aaa aaa a aaaa. Aaa aa a aaaaaaa aaa aaaa aaaa a aaaaaaaa aaaaaa aaa aaaaaaaa aaa aaa aaa aaa. Aaaaaaaaa aa aaaa aaaaaaa aaaaa aaaaaa aaaaa aaa aa aaaa aaa aaa aaa. Aa aaa aaaaa aa aaaaa aaaaaaaa aaaaaaa aaa.</p></div></div>
@@ -467,6 +509,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="breakout" id="bo-us">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Breakout · a hundred cents"><div class="anno-tag">Annotation · Breakout · a hundred cents</div><p>One hundred cents, each worth one per cent of a 1913 dollar's buying power. A year counter runs from 1913 to 2025 and cents go dark as value is lost, ending with 3 left. The most direct image of the macro point.</p><ul><li><b>Motion</b>Runs once on first view (about five seconds); Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">1913 to 2025 · CPI-U purchasing power</div><h2 class="bo-title">One dollar, <em>a hundred cents</em></h2></div>
       <p class="bo-dek">Aaa aaaaa aaaaaaa aa aaaaaaaaa aaaaaaa aa aa aaaaa aaa. A aa aaaa aaaa aaaaaaa aaaa aa aa aaaaa aaa aaaaaaaa aaa aaaaaaaaa aaaaa aa aaaaaaaa. Aaaaa aaa aa aa.</p>
@@ -481,6 +524,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 
 <section class="summary">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Case V · summary"><div class="anno-tag">Annotation · Case V · summary</div><p>The macro figures: what it costs in 2025 to buy 1913's dollar, the 3.1% left, the 1980 peak and the span. Mirrors the historical folders so the dollar is filed as just another case.</p></aside>
     <div class="folder paper">
       <div class="tab">Case V · Summary</div>
       <div class="sum-grid">
@@ -504,6 +548,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
       <h2>Two coins with a thin skin</h2>
       <p>Aaaaaa aaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaa a aaaaaaaaa aaa aaa aaaaaaaaa aaaaaaaa aaaaa a aaaaa aaaa. Aaa aaaaa a aaaaaaa a aaa aa. Aaa aaa.</p>
     </div>
+    <aside class="anno" aria-label="Annotation: The last exhibit"><div class="anno-tag">Annotation · The last exhibit</div><p>Pairs Exhibit A with the modern US cent: one is bronze under a silver wash, the other zinc under a copper skin. A visual bookend that returns the reader to the coin they held at the start.</p></aside>
     <div class="pair">
       <figure>
         <svg id="coinT" viewBox="-110 -110 220 220" role="img" aria-label="Sketch of the Tetricus antoninianus"></svg>
@@ -520,6 +565,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 <!-- ======================= EPILOGUE ======================= -->
 <section class="note-sec">
   <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Epilogue"><div class="anno-tag">Annotation · Epilogue</div><p>The author's closing narrative (placeholder), mirroring the prologue's letter format to bookend the piece. It is followed by the <b>Case closed</b> link into the Evidence Room and the full source list.</p></aside>
     <article class="letter paper">
       <div class="eyebrow">Epilogue</div>
       <h2>Aa Aaaaaaa Aaa Aa</h2>
@@ -544,6 +590,7 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
   </div>
 </section>
 
+<button type="button" class="anno-toggle" id="annoToggle" aria-pressed="true">✎ Annotations: on</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="common.js"></script>
 <script>
@@ -1262,6 +1309,17 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
     }, 200);
   });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
+</script>
+
+<script>
+(function () {
+  const btn = document.getElementById("annoToggle");
+  let on = true;
+  try { on = localStorage.getItem("pennyAnno") !== "off"; } catch (e) {}
+  function apply() { document.body.classList.toggle("no-anno", !on); btn.setAttribute("aria-pressed", String(on)); btn.textContent = "✎ Annotations: " + (on ? "on" : "off"); }
+  btn.addEventListener("click", () => { on = !on; try { localStorage.setItem("pennyAnno", on ? "on" : "off"); } catch (e) {} apply(); window.dispatchEvent(new Event("resize")); });
+  apply();
 })();
 </script>
 </body>
