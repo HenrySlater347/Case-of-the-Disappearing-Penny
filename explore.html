@@ -121,6 +121,24 @@ td .nm { font-family: var(--f-display); font-weight: 700; }
 .conf { font-family: var(--f-type); font-size: 12px; padding: 1px 6px; border: 1px solid currentColor; white-space: nowrap; }
 .conf.hi { color: var(--verdigris-hi); } .conf.md { color: var(--brass-hi); } .conf.lo { color: var(--red-hi); }
 .src { font-family: var(--f-type); font-size: 13px; color: var(--muted); margin-top: 10px; }
+/* spending exhibits */
+#spMain { width: 100%; height: 420px; display: block; }
+#spCtx { width: 100%; height: 70px; display: block; border-top: 1px solid var(--rule); }
+.sub-h { font-size: 18px; color: var(--paper); margin: 34px 0 10px; }
+.sub-h span { font-family: var(--f-type); font-weight: normal; font-size: 12.5px; color: var(--muted); letter-spacing: 0; }
+#stripes { position: relative; }
+#stripes rect, #decades rect.hitb { cursor: pointer; }
+#decades { position: relative; }
+.machine { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: start; }
+.mc-in { padding: 18px 20px; display: grid; gap: 6px; font-family: var(--f-type); font-size: 13px; }
+.mc-in label { margin-top: 8px; color: #5b5444; }
+.mc-in output { font-family: var(--f-display); font-weight: 700; font-size: 18px; color: var(--ink); margin-left: 6px; }
+.mc-in input[type=number] { font-family: var(--f-display); font-size: 22px; padding: 6px 8px; border: 1px solid rgba(31,42,46,.3); background: rgba(31,42,46,.05); color: var(--ink); color-scheme: light; width: 100%; }
+.mc-in input[type=range] { accent-color: var(--red); width: 100%; }
+.mc-res { border-top: 1px dashed rgba(31,42,46,.3); margin-top: 12px; padding-top: 12px; }
+.mc-res .big { font-family: var(--f-display); font-weight: 700; font-size: clamp(30px, 4vw, 44px); line-height: 1.05; color: var(--red); font-variant-numeric: tabular-nums; }
+.mc-res div:last-child { font-family: var(--f-body); font-size: 17px; color: #2b2a26; margin-top: 6px; }
+.mc-viz svg { width: 100%; height: 360px; display: block; overflow: visible; }
 footer { padding-block: 30px 50px; font-family: var(--f-type); font-size: 13px; color: var(--muted); }
 
 @media (max-width: 860px) {
@@ -128,6 +146,8 @@ footer { padding-block: 30px 50px; font-family: var(--f-type); font-size: 13px; 
   .rail { grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); }
   #overlay { height: 380px; }
   .waffles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .machine { grid-template-columns: minmax(0, 1fr); }
+  #spMain { height: 340px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
@@ -156,7 +176,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 </style>
 </head>
 <body>
-<div class="anno-band"><div class="wrap"><aside class="anno" aria-label="Annotation: How the Evidence Room works"><div class="anno-tag">Annotation · How the Evidence Room works</div><p>The exploratory companion to the story. Where the case file is guided and told in order, this page is open: readers choose the cases, measures and moments, and every figure links back to its source row. All five cases are named here because the story has already revealed them.</p><p>The exhibits run from broad comparison to raw data:</p><ol><li><b>Compare the cases</b>: all series indexed to 100 by years elapsed, or side by side in their own units and calendars; switch measures per case and hover for the source.</li><li><b>The melting coins</b>: one coin per record for any case, filled with what remains.</li><li><b>Break a coin into 100 pieces</b>: four 10&nbsp;x&nbsp;10 grids; pick any moment for each.</li><li><b>Bronze at true weight</b>: every Ptolemaic standard at relative size; click one to lay out all its denominations.</li><li><b>The race to the bottom</b>: all cases start on the same day; press play to run the years.</li><li><b>Rate of loss</b>: sortable table of first, lowest, years to half and annual rate.</li><li><b>The ledger</b>: every row from the source files with method and confidence.</li></ol><ul><li><b>Data</b>The same figures as the story, from common.js; the original spreadsheets ship in the data folder.</li><li><b>Memory</b>Case selections are remembered in this browser only.</li><li><b>Reading</b>Use the ✎ button at the bottom right to hide these annotations.</li></ul></aside>
+<div class="anno-band"><div class="wrap"><aside class="anno" aria-label="Annotation: Summary · the Evidence Room"><div class="anno-tag">Annotation · Summary · the Evidence Room</div><p><b>In short:</b> the story guides you through the cases in order; this room lets you test them yourself. It holds the same five datasets (Rome, Britain, Alexandria, London and the US dollar) with every figure traceable to its source row.</p><p><b>What the new spending data adds:</b> nominal US spending rose 711-fold from 1913 to 2025, but 97 of every 100 of those 2025 dollars is the rise in prices. After inflation it still grew 22-fold, about 2.8% a year. That is the reason for hope beside the reason for concern; real spending fell in 31 of 112 years, most recently 2022-24.</p><p><b>What the evidence shows:</b> every series loses value. At its lowest, Rome's denarius keeps about 3% of its Augustan silver, the last British staters about 27% of their gold, Ptolemaic bronze about 49% of its bronze per unit, and the Tudor penny about 17% of its 1526 silver. The dollar ends at about 3% of its 1913 purchasing power. Only London and Alexandria partly recover.</p><p><b>How to use it:</b> start with Compare for the big picture, then use the coin exhibits to see single moments, and finish in the Ledger to check any number. The exhibits run from broad comparison to raw data:</p><ol><li><b>Compare the cases</b>: all series indexed to 100 by years elapsed, or side by side in their own units and calendars; switch measures per case and hover for the source.</li><li><b>The melting coins</b>: one coin per record for any case, filled with what remains.</li><li><b>Break a coin into 100 pieces</b>: four 10&nbsp;x&nbsp;10 grids; pick any moment for each.</li><li><b>Bronze at true weight</b>: every Ptolemaic standard at relative size; click one to lay out all its denominations.</li><li><b>The race to the bottom</b>: all cases start on the same day; press play to run the years.</li><li><b>What the dollars actually bought</b>: nominal and real US spending on one axis, with log or linear scale, zoom presets and a brushable strip, plus a year-by-year inflation strip.</li><li><b>Decade by decade</b>: nominal against real growth for every decade, sortable, so the good decades and the bad ones separate.</li><li><b>The dollar time machine</b>: any amount between any two years, with the cents kept drawn out and real spending growth over the same span alongside.</li><li><b>Rate of loss</b>: sortable table of first, lowest, years to half and annual rate.</li><li><b>The ledger</b>: every row from the source files with method and confidence.</li></ol><ul><li><b>Data</b>The same figures as the story, from common.js; the original spreadsheets ship in the data folder.</li><li><b>Memory</b>Case selections are remembered in this browser only.</li><li><b>Reading</b>Use the ✎ button at the bottom right to hide these annotations.</li></ul></aside>
 </div></div>
 <header>
   <div class="wrap">
@@ -164,7 +184,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <div class="eyebrow">The Case of the Disappearing Penny · Part two</div>
       <h1>The Evidence Room</h1>
       <p>Aaaaaaaa aaa aaaa a a aaaa aaaaaaa aa aaaaaaaa aaaaa aaaaa aaa aaaa aaaaa aaaaaaaaa aaa. Aaa aa aaaaaa aaaaaaa aaaaa aaaaaaaaa aa aaaaaa aaa aa a a aaa. A.</p>
-      <nav class="jump" aria-label="Exhibits on this page"><a href="#compare">Compare</a><a href="#melt">Melting coins</a><a href="#parts">100 parts</a><a href="#weight">True weight</a><a href="#raceSec">The race</a><a href="#lossSec">Rate of loss</a><a href="#ledgerSec">Ledger</a></nav>
+      <nav class="jump" aria-label="Exhibits on this page"><a href="#compare">Compare</a><a href="#melt">Melting coins</a><a href="#parts">100 parts</a><a href="#weight">True weight</a><a href="#raceSec">The race</a><a href="#spendSec">Spending</a><a href="#decadeSec">By decade</a><a href="#machineSec">Time machine</a><a href="#lossSec">Rate of loss</a><a href="#ledgerSec">Ledger</a></nav>
     </div>
     <a class="back" href="./">← Back to the case file</a>
   </div>
@@ -246,20 +266,73 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
   </div>
 </section>
 
-<section id="lossSec" class="band">
+<section id="spendSec" class="band">
   <div class="wrap">
     <div class="sec-head">
-      <div><div class="eyebrow">Exhibit 6 · computed from the selected measures</div><h2>Rate of <em>loss</em></h2></div>
+      <div><div class="eyebrow">Exhibit 6 · Washington · nominal and real spending</div><h2>What the dollars <em>actually bought</em></h2></div>
+      <p>Aaaa aaaaa aaaaaa aaaa aaa aaaaaaa aaaa aaaaa aa aaaaa. Aaaaaa aaaa aaa aaa aaaaa aaaa aaaaaa aaaaaaa aa aaaa aaaaa. Aaa aaaaa.</p>
+    </div>
+    <div class="controls">
+      <span><span class="seg-label">Scale</span><span class="seg" id="spScale"><button type="button" data-v="log" aria-pressed="true">Log</button><button type="button" data-v="lin" aria-pressed="false">Linear</button></span></span>
+      <span><span class="seg-label">Show</span><span class="seg" id="spShow"><button type="button" data-v="both" aria-pressed="true">Nominal &amp; real</button><button type="button" data-v="real" aria-pressed="false">Real only</button></span></span>
+      <span><span class="seg-label">Zoom</span><span class="seg" id="spZoom"><button type="button" data-v="1913,2025" aria-pressed="true">All</button><button type="button" data-v="1913,1950">1913-50</button><button type="button" data-v="1965,1990">1965-90</button><button type="button" data-v="2000,2025">2000-25</button></span></span>
+    </div>
+    <div class="chartbox" id="spBox">
+      <svg id="spMain" role="img" aria-label="Nominal and real US spending, 1913 to 2025"></svg>
+      <svg id="spCtx" role="img" aria-label="Drag to choose the years shown above"></svg>
+      <div class="tip paper" id="spTip" hidden></div>
+    </div>
+    <div class="foot">Drag across the strip under the chart to zoom into any span of years; double-click it to reset. Real = nominal × 1913 CPI ÷ that year's CPI.</div>
+    <h3 class="sub-h">Inflation, year by year <span>· click a year to load it into the time machine below</span></h3>
+    <div class="viz" id="stripes"></div>
+    <div class="key"><div class="items" id="stripeKey"></div><div>Source: BLS CPI-U annual inflation</div></div>
+  </div>
+</section>
+
+<section id="decadeSec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Exhibit 7 · growth by decade</div><h2>Decade by <em>decade</em></h2></div>
+      <p>Aaaaa aaaaaa aaaa aa aaaaaa aaa aaaa aaaaaaaa aa aaaa. Aaaaaa aaaaa aaaa aaaaa aa aaa aaaaaaa aaaaaa aaaaa. Aaaa aaaaa aa a.</p>
+    </div>
+    <div class="controls"><span class="seg-label">Sort</span><span class="seg" id="decSort"><button type="button" data-v="time" aria-pressed="true">By decade</button><button type="button" data-v="real" aria-pressed="false">By real growth</button><button type="button" data-v="infl" aria-pressed="false">By inflation</button></span></div>
+    <div class="viz" id="decades"></div>
+    <div class="key"><div class="items"><span><i style="background:#D2A93E"></i>Nominal growth</span><span><i style="background:#E4E6E8"></i>Real growth (after inflation)</span><span><i style="background:#C9524A"></i>Real decline</span></div><div>Source: Macro_US_Data.xlsx · 1913-20 is a seven-year span; 2020-25 is five years</div></div>
+  </div>
+</section>
+
+<section id="machineSec" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Exhibit 8 · any two years</div><h2>The dollar <em>time machine</em></h2></div>
+      <p>Aaaa aaaaa aaaa aa aaaaaaa aaa aaaaaa aaaa a aaaaaaa. Aaaaaa aaa aaaaaa aaaa aaaa aaaaa aaaaa aaaa. Aaaaa aaa aaaa.</p>
+    </div>
+    <div class="machine">
+      <div class="mc-in paper">
+        <label for="mcAmt">Amount, $</label><input type="number" id="mcAmt" value="100" min="0" step="1">
+        <label for="mcFrom">From <output id="mcFromOut">1913</output></label><input type="range" id="mcFrom" min="1913" max="2025" value="1913">
+        <label for="mcTo">To <output id="mcToOut">2025</output></label><input type="range" id="mcTo" min="1913" max="2025" value="2025">
+        <div class="mc-res"><div class="big" id="mcBig"></div><div id="mcLine"></div></div>
+      </div>
+      <div class="mc-viz"><svg id="mcSvg" role="img" aria-label="Cents of buying power kept between the two years"></svg></div>
+    </div>
+  </div>
+</section>
+
+<section id="lossSec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="eyebrow">Exhibit 9 · computed from the selected measures</div><h2>Rate of <em>loss</em></h2></div>
       <p>Aaaa a aaa aaaaaaaa aa aaaaaa a aa aaaaaa aaaaaa aaa aaaa aaaaaaaa aaaaa aa aaa. Aa aaaaa a aaaaaaaa a aaa aaa aaa aaaaaa a aaaaaaa. Aaa.</p>
     </div>
     <div class="tablewrap"><table id="loss"><thead></thead><tbody></tbody></table></div>
   </div>
 </section>
 
-<section id="ledgerSec">
+<section id="ledgerSec" class="band">
   <div class="wrap">
     <div class="sec-head">
-      <div><div class="eyebrow">Exhibit 7 · every row in the file</div><h2>The <em>ledger</em></h2></div>
+      <div><div class="eyebrow">Exhibit 10 · every row in the file</div><h2>The <em>ledger</em></h2></div>
       <p>A aaaaa aa aa a aaaaaaaaa aaaaaa aa aa a aaaaa aaaaaaaa aaaaaa aaaaaa aaaa aaaaaaaa. Aaaaa a aa aaaa aaa aaa aaaa aa.</p>
     </div>
     <div class="tabs" role="tablist" id="tabs"></div>
@@ -269,7 +342,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 </section>
 
 <footer>
-  <div class="wrap">Sources: Walker 1976-78; Butcher &amp; Ponting 2005 (OJA 24.2); Van Arsdell, Celtic Coinage of Britain 3rd ed. online; AJN 2021 Metrological Survey of Ptolemaic Bronze Coins II; Challis 1992, App. 2; Munro 2010 (Toronto WP 417); BLS CPI-U. <a href="./">Return to the case file</a>.</div>
+  <div class="wrap">Sources: Walker 1976-78; Butcher &amp; Ponting 2005 (OJA 24.2); Van Arsdell, Celtic Coinage of Britain 3rd ed. online; AJN 2021 Metrological Survey of Ptolemaic Bronze Coins II; Challis 1992, App. 2; Munro 2010 (Toronto WP 417); BLS CPI-U; US nominal and real spending from Macro_US_Data.xlsx. <a href="./">Return to the case file</a>.</div>
 </footer>
 
 <button type="button" class="anno-toggle" id="annoToggle" aria-pressed="true">✎ Annotations: on</button>
@@ -627,7 +700,235 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
   });
   yr.addEventListener("input", () => { stop(); setRace(+yr.value, false); });
 
-  /* ================= Exhibit 6: loss ================= */
+  /* ================= Exhibit 6: nominal and real spending ================= */
+  const U = P.us, NOM = C.brass, REAL = C.fine;
+  const fmt$ = v => "$" + (v >= 100 ? d3.format(",.0f")(v) : v >= 10 ? v.toFixed(1) : v.toFixed(2)) + " bn";
+  const sp = { scale: "log", show: "both", dom: [1913, 2025] };
+  const spMain = d3.select("#spMain"), spCtx = d3.select("#spCtx"), spTip = d3.select("#spTip"), spBox = document.getElementById("spBox");
+  let spDraw = null;
+  function buildSpend() {
+    spMain.selectAll("*").remove(); spCtx.selectAll("*").remove();
+    const w = spMain.node().clientWidth || 900, h = spMain.node().clientHeight || 420, narrow = w < 560;
+    spMain.attr("viewBox", `0 0 ${w} ${h}`);
+    const m = { t: 24, r: narrow ? 60 : 96, b: 30, l: 64 };
+    spMain.append("defs").append("clipPath").attr("id", "spC").append("rect").attr("x", m.l).attr("y", 0).attr("width", w - m.l - m.r).attr("height", h - m.b);
+    const pat = spMain.select("defs").append("pattern").attr("id", "spHatch").attr("width", 6).attr("height", 6).attr("patternUnits", "userSpaceOnUse").attr("patternTransform", "rotate(45)");
+    pat.append("rect").attr("width", 6).attr("height", 6).attr("fill", "#3a2a1f"); pat.append("line").attr("y2", 6).attr("stroke", "rgba(201,82,74,.6)").attr("stroke-width", 1.4);
+    const gy = spMain.append("g").attr("class", "grid"), ay = spMain.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`), ax = spMain.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`);
+    const pl = spMain.append("g").attr("clip-path", "url(#spC)");
+    const gap = pl.append("path").attr("fill", "url(#spHatch)");
+    const nomP = pl.append("path").attr("fill", "none").attr("stroke", NOM).attr("stroke-width", 2.4);
+    const realP = pl.append("path").attr("fill", "none").attr("stroke", REAL).attr("stroke-width", 2.4);
+    const lbl = spMain.append("g");
+    const lN = lbl.append("text").attr("fill", NOM).attr("font-size", 12), lR = lbl.append("text").attr("fill", REAL).attr("font-size", 12);
+    const hov = spMain.append("g").style("pointer-events", "none").attr("opacity", 0);
+    const vl = hov.append("line").attr("stroke", C.paper).attr("stroke-opacity", .45).attr("stroke-dasharray", "3 3").attr("y1", m.t).attr("y2", h - m.b);
+    const cN = hov.append("circle").attr("r", 5).attr("fill", NOM).attr("stroke", C.ground2).attr("stroke-width", 2);
+    const cR = hov.append("circle").attr("r", 5).attr("fill", REAL).attr("stroke", C.ground2).attr("stroke-width", 2);
+    const hit = spMain.append("rect").attr("x", m.l).attr("y", m.t).attr("width", w - m.l - m.r).attr("height", h - m.t - m.b).attr("fill", "transparent").style("cursor", "crosshair");
+    let x, y;
+    function draw(anim) {
+      const vis = U.filter(d => d.year >= sp.dom[0] && d.year <= sp.dom[1]);
+      const both = sp.show === "both";
+      const hi = d3.max(vis, d => (both ? d.nom : d.real)), lo = d3.min(vis, d => d.real);
+      x = d3.scaleLinear(sp.dom, [m.l, w - m.r]);
+      y = sp.scale === "log" ? d3.scaleLog([lo * 0.85, hi * 1.2], [h - m.b, m.t]) : d3.scaleLinear([0, hi * 1.08], [h - m.b, m.t]).nice();
+      const dur = anim && !REDUCED ? 700 : 0, tr = sel => (dur ? sel.transition().duration(dur).ease(d3.easeCubicInOut) : sel);
+      const [d0, d1] = y.domain(), ticks = sp.scale === "log" ? [1, 2, 3, 5, 10, 20, 30, 50, 100, 200, 300, 500, 1000, 2000, 3000].filter(t => t >= d0 && t <= d1).filter((t, i, a) => a.length <= 8 || /^[13]/.test(String(t))) : y.ticks(6);
+      gy.selectAll("line").data(ticks).join("line").attr("x1", m.l).attr("x2", w - m.r).call(sel => tr(sel).attr("y1", y).attr("y2", y));
+      tr(ay).call(d3.axisLeft(y).tickValues(ticks).tickFormat(v => "$" + d3.format(",~r")(v)).tickSize(0)).call(g => g.select(".domain").remove());
+      tr(ax).call(d3.axisBottom(x).ticks(narrow ? 4 : 9).tickFormat(d3.format("d")).tickSizeOuter(0));
+      const yy = v => y(Math.max(y.domain()[0] * 0.5, v));
+      tr(nomP).attr("d", d3.line().x(d => x(d.year)).y(d => yy(d.nom))(U)).attr("opacity", both ? 1 : 0);
+      tr(realP).attr("d", d3.line().x(d => x(d.year)).y(d => yy(d.real))(U));
+      tr(gap).attr("d", d3.area().x(d => x(d.year)).y0(d => yy(d.real)).y1(d => yy(d.nom))(U)).attr("opacity", both ? 1 : 0);
+      const e = vis[vis.length - 1];
+      tr(lN).attr("x", x(e.year) + 6).attr("y", yy(e.nom) + 4).attr("opacity", both ? 1 : 0); lN.text("Nominal");
+      tr(lR).attr("x", x(e.year) + 6).attr("y", yy(e.real) + 4); lR.text(narrow ? "Real" : "Real (1913 $)");
+    }
+    hit.on("pointermove", ev => {
+      const [mx] = d3.pointer(ev, spMain.node());
+      const yr = Math.round(Math.max(sp.dom[0], Math.min(sp.dom[1], x.invert(mx)))), d = U.find(u => u.year === yr);
+      const both = sp.show === "both";
+      hov.attr("opacity", 1); vl.attr("x1", x(yr)).attr("x2", x(yr));
+      cN.attr("cx", x(yr)).attr("cy", y(d.nom)).attr("opacity", both ? 1 : 0); cR.attr("cx", x(yr)).attr("cy", y(d.real));
+      spTip.attr("hidden", null).html(`<b>${yr}</b><br>Nominal ${fmt$(d.nom)}<br>Real ${fmt$(d.real)} in 1913 dollars` + (d.realChg != null ? `<br>Real ${d.realChg >= 0 ? "+" : ""}${d.realChg.toFixed(1)}% · nominal ${d.nomChg >= 0 ? "+" : ""}${d.nomChg.toFixed(1)}%<br>Inflation ${d.infl.toFixed(1)}% · prices are ${(d.nom / d.real).toFixed(1)}× 1913` : "<br>Base year"));
+      const r = spBox.getBoundingClientRect(), tw = spTip.node().offsetWidth;
+      let lx = ev.clientX - r.left + 16; if (lx + tw > r.width - 6) lx = ev.clientX - r.left - tw - 16;
+      spTip.style("left", lx + "px").style("top", Math.max(4, y(d.real) - 120) + "px");
+    }).on("pointerleave", () => { hov.attr("opacity", 0); spTip.attr("hidden", true); });
+    // context strip with a brush
+    const ch = spCtx.node().clientHeight || 70;
+    spCtx.attr("viewBox", `0 0 ${w} ${ch}`);
+    const xc = d3.scaleLinear([1913, 2025], [m.l, w - m.r]), yc = d3.scaleLog([2, 4000], [ch - 18, 6]);
+    spCtx.append("path").attr("d", d3.area().x(d => xc(d.year)).y0(d => yc(d.real)).y1(d => yc(d.nom))(U)).attr("fill", "rgba(201,82,74,.25)");
+    spCtx.append("path").attr("d", d3.line().x(d => xc(d.year)).y(d => yc(d.nom))(U)).attr("fill", "none").attr("stroke", NOM).attr("stroke-width", 1.2);
+    spCtx.append("path").attr("d", d3.line().x(d => xc(d.year)).y(d => yc(d.real))(U)).attr("fill", "none").attr("stroke", REAL).attr("stroke-width", 1.2);
+    spCtx.append("g").attr("class", "axis").attr("transform", `translate(0,${ch - 18})`).call(d3.axisBottom(xc).ticks(narrow ? 4 : 12).tickFormat(d3.format("d")).tickSize(3));
+    const brush = d3.brushX().extent([[m.l, 2], [w - m.r, ch - 18]]).on("brush end", ev => {
+      if (!ev.selection) { if (ev.type === "end" && ev.sourceEvent) bg.transition().duration(REDUCED ? 0 : 600).call(brush.move, [xc(1913), xc(2025)]); return; }
+      let [a, b] = ev.selection.map(v => Math.round(xc.invert(v)));
+      if (b - a < 3) b = Math.min(2025, a + 3);
+      sp.dom = [a, b];
+      if (ev.sourceEvent) d3.selectAll("#spZoom button").attr("aria-pressed", "false");
+      draw(false);
+    });
+    const bg = spCtx.append("g").attr("class", "brush").call(brush);
+    bg.selectAll(".selection").attr("fill", C.paper).attr("fill-opacity", .12).attr("stroke", C.paper).attr("stroke-opacity", .6);
+    spCtx.on("dblclick", () => bg.transition().duration(REDUCED ? 0 : 600).call(brush.move, [xc(1913), xc(2025)]));
+    bg.call(brush.move, [xc(sp.dom[0]), xc(sp.dom[1])]);
+    draw(false);
+    spDraw = { draw, zoom: (a, b) => bg.transition().duration(REDUCED ? 0 : 900).ease(d3.easeCubicInOut).call(brush.move, [xc(a), xc(b)]) };
+  }
+  d3.selectAll("#spScale button").on("click", function () { sp.scale = this.dataset.v; d3.selectAll("#spScale button").attr("aria-pressed", function () { return String(this.dataset.v === sp.scale); }); spDraw.draw(true); });
+  d3.selectAll("#spShow button").on("click", function () { sp.show = this.dataset.v; d3.selectAll("#spShow button").attr("aria-pressed", function () { return String(this.dataset.v === sp.show); }); spDraw.draw(true); });
+  d3.selectAll("#spZoom button").on("click", function () { const v = this.dataset.v, [a, b] = v.split(",").map(Number); d3.selectAll("#spZoom button").attr("aria-pressed", function () { return String(this.dataset.v === v); }); spDraw.zoom(a, b); });
+
+  // inflation stripes
+  const inflColor = v => (v == null ? "#3a2a1f" : v >= 0 ? d3.interpolateRgb("#4a3a2e", "#E2675C")(Math.min(1, v / 14)) : d3.interpolateRgb("#4a3a2e", "#8FB3C9")(Math.min(1, -v / 11)));
+  function drawStripes() {
+    const box = d3.select("#stripes"); box.selectAll("*").remove();
+    const w = Math.max(280, box.node().clientWidth), h = 96;
+    const svg = box.append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("height", h);
+    const tip = box.append("div").attr("class", "tip paper").attr("hidden", true);
+    const x = d3.scaleBand(U.map(d => d.year), [0, w]).padding(0);
+    const bars = svg.append("g").selectAll("rect").data(U).join("rect").attr("x", d => x(d.year)).attr("width", x.bandwidth() + 0.6).attr("y", 0).attr("height", h - 22).attr("fill", d => inflColor(d.infl));
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - 22})`).call(d3.axisBottom(x).tickValues(U.map(d => d.year).filter(y => y % (w < 600 ? 25 : 10) === 0)).tickSize(3)).select(".domain").remove();
+    const mark = svg.append("rect").attr("y", -2).attr("height", h - 18).attr("width", x.bandwidth() + 2).attr("fill", "none").attr("stroke", C.paper).attr("stroke-width", 1.5).attr("opacity", 0);
+    bars.on("pointermove", function (ev, d) {
+      mark.attr("x", x(d.year) - 1).attr("opacity", 1);
+      const [px] = d3.pointer(ev, box.node());
+      tip.attr("hidden", null).html(`<b>${d.year}</b><br>${d.infl == null ? "Base year" : (d.infl >= 0 ? "Inflation " : "Deflation ") + Math.abs(d.infl).toFixed(1) + "%"}<br>Real spending ${d.realChg == null ? "–" : (d.realChg >= 0 ? "+" : "") + d.realChg.toFixed(1) + "%"}`);
+      const tw = tip.node().offsetWidth; tip.style("left", Math.min(w - tw, Math.max(0, px - tw / 2)) + "px").style("top", (h - 10) + "px");
+    }).on("pointerleave", () => { mark.attr("opacity", 0); tip.attr("hidden", true); })
+      .on("click", (ev, d) => { setMachine({ from: d.year }); document.getElementById("machineSec").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth" }); });
+    if (!REDUCED && stripesAnim) { stripesAnim = false; bars.attr("height", 0).transition().delay((d, i) => i * 8).duration(400).attr("height", h - 22); }
+    const key = d3.select("#stripeKey"); key.selectAll("*").remove();
+    [["Deflation, up to -10.5%", "#8FB3C9"], ["About 0%", "#4a3a2e"], ["Inflation, up to 17.97%", "#E2675C"]].forEach(([t, c]) => { const s0 = key.append("span"); s0.append("i").style("background", c); s0.append("span").text(t); });
+  }
+  let stripesAnim = true;
+
+  /* ================= Exhibit 7: decade by decade ================= */
+  const DEC = [1913, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020].map((a, i, arr) => {
+    const b = arr[i + 1] || 2025, A = U.find(d => d.year === a), B = U.find(d => d.year === b);
+    const yrs = U.filter(d => d.year > a && d.year <= b);
+    const worst = d3.least(yrs, d => d.realChg);
+    return { id: a === 1913 ? "1913-20" : a === 2020 ? "2020-25" : a + "s", a, b, nom: (B.nom / A.nom - 1) * 100, real: (B.real / A.real - 1) * 100, infl: (B.cpi / A.cpi - 1) * 100, down: yrs.filter(d => d.realChg < 0).length, n: yrs.length, worst };
+  });
+  let decSort = "time";
+  function drawDecades(anim) {
+    const box = d3.select("#decades");
+    let svg = box.select("svg");
+    const w = Math.max(280, box.node().clientWidth), narrow = w < 640, h = narrow ? 300 : 340;
+    const m = { t: 18, r: 8, b: 40, l: 52 };
+    if (svg.empty() || +svg.attr("data-w") !== w) {
+      box.selectAll("*").remove();
+      svg = box.append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("height", h).attr("data-w", w);
+      box.append("div").attr("class", "tip paper").attr("hidden", true);
+      svg.append("g").attr("class", "grid"); svg.append("g").attr("class", "axis ay").attr("transform", `translate(${m.l},0)`);
+      svg.append("line").attr("class", "zero").attr("stroke", C.paper).attr("stroke-opacity", .5);
+      svg.append("g").attr("class", "groups");
+    }
+    const tip = box.select(".tip");
+    const order = DEC.slice().sort((p, q) => (decSort === "time" ? p.a - q.a : decSort === "real" ? q.real - p.real : q.infl - p.infl));
+    const x = d3.scaleBand(order.map(d => d.id), [m.l, w - m.r]).padding(0.22), xi = d3.scaleBand(["nom", "real"], [0, x.bandwidth()]).padding(0.08);
+    const y = d3.scaleLinear([-30, 230], [h - m.b, m.t]);
+    svg.select(".grid").selectAll("line").data([50, 100, 150, 200]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y).attr("y2", y);
+    svg.select(".ay").call(d3.axisLeft(y).tickValues([0, 50, 100, 150, 200]).tickFormat(v => "+" + v + "%").tickSize(0)).call(g => g.select(".domain").remove());
+    svg.select(".zero").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y(0)).attr("y2", y(0));
+    const dur = anim && !REDUCED ? 750 : 0;
+    const gs = svg.select(".groups").selectAll("g.dec").data(order, d => d.id).join(en => {
+      const g = en.append("g").attr("class", "dec").attr("transform", d => `translate(${x(d.id)},0)`);
+      g.append("rect").attr("class", "nom").attr("fill", C.brass).attr("rx", 2);
+      g.append("rect").attr("class", "real").attr("rx", 2);
+      g.append("text").attr("class", "lab").attr("text-anchor", "middle").attr("font-size", narrow ? 9.5 : 11.5);
+      g.append("text").attr("class", "rv").attr("text-anchor", "middle").attr("font-size", narrow ? 9 : 10.5);
+      g.append("rect").attr("class", "hitb").attr("fill", "transparent");
+      return g;
+    });
+    gs.transition().duration(dur).ease(d3.easeCubicInOut).attr("transform", d => `translate(${x(d.id)},0)`);
+    const bar = (sel, k) => sel.attr("x", xi(k)).attr("width", xi.bandwidth()).attr("y", d => y(Math.max(0, d[k]))).attr("height", d => Math.abs(y(d[k]) - y(0)));
+    const grow = !gs.select("rect.nom").attr("height") && !REDUCED;
+    gs.select("rect.nom").call(sel => { if (grow) sel.attr("y", y(0)).attr("height", 0).attr("x", xi("nom")).attr("width", xi.bandwidth()).transition().delay((d, i) => i * 50).duration(600).call(t => bar(t, "nom")); else bar(sel, "nom"); });
+    gs.select("rect.real").attr("fill", d => (d.real >= 0 ? C.fine : C.red)).call(sel => { if (grow) sel.attr("y", y(0)).attr("height", 0).attr("x", xi("real")).attr("width", xi.bandwidth()).transition().delay((d, i) => 200 + i * 50).duration(600).call(t => bar(t, "real")); else bar(sel, "real"); });
+    gs.select("text.lab").attr("x", x.bandwidth() / 2).attr("y", h - m.b + 16).attr("fill", C.paper).text(d => d.id);
+    gs.select("text.rv").attr("x", xi("real") + xi.bandwidth() / 2).attr("y", d => (d.real >= 0 ? y(d.real) - 5 : y(d.real) + 12)).attr("fill", d => (d.real >= 0 ? C.fine : "#E08A80")).text(d => (narrow ? "" : (d.real >= 0 ? "+" : "") + Math.round(d.real) + "%"));
+    gs.select("rect.hitb").attr("x", 0).attr("width", x.bandwidth()).attr("y", m.t).attr("height", h - m.t - m.b + 20)
+      .on("pointermove", function (ev, d) {
+        gs.attr("opacity", o => (o === d ? 1 : 0.4));
+        const [px, py] = d3.pointer(ev, box.node());
+        tip.attr("hidden", null).html(`<b>${d.id}</b> (${d.a}-${d.b})<br>Nominal ${d.nom >= 0 ? "+" : ""}${d.nom.toFixed(0)}% · real ${d.real >= 0 ? "+" : ""}${d.real.toFixed(0)}%<br>Prices ${d.infl >= 0 ? "+" : ""}${d.infl.toFixed(0)}%<br>Real fell in ${d.down} of ${d.n} years` + (d.worst.realChg < 0 ? `; worst ${d.worst.year}, ${d.worst.realChg.toFixed(1)}%` : ""));
+        const tw = tip.node().offsetWidth; let lx = px + 14; if (lx + tw > w) lx = px - tw - 14;
+        tip.style("left", lx + "px").style("top", Math.max(0, py - 90) + "px");
+      }).on("pointerleave", () => { gs.attr("opacity", 1); tip.attr("hidden", true); });
+  }
+  d3.selectAll("#decSort button").on("click", function () { decSort = this.dataset.v; d3.selectAll("#decSort button").attr("aria-pressed", function () { return String(this.dataset.v === decSort); }); drawDecades(true); });
+
+  /* ================= Exhibit 8: the time machine ================= */
+  const mc = { from: 1913, to: 2025, amt: 100 };
+  const mcAmt = document.getElementById("mcAmt"), mcFrom = document.getElementById("mcFrom"), mcTo = document.getElementById("mcTo");
+  let mcViz = null;
+  function buildMachine() {
+    const svg = d3.select("#mcSvg"); svg.selectAll("*").remove();
+    const w = svg.node().clientWidth || 700, h = 360, narrow = w < 560;
+    svg.attr("viewBox", `0 0 ${w} ${h}`);
+    const gw = Math.min(narrow ? w : w * 0.55, 330), cell = gw / 10, r = cell * 0.4;
+    const grid = svg.append("g").attr("transform", `translate(0,30)`);
+    svg.append("text").attr("x", 0).attr("y", 16).attr("fill", C.paper).attr("font-size", 12.5).text("100 cents of the first year's buying power");
+    const cents = grid.selectAll("circle").data(d3.range(100)).join("circle").attr("cx", i => (i % 10) * cell + cell / 2).attr("cy", i => Math.floor(i / 10) * cell + cell / 2).attr("r", r).attr("stroke-width", 1);
+    const kept = svg.append("text").attr("x", 0).attr("y", 30 + gw + 26).style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 22).attr("fill", C.paper);
+    let rv = null;
+    if (!narrow) {
+      const x0 = gw + 60, bw = 70, top = 46, bh = 250;
+      svg.append("text").attr("x", x0).attr("y", 16).attr("fill", C.paper).attr("font-size", 12.5).text("Real spending over the same span");
+      const yb = d3.scaleLinear([0, 1], [top + bh, top]);
+      const b1 = svg.append("rect").attr("x", x0).attr("width", bw).attr("fill", "#8f9699").attr("rx", 3);
+      const b2 = svg.append("rect").attr("x", x0 + bw + 30).attr("width", bw).attr("fill", REAL).attr("rx", 3);
+      const t1 = svg.append("text").attr("x", x0 + bw / 2).attr("text-anchor", "middle").attr("font-size", 12).attr("fill", C.paper);
+      const t2 = svg.append("text").attr("x", x0 + bw * 1.5 + 30).attr("text-anchor", "middle").attr("font-size", 12).attr("fill", C.paper);
+      const y1 = svg.append("text").attr("x", x0 + bw / 2).attr("y", top + bh + 18).attr("text-anchor", "middle").attr("font-size", 12);
+      const y2 = svg.append("text").attr("x", x0 + bw * 1.5 + 30).attr("y", top + bh + 18).attr("text-anchor", "middle").attr("font-size", 12);
+      const ratio = svg.append("text").attr("x", x0).attr("y", top + bh + 46).style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 20).attr("fill", REAL);
+      rv = (A, B, d) => {
+        const mx = Math.max(A.real, B.real); yb.domain([0, mx]);
+        const tr = s0 => (d ? s0.transition().duration(d) : s0);
+        tr(b1).attr("y", yb(A.real)).attr("height", top + bh - yb(A.real)); tr(b2).attr("y", yb(B.real)).attr("height", top + bh - yb(B.real));
+        tr(t1).attr("y", yb(A.real) - 6).text(fmt$(A.real)); tr(t2).attr("y", yb(B.real) - 6).text(fmt$(B.real));
+        y1.text(A.year); y2.text(B.year);
+        const k = B.real / A.real;
+        ratio.text(k >= 1 ? `×${k.toFixed(k < 10 ? 2 : 1)} real` : `${((k - 1) * 100).toFixed(1)}% real`).attr("fill", k >= 1 ? REAL : C.red);
+      };
+    }
+    let lastLeft = null;
+    mcViz = d => {
+      const A = U.find(u => u.year === mc.from), B = U.find(u => u.year === mc.to);
+      const left = Math.max(0, Math.min(100, Math.round((A.cpi / B.cpi) * 100)));
+      const fill = i => (i < left ? C.bronzeHi : "none"), stroke = i => (i < left ? "#6b3f22" : "rgba(239,228,204,.28)");
+      if (d && lastLeft != null && !REDUCED) {
+        const lo = Math.min(left, lastLeft), hi = Math.max(left, lastLeft);
+        cents.filter(i => i >= lo && i < hi).transition().delay(i => (left < lastLeft ? (hi - 1 - i) : (i - lo)) * 8).duration(160).attr("fill", fill).attr("stroke", stroke);
+      } else cents.interrupt().attr("fill", fill).attr("stroke", stroke);
+      lastLeft = left;
+      kept.text(B.cpi >= A.cpi ? `${left} of 100 cents kept` : `Worth ${(A.cpi / B.cpi * 100).toFixed(0)} cents: prices fell`);
+      if (rv) rv(A, B, d);
+    };
+  }
+  function setMachine(o) {
+    Object.assign(mc, o);
+    mcFrom.value = mc.from; mcTo.value = mc.to;
+    document.getElementById("mcFromOut").textContent = mc.from; document.getElementById("mcToOut").textContent = mc.to;
+    const A = U.find(u => u.year === mc.from), B = U.find(u => u.year === mc.to);
+    const v = mc.amt * B.cpi / A.cpi;
+    const money = n => "$" + (n >= 1000 ? d3.format(",.0f")(n) : n.toFixed(2));
+    document.getElementById("mcBig").textContent = money(v);
+    document.getElementById("mcLine").textContent = `${money(mc.amt)} in ${mc.from} buys what ${money(v)} buys in ${mc.to}. Prices ${B.cpi >= A.cpi ? "rose" : "fell"} ${d3.format(",.0f")(Math.abs((B.cpi / A.cpi - 1) * 100))}% between them; real spending ${B.real >= A.real ? "grew" : "fell"} ${d3.format(",.0f")(Math.abs((B.real / A.real - 1) * 100))}%.`;
+    if (mcViz) mcViz(250);
+  }
+  mcAmt.addEventListener("input", () => setMachine({ amt: Math.max(0, +mcAmt.value || 0) }));
+  mcFrom.addEventListener("input", () => setMachine({ from: +mcFrom.value }));
+  mcTo.addEventListener("input", () => setMachine({ to: +mcTo.value }));
+
+  /* ================= Exhibit 9: loss ================= */
   const COLS = [{ k: "name", t: "Case" }, { k: "measure", t: "Measure" }, { k: "first", t: "First" }, { k: "low", t: "Lowest" }, { k: "last", t: "Last" }, { k: "span", t: "Span, yrs" }, { k: "lowIdx", t: "Low as % of first" }, { k: "half", t: "Years to half" }, { k: "rate", t: "Annual rate to low" }];
   let sortK = "lowIdx", sortDir = 1;
   function drawLoss() {
@@ -647,7 +948,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       `<td class="num">${r.half == null ? "never" : Math.round(r.half)}</td><td class="num">${r.rate.toFixed(2)}% / yr</td>`);
   }
 
-  /* ================= Exhibit 7: ledger ================= */
+  /* ================= Exhibit 10: ledger ================= */
   const conf = c => { if (!c) return ""; const l = c.toLowerCase(); const cls = l.startsWith("low") || l.startsWith("medium-low") ? "lo" : l.startsWith("high") ? "hi" : "md"; return `<span class="conf ${cls}">${c}</span>`; };
   const LEDGER = {
     rome: { title: "Rome", src: "D.R. Walker, The Metrology of the Roman Silver Coinage (1976-78), XRF surface analysis; Butcher & Ponting 2005, Oxford Journal of Archaeology 24.2, AAS/ICP-AES on drilled samples.",
@@ -663,9 +964,9 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     tudor: { title: "London", src: "C.E. Challis, A New History of the Royal Mint (CUP 1992), App. 2, pp. 717-728; penny fine silver from J. Munro (2010), Toronto Economics WP 417.",
       head: ["Date", "Monarch", "Event", "Indenture fineness", "%", "Penny fine silver g", "Notes"],
       rows: () => P.tudor.map(d => [d.date, d.mon, d.ev, d.oz || "–", d.pct ?? "–", d.pg ?? "–", d.note || ""]) },
-    us: { title: "Washington", src: "US Bureau of Labor Statistics, CPI-U annual averages. Purchasing power in 2025 dollars.",
-      head: ["Year", "CPI-U", "Inflation %", "Value of $1 in 2025 dollars", "% of 1913 power"],
-      rows: () => P.us.map(d => [d.year, d.cpi, d.infl == null ? "–" : d.infl.toFixed(2), "$" + d.pp.toFixed(2), d.idx.toFixed(1)]) }
+    us: { title: "Washington", src: "US Bureau of Labor Statistics, CPI-U annual averages. Purchasing power in 2025 dollars. Nominal and real spending from Macro_US_Data.xlsx.",
+      head: ["Year", "CPI-U", "Inflation %", "Value of $1 in 2025 dollars", "% of 1913 power", "Nominal $ bn", "Real $ bn (1913 $)", "Real change %"],
+      rows: () => P.us.map(d => [d.year, d.cpi, d.infl == null ? "–" : d.infl.toFixed(2), "$" + d.pp.toFixed(2), d.idx.toFixed(1), d.nom, d.real, d.realChg == null ? "–" : `<span style="color:${d.realChg < 0 ? "var(--red-hi)" : "var(--fine)"}">${d.realChg >= 0 ? "+" : ""}${d.realChg.toFixed(2)}</span>`]) }
   };
   let tab = "rome";
   const tabs = d3.select("#tabs");
@@ -698,13 +999,17 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     if (e.target.id === "melt") drawMelt(true);
     if (e.target.id === "parts") drawParts(true);
     if (e.target.id === "weight") { drawWeight(true); drawWeightDetail(true); }
+    if (e.target.id === "spendSec") drawStripes();
+    if (e.target.id === "decadeSec") { d3.select("#decades").selectAll("*").remove(); drawDecades(true); }
   }), { threshold: 0.25 });
   function start() {
     update(false); drawMelt(false); drawParts(false); drawWeight(false); drawWeightDetail(false); drawLedger();
-    ["melt", "parts", "weight"].forEach(id => io.observe(document.getElementById(id)));
+    if (REDUCED) stripesAnim = false;
+    buildSpend(); drawStripes(); drawDecades(false); buildMachine(); setMachine({});
+    ["melt", "parts", "weight", "spendSec", "decadeSec"].forEach(id => io.observe(document.getElementById(id)));
   }
   let rt;
-  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { update(false); drawMelt(false); drawParts(false); drawWeight(false); drawWeightDetail(false); }, 200); });
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { update(false); drawMelt(false); drawParts(false); drawWeight(false); drawWeightDetail(false); buildSpend(); stripesAnim = false; drawStripes(); drawDecades(false); buildMachine(); setMachine({}); }, 200); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
 })();
 </script>

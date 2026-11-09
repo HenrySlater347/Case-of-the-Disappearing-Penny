@@ -2,13 +2,21 @@
 
 A scrolling D3 story about currency debasement (Rome, Celtic Britain, Ptolemaic Alexandria, Tudor London, and the US dollar), plus an explorer page called the Evidence Room.
 
+## What's new in this version
+
+- **Hover layer on every sticky chart** (story page): move or drag across a chart to scrub through the records. A crosshair glides between points, a paper tooltip shows the source row, and the coin in the corner repaints to match. New points pop in as each note reveals them.
+- **Removed** the old note V-e (dollar re-projected onto the ancient board by years elapsed).
+- **Case V, continued: Concern, and hope**: a new scrolling chart of US nominal and real spending (linear → log → zoom on 2000-25 → long-run trend), plus an "Up years, down years" breakout of annual real change.
+- **The verdict**: a new final summary chart. Every case measured against its own start, at three moments (start, lowest, last), with real US spending as the reason-for-hope row.
+- **Evidence Room**: three new exhibits: nominal vs real spending with log/linear, zoom presets and a brushable strip; an inflation stripe chart; decade-by-decade growth (sortable); and a dollar time machine. The ledger's Washington tab gains nominal, real and real-change columns.
+
 ## Files
 
 | File | What it is |
 |---|---|
 | `index.html` | The scrolling story (home page) |
 | `explore.html` | The Evidence Room explorer |
-| `common.js` | Shared data, colour palette and coin/chart drawing code used by both pages |
+| `common.js` | Shared data (including the US nominal and real spending series), colour palette and coin/chart drawing code used by both pages |
 | `.nojekyll` | Tells GitHub Pages to serve the files as-is |
 | `data/` | The original source spreadsheets, kept for reference (the pages don't load them; the figures are in `common.js`) |
 

@@ -115,6 +115,33 @@ svg text { font-family: var(--f-type); fill: var(--muted); }
 .coin-mark { font-family: var(--f-display); font-weight: 700; }
 .lbl-sm { font-size: 11px; }
 .legend-k text { font-size: 11.5px; fill: var(--text); }
+.legend-k g[data-s] { cursor: pointer; }
+
+/* ---------- hover layer on the sticky charts ---------- */
+.ctip { position: absolute; z-index: 4; pointer-events: none; padding: 9px 12px; font-family: var(--f-type); font-size: 12.5px; line-height: 1.45; max-width: 250px; box-shadow: 0 8px 20px rgba(0,0,0,.45); opacity: 0; transition: opacity .15s, transform .15s; transform: translateY(4px); }
+.ctip.on { opacity: 1; transform: none; }
+.ctip b { font-weight: normal; color: var(--red); display: block; }
+.ctip .s { color: #6b6250; font-size: 11.5px; }
+.scrub line { stroke: var(--paper); stroke-opacity: .45; stroke-dasharray: 3 3; }
+.scrub .ring { fill: none; stroke: var(--paper); stroke-width: 1.6; }
+.hit { fill: transparent; cursor: crosshair; touch-action: pan-y; }
+@media (hover: hover) { .figure .plate .title::after { content: "  ·  hover to scrub"; color: var(--brass-hi); opacity: .75; } }
+.hint { font-family: var(--f-type); font-size: 11px; fill: var(--muted); opacity: .8; }
+
+/* ---------- segmented toggle (spending + verdict) ---------- */
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); }
+.seg button { background: transparent; color: var(--muted); border: 0; padding: 7px 12px; font-family: var(--f-type); font-size: 13px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+.seg button:hover { color: var(--paper); }
+.seg button[aria-pressed="true"]:hover { color: var(--ink); }
+.tally { font-family: var(--f-type); font-size: 13px; color: var(--muted); display: flex; gap: 22px; flex-wrap: wrap; }
+.tally b { font-family: var(--f-display); font-size: 22px; font-weight: 700; margin-right: 6px; }
+
+/* ---------- the verdict ---------- */
+.verdict { padding-block: 72px 56px; border-top: 1px solid var(--rule); background: var(--band); }
+.verdict .controls { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin: 22px 0 14px; }
+.verdict .viz { position: relative; }
+.verdict .viz svg { display: block; width: 100%; overflow: visible; }
 
 /* ---------- Breakout bands ---------- */
 .breakout { background: var(--band); border-block: 1px solid var(--rule); padding-block: 64px 48px; margin-top: 24px; }
@@ -207,7 +234,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 </style>
 </head>
 <body>
-<div class="anno-band"><div class="wrap"><aside class="anno" aria-label="Annotation: How this page works"><div class="anno-tag">Annotation · How this page works</div><p>A scrollytelling case file in seven movements: a personal <b>prologue</b>, four historical cases (I&nbsp;Rome, II&nbsp;Britain, III&nbsp;Alexandria, IV&nbsp;London), <b>the red string</b> that compares them, the sealed <b>Case V</b> (the US dollar) and a personal <b>epilogue</b>.</p><p>Every case repeats the same three beats so readers learn the pattern once: (1) a <b>sticky chart</b> that changes as the paper notes scroll past it, (2) a full-width <b>breakout</b> visual that restates the case at a glance, and (3) a paper <b>summary folder</b> with headline figures. Cultures are not named until each case opens, and the dollar is withheld until the end so the macro point lands as the reveal.</p><ul><li><b>Colour</b>Silver to verdigris is the data language: lighter means purer metal, bronze and green mean the coin is failing. Bronze, brass, file paper and the red string carry the story. These slate notes sit outside both palettes.</li><li><b>Type</b>Cinzel for titles (Roman inscriptions), Special Elite for evidence tags and chart labels (the investigator's typewriter), Crimson Pro for narrative.</li><li><b>Copy</b>Narrative paragraphs are placeholder text made of the letter a, pending the author's draft. Headings, dates, chart labels, figures and sources are real.</li><li><b>Reading</b>Use the ✎ button at the bottom right to hide these annotations for a clean read.</li></ul></aside>
+<div class="anno-band"><div class="wrap"><aside class="anno" aria-label="Annotation: How this page works"><div class="anno-tag">Annotation · How this page works</div><p>I built this page as a scrollytelling case file in seven movements. It opens with my personal <b>prologue</b>, moves through four historical cases (I&nbsp;Rome, II&nbsp;Britain, III&nbsp;Alexandria, IV&nbsp;London), ties them together with <b>the red string</b>, opens the sealed <b>Case V</b> (the US dollar) and its continuation on nominal and real spending (<b>concern, and hope</b>), sums every case up in <b>the verdict</b>, and closes with my <b>epilogue</b>.</p><p>I gave every case the same three beats so you only have to learn the pattern once: (1) a <b>sticky chart</b> that changes as the paper notes scroll past it, (2) a full-width <b>breakout</b> visual that restates the case at a glance, and (3) a paper <b>summary folder</b> with the headline figures. I don't name a culture until its case opens, and I hold the dollar back until the end so the macro point lands as the reveal.</p><ul><li><b>Colour</b>I use silver to verdigris as my data language: the lighter the coin, the purer the metal; bronze and green mean it is failing. Bronze, brass, file paper and the red string carry my story. I put these notes in slate so they sit outside both palettes.</li><li><b>Type</b>I chose Cinzel for titles because it echoes Roman inscriptions, Special Elite for evidence tags and chart labels as my investigator's typewriter, and Crimson Pro for the narrative.</li><li><b>Copy</b>My narrative paragraphs are still placeholder text made of the letter a while I draft them. The headings, dates, chart labels, figures and sources are real.</li><li><b>Charts</b>Every sticky chart has a hover layer: move or drag across it to scrub through the records, and the coin in the corner repaints to match.</li><li><b>Reading</b>Use the ✎ button at the bottom right to hide my notes for a clean read.</li></ul></aside>
 </div></div>
 <!-- ======================= HERO ======================= -->
 <header class="hero">
@@ -218,7 +245,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h1>The Case of the <span>Disappearing Penny</span></h1>
       <p class="dek">Aaaaaaa aaa aa aaaa aaaaa aa aaaaaaaaa aaaaa aaaaa aaaa aa aaaaaaaa aaa aaaaa aaaa. Aaaaa aaaa aaaaa aa aaaa aaa aaa aaaaaaaaa aaaaaaaaa aaa. A aaaaa aaaaaaaaa aaaaaa aaaaaaaa a aaaaaa a aaa.</p>
       <div class="scroll-cue">Scroll to open the file</div>
-      <aside class="anno" aria-label="Annotation: Opening"><div class="anno-tag">Annotation · Opening</div><p>Introduces Exhibit A, an antoninianus of Tetricus I at about 2% silver, without explaining it. The coin animates from bright silver to corroded bronze on load: the whole story in one object, before the reader knows what they are looking at.</p></aside>
+      <aside class="anno" aria-label="Annotation: Opening"><div class="anno-tag">Annotation · Opening</div><p>I open on Exhibit A, an antoninianus of Tetricus I at about 2% silver, and I deliberately don't explain it yet. I animate it from bright silver to corroded bronze on load so you see the whole story in one object before you know what you're looking at.</p></aside>
 
     </div>
     <div class="exhibitA">
@@ -231,7 +258,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 <!-- ======================= PROLOGUE ======================= -->
 <section class="note-sec">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Prologue"><div class="anno-tag">Annotation · Prologue</div><p>The author's personal narrative (placeholder). A first-person, human entry point before any data appears. The paper sheet, pin and drop cap mark it as a letter rather than evidence, so it reads differently from the case notes that follow.</p></aside>
+    <aside class="anno" aria-label="Annotation: Prologue"><div class="anno-tag">Annotation · Prologue</div><p>This is where my personal narrative goes (placeholder for now). I wanted a first-person, human way in before any data appears. I set it on a pinned paper sheet with a drop cap so it reads as a letter from me, not as one of the case notes.</p></aside>
     <article class="letter paper">
       <div class="eyebrow">Prologue</div>
       <h2>Aaaa Aaaaaa Aaaa Aaaaa Aaa</h2>
@@ -252,7 +279,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h2>The denarius</h2>
       <p>Aaa aa a aaa aaaa aa aaa a aaaaaaaa aaa aaa aa aa. Aaaaaaaaa aaa a aaaaa aaaaaaa aa aaaaa aa aaaaa aaa aaaaaaa. Aa aaa aaaa a aa aaaaaaaa.</p>
     </div>
-        <aside class="anno" aria-label="Annotation: Case I · Rome · scrolling chart"><div class="anno-tag">Annotation · Case I · Rome · scrolling chart</div><p>Seven notes drive one chart: denarius fineness by reign from Walker's XRF data, 27 BC to AD 301. Each note reveals more of the line, swaps the annotation and re-colours the coin in the corner from silver toward verdigris.</p><p>Note I-b adds a dashed brass line for silver weight per coin, showing that Nero's reform hid the loss in weight. Note I-g overlays Butcher &amp; Ponting's drilled-sample results in red, the source-criticism beat for specialist readers.</p><ul><li><b>Data</b>Walker 1976-78 (34 reigns); Butcher &amp; Ponting 2005 (12 periods). Dashed segments and range bars are values recorded only as ranges.</li><li><b>Interaction</b>Scroll-driven; hover any point for the ruler, dates and note.</li></ul></aside>
+        <aside class="anno" aria-label="Annotation: Case I · Rome · scrolling chart"><div class="anno-tag">Annotation · Case I · Rome · scrolling chart</div><p>I drive one chart with seven notes: denarius fineness by reign from Walker's XRF data, 27 BC to AD 301. Each note reveals more of the line, swaps my annotation and re-colours the coin in the corner from silver toward verdigris.</p><p>In note I-b I add a dashed brass line for silver weight per coin, to show that Nero hid the loss in the weight. In note I-g I overlay Butcher &amp; Ponting's drilled-sample results in red. That's my source-criticism beat for specialist readers.</p><ul><li><b>Data</b>Walker 1976-78 (34 reigns); Butcher &amp; Ponting 2005 (12 periods). I draw values recorded only as ranges with dashed segments and range bars.</li><li><b>Interaction</b>Scroll-driven; hover any point for the ruler, dates and note.</li></ul></aside>
     <div class="scrolly" data-chapter="rome">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit I-a · 27 BC to AD 14</div><h3>Aaaa Aaaaaaa Aaaa</h3><p>Aaaaa a aaaaa aaaaaaaa aaaaa aaaaaaaaa aaaaaa aa aaaaaaaa aaa aaaaa aaaaaa aaa. Aaa aaa aaa a aaa aaa aaaaa aaaaa. Aaaa aaa aa a a aaaa aa aaaaaaaaa aaa aa aaaaaaaaa aaa. Aaaaaaaa aaaaaaaaa aaaaa aaaaa aaa a aa aa aaaa a aaaaa aaaaaa aa. Aa aaaa a a aaaaaaaaa a.</p></div></div>
@@ -270,7 +297,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="breakout" id="bo-rome">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Breakout · melting coins"><div class="anno-tag">Annotation · Breakout · melting coins</div><p>One coin per reign; the silver band from the bottom is the fineness, base metal fills the rest. Restates Case I in a form readers grasp at a glance, inspired by a coin-tray layout. Dashed rings mark values known only from ranges in the texts.</p><ul><li><b>Motion</b>Coins drain in sequence the first time the band scrolls into view; Replay reruns it.</li></ul></aside>
+    <aside class="anno" aria-label="Annotation: Breakout · melting coins"><div class="anno-tag">Annotation · Breakout · melting coins</div><p>I give each reign one coin; the silver band from the bottom is its fineness and base metal fills the rest. I restate Case I in a form you can take in at a glance, laid out like a coin tray. I put dashed rings around values known only from ranges in the texts.</p><ul><li><b>Motion</b>The coins drain in sequence the first time this band scrolls into view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">27 BC to c. AD 300 · silver content by reign</div><h2 class="bo-title">The coin that turned to <em>bronze</em></h2></div>
       <p class="bo-dek">Aaaaaaaa aaa aaaaaaaaa aaaaa aa aaaaaa a aaaaaaaa aaaaa aaaa aaaaa aaaaa aaa. Aaaaaa aaaa aaaaa aaaaaaa aaaaaaaa a aaaaaaaaa a aaa a a aaaa a aaa aa. Aaa aa aa aaa aa aa.</p>
@@ -285,7 +312,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="summary">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Case I · summary"><div class="anno-tag">Annotation · Case I · summary</div><p>Paper folder that closes the case: four headline figures, a short recap (placeholder) and a sparkline of fineness indexed to 100. Gives skimmers the takeaway and gives every reader a pause before the next culture is revealed.</p></aside>
+    <aside class="anno" aria-label="Annotation: Case I · summary"><div class="anno-tag">Annotation · Case I · summary</div><p>I close each case with a paper folder: four headline figures, a short recap (placeholder for now) and a sparkline of fineness indexed to 100. It gives skimmers the takeaway and gives every reader a pause before I reveal the next culture.</p></aside>
     <div class="folder paper">
       <div class="tab">Case I · Summary</div>
       <div class="sum-grid">
@@ -309,7 +336,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h2>Gold staters</h2>
       <p>Aa aa aaaaa aaaaa aaa aaaaaa aa aaaaaaaa aa aaaaaaaa aaaaa aaa a aa aaa. Aaa aaaaaaaa aaaaa aa aaaaaaa aa aaaaaaaaa aaaa. Aaaa aaa aaa aaa a.</p>
     </div>
-        <aside class="anno" aria-label="Annotation: Case II · Britain · scrolling chart"><div class="anno-tag">Annotation · Case II · Britain · scrolling chart</div><p>Stacked bars break six staters into gold, silver and copper, revealed in date order; a lower panel tracks stater weight with the Gallic War shaded. The gold coin in the corner shifts toward copper as the alloy changes.</p><p>Hatched segments are metal the source did not report. The Whitwell coin is outlined in red because it is a single surface XRF reading with an assigned date.</p><ul><li><b>Data</b>Van Arsdell, Celtic Coinage of Britain (electron microprobe, SEM-EDS, metrology).</li><li><b>Interaction</b>Scroll-driven; hover segments for bounds and method.</li></ul></aside>
+        <aside class="anno" aria-label="Annotation: Case II · Britain · scrolling chart"><div class="anno-tag">Annotation · Case II · Britain · scrolling chart</div><p>I break six staters into gold, silver and copper with stacked bars, revealed in date order, and track stater weight in a lower panel with the Gallic War shaded. The gold coin in the corner shifts toward copper as the alloy changes.</p><p>I hatch the metal the source didn't report rather than guess at it. I outline the Whitwell coin in red because it's a single surface XRF reading with an assigned date.</p><ul><li><b>Data</b>Van Arsdell, Celtic Coinage of Britain (electron microprobe, SEM-EDS, metrology).</li><li><b>Interaction</b>Scroll-driven; hover segments for bounds and method.</li></ul></aside>
     <div class="scrolly" data-chapter="celtic">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit II-a · c. 125 BC</div><h3>Aa Aa Aaaaa</h3><p>Aa aa aaaaaaaaa aaa aaa aaa aaaaaaaa aaaaaa aa aaa aaaaaaaaa. Aa aaa aaaaaa aaaaaaaa aaaaa aaaaa aaa a aaaaaaaa aa aaaaaaa aaaaaa aa aa aaa. A aaaaaaa a aa aaaaaaa aaaa aaa a aa aa aaaaa aaa aaaaaaaaa aa aaaaaaaaa aa. Aaa aaaaa aaa aaaaaaaaa aa aaa.</p></div></div>
@@ -325,7 +352,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="breakout" id="bo-celtic">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Breakout · 100 parts"><div class="anno-tag">Annotation · Breakout · 100 parts</div><p>Three staters as 10&nbsp;x&nbsp;10 grids, filled gold first, then silver, then copper. Turns percentages into parts a reader can count, so copper taking over the coin is visible without reading a number.</p><ul><li><b>Motion</b>Cells fill in order on first view; Replay reruns it.</li></ul></aside>
+    <aside class="anno" aria-label="Annotation: Breakout · 100 parts"><div class="anno-tag">Annotation · Breakout · 100 parts</div><p>I turn three staters into 10&nbsp;x&nbsp;10 grids, filled gold first, then silver, then copper. I wanted percentages you can count, so you can see copper take over the coin without reading a number.</p><ul><li><b>Motion</b>The cells fill in order on first view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">Three staters · alloy by electron microprobe</div><h2 class="bo-title">A stater in <em>100 parts</em></h2></div>
       <p class="bo-dek">Aaaaaaaaa aaaaaaaa aaaaa aaaaaa aaaaaaaaa a aaa aaaaa aaaaaaa aaaa. Aa aaaaaaa aaaaaaaa aaaaaa aaa aaaaa a aaa aaaaaaaa a aaaaa aaaaa aaaaa. A aaaaaa aa a aaaa aa aaaaaaaa.</p>
@@ -340,7 +367,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="summary">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Case II · summary"><div class="anno-tag">Annotation · Case II · summary</div><p>Same folder format as Case I so the rhythm is predictable: gold at the start and end, weight loss and the final copper share, with a sparkline of gold content.</p></aside>
+    <aside class="anno" aria-label="Annotation: Case II · summary"><div class="anno-tag">Annotation · Case II · summary</div><p>I keep the same folder format as Case I so the rhythm stays predictable: gold at the start and end, the weight loss and the final copper share, with a sparkline of gold content.</p></aside>
     <div class="folder paper">
       <div class="tab">Case II · Summary</div>
       <div class="sum-grid">
@@ -364,7 +391,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h2>Ptolemaic bronze</h2>
       <p>Aaa aa aa aaaaaaaa aaaa aaaa aaaaaaaaa aaaaaaa aaaa aaa aaaaaaaa aaaaaa aaa. Aaaaaaa a aaa aaaaa aaaaa aaaaaaaaa aaaa a aaaa aaaaaa aaaa. Aaaaaaaa aa a aaaaa a aaa aa aa.</p>
     </div>
-        <aside class="anno" aria-label="Annotation: Case III · Alexandria · scrolling chart"><div class="anno-tag">Annotation · Case III · Alexandria · scrolling chart</div><p>A scatter of Ptolemaic bronze types: face value across, mean weight up, dot size by specimens weighed. The slope of each line from the origin is grams of bronze per unit of value, so a flatter line means a debased standard.</p><p>Note III-c animates one coin, Sv1424B, sliding from 100 to 120 units at the same 22.5 g: debasement by decree, with no new metal struck.</p><ul><li><b>Data</b>AJN 2021 metrological survey, 39 types, Svoronos numbers. Only Classes 2, 4 and 6 are dated; the rest are placed by series order.</li><li><b>Interaction</b>Scroll-driven; hover any dot for catalogue number, weight and n.</li></ul></aside>
+        <aside class="anno" aria-label="Annotation: Case III · Alexandria · scrolling chart"><div class="anno-tag">Annotation · Case III · Alexandria · scrolling chart</div><p>I plot Ptolemaic bronze types as a scatter: face value across, mean weight up, dot size by specimens weighed. The slope of each line from the origin is grams of bronze per unit of value, so a flatter line means a debased standard.</p><p>In note III-c I animate one coin, Sv1424B, sliding from 100 to 120 units at the same 22.5 g. I wanted you to watch debasement by decree, with no new metal struck.</p><ul><li><b>Data</b>AJN 2021 metrological survey, 39 types, Svoronos numbers. Only Classes 2, 4 and 6 are dated; I place the rest by series order.</li><li><b>Interaction</b>Scroll-driven; hover any dot for catalogue number, weight and n.</li></ul></aside>
     <div class="scrolly" data-chapter="ptol">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit III-a · late 3rd to early 2nd c. BC</div><h3>Aaaaaaa Aaa Aaaaaa Aaaaaa</h3><p>A aa aaaaaaa aa aa a aaaaaaaa aaaa. Aaaa aaa a aaaaaa aaa aa a aaaaaaaa aa aaaaaaaaa aaaaaaaa aaaaaaaaa aaa aaaa aaaaa a. Aa aaaaa aaa aaaa a aaaaaaaaa aaaa a. Aaa aaaa a aaa aa aa aaaa aaaaa aaaaaa aaaaa aaaaaaaa aaaaaa aa aaaaaaa. Aa aaaaaaa a aa.</p></div></div>
@@ -380,7 +407,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="breakout" id="bo-ptol">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Breakout · true weight"><div class="anno-tag">Annotation · Breakout · true weight</div><p>Four coins drawn with area proportional to mean weight; the dashed ring is the 40.7 g Standard 3 coin. Makes the cut physical: the same Zeus Ammon type at nearly half the bronze, then re-tariffed upward.</p><ul><li><b>Motion</b>Coins scale up in sequence on first view; Replay reruns it.</li></ul></aside>
+    <aside class="anno" aria-label="Annotation: Breakout · true weight"><div class="anno-tag">Annotation · Breakout · true weight</div><p>I draw four coins with area proportional to mean weight; the dashed ring is the 40.7 g Standard 3 coin. I wanted the cut to feel physical: the same Zeus Ammon type at nearly half the bronze, then re-tariffed upward.</p><ul><li><b>Motion</b>The coins scale up in sequence on first view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">Zeus Ammon and Cleopatra VII · drawn to relative weight</div><h2 class="bo-title">Same god, <em>half the bronze</em></h2></div>
       <p class="bo-dek">Aaaaa aaaaaaaaa a aa aaaa aaaaaaa aaa aaa aaa aa. Aa aaaaaa aa aaaa a aaa aaaa a aaaa aaaaa aaaaa aaa aaaaaa aaa aaa. Aaa aaaaaaaa aaaaaaaaa aaaa aaaa.</p>
@@ -395,7 +422,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="summary">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Case III · summary"><div class="anno-tag">Annotation · Case III · summary</div><p>Headline figures for bronze per unit, the low point, the deepest cut and the re-tariffed coin, with a sparkline of grams per unit by series order.</p></aside>
+    <aside class="anno" aria-label="Annotation: Case III · summary"><div class="anno-tag">Annotation · Case III · summary</div><p>Here I pull out bronze per unit, the low point, the deepest cut and the re-tariffed coin, with a sparkline of grams per unit in series order.</p></aside>
     <div class="folder paper">
       <div class="tab">Case III · Summary</div>
       <div class="sum-grid">
@@ -419,7 +446,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h2>The Tudor penny</h2>
       <p>Aaaaaaaaa aaaaaaaa aaaaaa aa a aaaa aaa. A aaaaa aa aaaaaaa aaaaaaaa aaaaaaa a aaaa aaa aaaa aaaaaa aaaaa aaa aaaaaaaa aaaa. Aaaaaa aaa aaaaaa aaaaa a a aaaaaaa aaaaaaa.</p>
     </div>
-        <aside class="anno" aria-label="Annotation: Case IV · London · scrolling chart"><div class="anno-tag">Annotation · Case IV · London · scrolling chart</div><p>Two stacked panels share one timeline: Tower Mint indenture fineness (step line) above, fine silver in a single penny below, against the 1526 benchmark. The x-axis is expanded for 1541-1554 so the Great Debasement is readable.</p><p>Dashed segments mark stretches with no indenture in the file; the red tick in 1542 is Munro's alternative reading of an ambiguous indenture.</p><ul><li><b>Data</b>Challis 1992, App. 2 (indentures); Munro 2010 (penny fine silver).</li><li><b>Interaction</b>Scroll-driven; hover points for dates, wording and notes.</li></ul></aside>
+        <aside class="anno" aria-label="Annotation: Case IV · London · scrolling chart"><div class="anno-tag">Annotation · Case IV · London · scrolling chart</div><p>I stack two panels on one timeline: Tower Mint indenture fineness as a step line above, fine silver in a single penny below, against the 1526 benchmark. I expand the x-axis for 1541-1554 so the Great Debasement is readable.</p><p>I dash the stretches where my file has no indenture, and the red tick in 1542 is Munro's alternative reading of an ambiguous indenture.</p><ul><li><b>Data</b>Challis 1992, App. 2 (indentures); Munro 2010 (penny fine silver).</li><li><b>Interaction</b>Scroll-driven; hover points for dates, wording and notes.</li></ul></aside>
     <div class="scrolly" data-chapter="tudor">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit IV-a · 5 November 1526</div><h3>Aaaaa Aaaa</h3><p>A aa aaaa aaaaaa aaa aa a aa. Aaaaa aaaa aaaaaaaaa aaa aaaa aaaaaaaaa aaaaaaaaa aaa aaaaa aaaaaa a aaaaaaa aaa aaa aaa. Aaaaaaaa a a aa a a aaaa aaaaaaaa a aaaa aaaaaaaaa aa. Aa aa aaaa aaaa aaa aaaaaaaa aa. Aaa aaaa a aaa a aaa.</p></div></div>
@@ -435,7 +462,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="breakout" id="bo-tudor">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Breakout · inside the penny"><div class="anno-tag">Annotation · Breakout · inside the penny</div><p>Each penny holds a silver disc sized to its fine silver; the dashed ring is the 1526 penny. Shows the low of 1551 and that even Elizabeth's restored penny never refilled the ring.</p><ul><li><b>Motion</b>Discs shrink from the 1526 size on first view; Replay reruns it.</li></ul></aside>
+    <aside class="anno" aria-label="Annotation: Breakout · inside the penny"><div class="anno-tag">Annotation · Breakout · inside the penny</div><p>I put a silver disc inside each penny, sized to its fine silver; the dashed ring is the 1526 penny. I wanted to show the low of 1551, and that even Elizabeth's restored penny never refilled the ring.</p><ul><li><b>Motion</b>The discs shrink from the 1526 size on first view; Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">1526 to 1601 · fine silver in one penny</div><h2 class="bo-title">What's left <em>inside the penny</em></h2></div>
       <p class="bo-dek">Aaaaa aaaa aa aaa aaaa aaaaaa aaaaaaaaa a a aa aa aaaaaa aaa aaaaa aaaaaaa aaaaaaaaa. Aaaaaa a aa aa aaaaaaaaa a aaa a aaa a aaaaa aaaaaaaaa aaaaa aaaaaaa.</p>
@@ -450,7 +477,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="summary">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Case IV · summary"><div class="anno-tag">Annotation · Case IV · summary</div><p>Sterling, the 1551 low, the 1601 penny and the permanent 27% loss, with a sparkline of fine silver per penny. Ends the historical cases.</p></aside>
+    <aside class="anno" aria-label="Annotation: Case IV · summary"><div class="anno-tag">Annotation · Case IV · summary</div><p>I file sterling, the 1551 low, the 1601 penny and the permanent 27% loss, with a sparkline of fine silver per penny. This folder ends my historical cases.</p></aside>
     <div class="folder paper">
       <div class="tab">Case IV · Summary</div>
       <div class="sum-grid">
@@ -474,7 +501,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h2>The red string</h2>
       <p>A a aaaaaaa aa aa aaa aaa aaaaaaaaa aaaaaa aa aaaa aaaaa aaaaa aaaaaaaa aaaaaaaaa aaaa. Aaaaaa aaaa aa aaa aaaa aaaa aaa aaaaaaa aaaa aaa. Aaaaa aaaa.</p>
     </div>
-        <aside class="anno" aria-label="Annotation: The red string · synthesis"><div class="anno-tag">Annotation · The red string · synthesis</div><p>The four cases on one board. Each series is indexed to 100 at its first record and plotted by years elapsed, so the shape and pace of loss can be compared across different metals and centuries. The second note draws the red string between where each case ends.</p><p>This is the hinge of the piece: it closes the historical section and teases the one file still sealed.</p><ul><li><b>Caution</b>The series measure different things (fineness, gold share, bronze per unit, silver per penny); the index compares shape, not quantity.</li></ul></aside>
+        <aside class="anno" aria-label="Annotation: The red string · synthesis"><div class="anno-tag">Annotation · The red string · synthesis</div><p>Here I put the four cases on one board. I index each series to 100 at its first record and plot it by years elapsed, so you can compare the shape and pace of loss across different metals and centuries. In the second note I draw the red string between where each case ends.</p><p>This is the hinge of my piece: it closes the history and teases the one file I've kept sealed.</p><ul><li><b>Caution</b>My series measure different things (fineness, gold share, bronze per unit, silver per penny), so the index compares shape, not quantity.</li></ul></aside>
     <div class="scrolly" data-chapter="string">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">The board</div><h3>Aaaa Aaaaaaa Aaaaaa Aa</h3><p>Aaaaaaa a a a aaaa aaa a aa a. Aaaaa aaaaa aaa aa aaaaaaa aaa aaa a a aaaaaa aaaaaaaa a aaaaa a aaaaa. A aaaaa aaa aa aaaaaaaaa aaa aaa aaaa aaaa aaaaaa aaaaaa. Aaaa aaaaaaa aa aaaaaaa aaaaaaa aaa aaaa aaa aaa aaa aaaaaaaaa aaaaa aaaaaaaaa.</p><div class="note">Aaaaaaaaa aaaa aaa aaaa aaaaa a aa aaaa aaaa aa aaaaaaa aaaaa. Aaaaa aaaa aaa a aaaaaaaaa aaaaa.</div></div></div>
@@ -493,14 +520,13 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h2>The dollar in your pocket</h2>
       <p>Aaaa a a aaaaaa aaaa aaaaa a aaaaaaaaa aaa a. Aa aaaa aaaaa aa aaaaa aa aaaa aaaa aaaa aaa aaaaa aaa a aaaaaa. A aaa aaa aaa aaaaaaaa aaaaa aaaa aaaa aaaaaaaa aaa aaaaa aaaaaaa aaaaaaaa aaaaaaa.</p>
     </div>
-        <aside class="anno" aria-label="Annotation: Case V · the macro reveal"><div class="anno-tag">Annotation · Case V · the macro reveal</div><p>The story's one step out of history: the US dollar's purchasing power from 1913 to 2025 (BLS CPI-U), indexed to 1913 = 100. A penny in the corner shrinks in area with the dollar's value.</p><p>Note V-e re-projects the dollar onto the red-string board beside Rome, the comparison the whole piece has been building toward.</p><ul><li><b>Caution</b>Purchasing power and metal content are different measures; the final note says so on the page.</li><li><b>Interaction</b>Scroll-driven; the x-axis animates from calendar years to years elapsed.</li></ul></aside>
+        <aside class="anno" aria-label="Annotation: Case V · the macro reveal"><div class="anno-tag">Annotation · Case V · the macro reveal</div><p>This is the one place I step out of history: the US dollar's purchasing power from 1913 to 2025 (BLS CPI-U), indexed to 1913 = 100. I shrink a penny in the corner in step with the dollar's value.</p><p>I dropped the old note V-e, which re-projected the dollar onto the ancient board by years elapsed. It mixed purchasing power with metal content on one axis and didn't read. The comparison now lives in <b>The verdict</b> at the end, where every case is measured against its own start.</p><ul><li><b>Caution</b>Purchasing power and metal content are different measures, and I say so on the page.</li><li><b>Interaction</b>Scroll-driven. Hover or drag across the chart to scrub any year: the penny resizes to that year's value.</li></ul></aside>
     <div class="scrolly" data-chapter="macro">
       <div class="steps">
         <div class="step"><div class="card paper"><div class="ex">Exhibit V-a · 1913 to 1929</div><h3>Aaaaaa Aa Aaaa Aaa</h3><p>Aaa aaa aaaaa aaa aaaaa aaaa aaaa aaaaa aaa aaa aaa a aaaa. Aaa aa a aaaaaaa aaa aaaa aaaa a aaaaaaaa aaaaaa aaa aaaaaaaa aaa aaa aaa aaa. Aaaaaaaaa aa aaaa aaaaaaa aaaaa aaaaaa aaaaa aaa aa aaaa aaa aaa aaa. Aa aaa aaaaa aa aaaaa aaaaaaaa aaaaaaa aaa.</p></div></div>
         <div class="step"><div class="card paper"><div class="ex">Exhibit V-b · 1930 to 1945</div><h3>Aaaaaaa Aaaa Aaaaaaa Aa</h3><p>A aaaa aa aaaaa aaaa aa a aa aaaaa aaaaa aaa a aa aa aaaaa aaaaa. Aaa aaaaaaa aaaaa aaaaaaa aa aaaaaaaaa aaa aaaaaaaa aa aaaaaaa aaaaaaa a a aaaaaaa aaaaaaa. Aaa aaa aaa aaaaa aa aaa aaa aaaaaaaaa aaaaaa. Aaaa aa aaaaaaaa aaaaaaaa aaaa aaaaaaaa aaa aa aaaa aa aaaa aaaaa.</p></div></div>
         <div class="step"><div class="card paper"><div class="ex">Exhibit V-c · 1946 to 1971</div><h3>Aaaaaa Aa Aaaa Aaaaaa</h3><p>Aaaaaaaaa aa aaaaaaaaa a a aaaa aaaa a aaaaaaa aaa aaa aaaaaaa aaaaa a. Aa a aaaaaaa aaaaaa aaaa aaa aa aaaaaaaa aa aa a. Aaaa aa aaaaa aaa a a aaa aaaaaaaa aaaaaaaaa aaaaa aaaa. Aaaaaaa aaa aaa aa aa aaaaa aa a aaaaaa. Aa aaaa a.</p></div></div>
         <div class="step"><div class="card paper"><div class="ex">Exhibit V-d · 1972 to 2025</div><h3>Aaaa Aa</h3><p>Aaaaaa aaaaaaaaa aaaa a aa a aa aaaaaa aaaaaaaaa aaa aaa aaaaaa. A aaaaa aa aaaaaaaa aaaa a aa aaa aaaaaaa aaaaaa aaaaaaaa. Aaaaaaaa aa aa aaa aaaaaa aaaaaaaaa a aaa aaaa aaa aaaa aa aaaaa aaaa aa aaaaaaaa. Aaaa aaaaaaa aaaaaa aaaa aaaaaaaa aaaaaaaa aaaaa aaaaa a aaaaaaaaa aaa aaaaa aaaa aaaa. Aaaa aa a.</p></div></div>
-        <div class="step"><div class="card paper"><div class="ex">Exhibit V-e · Back to the board</div><h3>Aaaaa Aa Aaaa Aaaaa</h3><p>A aa aaa aa aaaaaa aaaaaaa aaa aaa aaaa. Aaaaa aaa aaa aaaaa aaaa aaa aaaaaaaaa. Aaaaa aaaaaaaaa aaaaaaa aaaaa aa aaaaa aa aaaa a aaa aaaa aaaaa. Aaaa aaa aaa aaaaaa aaa aaa aaaaaaaa aa. Aaaa aa aaaa aaaaaaaa aaa aaaaa aaaaaaaa aaaa aaaaaa aaa.</p><div class="note">Aaaaa aaaaaaaaa aaa aaaaa aaaaaaa aa aaaaaaa aaaaaaa a a aa aa aa. A aaa aaaaaaa aaaa a aaaa aa.</div></div></div>
       </div>
       <div class="figure"><div class="plate"><div class="title" id="macroTitle">Purchasing power of the US dollar · 1913 = 100</div><svg></svg></div></div>
     </div>
@@ -509,7 +535,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="breakout" id="bo-us">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Breakout · a hundred cents"><div class="anno-tag">Annotation · Breakout · a hundred cents</div><p>One hundred cents, each worth one per cent of a 1913 dollar's buying power. A year counter runs from 1913 to 2025 and cents go dark as value is lost, ending with 3 left. The most direct image of the macro point.</p><ul><li><b>Motion</b>Runs once on first view (about five seconds); Replay reruns it.</li></ul></aside>
+    <aside class="anno" aria-label="Annotation: Breakout · a hundred cents"><div class="anno-tag">Annotation · Breakout · a hundred cents</div><p>I lay out one hundred cents, each worth one per cent of a 1913 dollar's buying power. A year counter runs from 1913 to 2025 and the cents go dark as value is lost, until only 3 are left. It's the most direct image I have of the macro point.</p><ul><li><b>Motion</b>It runs once on first view (about five seconds); Replay reruns it.</li></ul></aside>
     <div class="bo-head">
       <div><div class="eyebrow">1913 to 2025 · CPI-U purchasing power</div><h2 class="bo-title">One dollar, <em>a hundred cents</em></h2></div>
       <p class="bo-dek">Aaa aaaaa aaaaaaa aa aaaaaaaaa aaaaaaa aa aa aaaaa aaa. A aa aaaa aaaa aaaaaaa aaaa aa aa aaaaa aaa aaaaaaaa aaa aaaaaaaaa aaaaa aa aaaaaaaa. Aaaaa aaa aa aa.</p>
@@ -524,7 +550,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 
 <section class="summary">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Case V · summary"><div class="anno-tag">Annotation · Case V · summary</div><p>The macro figures: what it costs in 2025 to buy 1913's dollar, the 3.1% left, the 1980 peak and the span. Mirrors the historical folders so the dollar is filed as just another case.</p></aside>
+    <aside class="anno" aria-label="Annotation: Case V · summary"><div class="anno-tag">Annotation · Case V · summary</div><p>I give the dollar the same folder as the historical cases: what it costs in 2025 to buy 1913's dollar, the 3.1% left, the 1980 peak and the span. I file it as just another case on purpose.</p></aside>
     <div class="folder paper">
       <div class="tab">Case V · Summary</div>
       <div class="sum-grid">
@@ -540,6 +566,65 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
   </div>
 </section>
 
+<!-- ======================= CASE V, CONTINUED: SPENDING ======================= -->
+<section class="chapter" id="spending">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no" style="color:var(--red-hi)">Case V · continued</div>
+      <h2>Concern, and hope</h2>
+      <p>Aaaa aaaaaaa aaaaa aa aaaaaa aaaaaaaa aaa aaaaa aaaa. Aaaaa aaaaaaa aa aaa aaaaaa aaaaa a aaaa aaaaaaaa aaaaaaa aaa. Aaaaa aaaa aaaaaa aa a aaaaaaa.</p>
+    </div>
+    <aside class="anno" aria-label="Annotation: Case V continued · spending"><div class="anno-tag">Annotation · Case V continued · nominal and real spending</div><p>I bring in the second half of my US file: spending in nominal dollars and the same series in 1913 dollars (nominal × 1913 CPI ÷ that year's CPI). Both lines share one axis in billions, so there's no dual-axis trick. The gap between them is what prices took.</p><p>The five notes alternate on purpose. <b>Concern</b>: the headline number is mostly prices, and real spending fell three years running in 2022-24. <b>Hope</b>: on a log scale the real line climbs 22-fold, about 2.8% a year, and it turned up again in 2025.</p><ul><li><b>Motion</b>I animate the y-axis from linear to log, then zoom the x-axis into 2000-2025 and back out.</li><li><b>Interaction</b>Hover or drag to scrub any year for nominal, real, inflation and the real change.</li><li><b>Data</b>Macro_US_Data.xlsx, columns "Nominal $'s in Billions" and "Real $'s in Billions 1913 Dollars".</li></ul></aside>
+    <div class="scrolly" data-chapter="spend">
+      <div class="steps">
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-e · Reason for concern</div><h3>Aaa Aaaaaaaa Aaaaaa</h3><p>Aaaaaaa aaa aaaaa aaaaaa aaaaaaa aaa aaaaaaaa aaa aa aaaa. Aaaaa aaaaaaa a aaaa aaaaa aaa aaaaaaaaa aaa aaa aaaaa. Aaaa aaaaa aa aaa aaaaaaa aaaa aaaaa a aaaaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-f · Reason for concern</div><h3>Aaaa Aa Aa Aa Aaaaaa</h3><p>Aaaa aaa aaaaa aaaaaa aa aaa aaaaaaa aaaaaa aaa aaaaa aaaaa. Aaaaaaaa aaaaa aa aaaaaa aaaa aaaa aaa aaaaaa aaaaaaaa. Aaa aaaaa aaaa aa aaaaaa aaaaaaaa aaaa aa aaaaa.</p><div class="note">Aaaa aaaaaaa: aaaaaaa × 1913 AAA ÷ aaaa aaaa'a AAA.</div></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-g · Reason for hope</div><h3>Aaa Aaaa Aaaa Aaaa Aaaaa</h3><p>Aa a aaa aaaaa aaaa aaaaa aa aaaaa aaaaa aaaaaaa aaa aaaaa. Aaa aaaa aaaa aaaaa aaaaa aaaaaaa aaaaa aaaaaaa aaa aaaaaaa aa aaaaaa. Aaaaaa aaaaaa aaa aaaa aaaa aaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-h · Reason for concern · 2000 to 2025</div><h3>Aaaaa Aaaaa Aaaaaa</h3><p>Aaaa aaa aaaaaaa aaa aaaaa aaaaaa aaaaa aaa aaaaaaa aaaa. Aaaaa aaaaaaaa aaa aaaaaa aaaa aaaaa aa aaa aaaa aaa aaaaaa aaaaa. Aaaaa aaaaaa aa aaaa aaa aaaaaaa.</p></div></div>
+        <div class="step"><div class="card paper"><div class="ex">Exhibit V-i · Reason for hope · 1913 to 2025</div><h3>Aaa Aaaa Aaa</h3><p>Aaaaaaa aaa aaaa aaaaaaaa aaaaaa aa aaa aaaaa aa aaaaa aaaaa. Aaaaa aaa aaaaaaa aaaaa aaaa aaa aaaaaaaa aaaaa aaaa aa aaaa. Aaaa aaaaa aaaaaaa aaa aaaaa aa aaa aaaaaa.</p><div class="note">Aaaaaa aaaa aa a aaaaa aaaaaaaa aaaa aaaaa, aaa a aaaaaaaaa.</div></div></div>
+      </div>
+      <div class="figure"><div class="plate"><div class="title" id="spendTitle">US spending, $ bn · nominal and 1913 dollars</div><svg></svg></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="breakout" id="bo-spend">
+  <div class="wrap">
+    <aside class="anno" aria-label="Annotation: Breakout · up years and down years"><div class="anno-tag">Annotation · Breakout · up years and down years</div><p>I draw one bar per year for the change in real spending: fine silver above the line when it grew after inflation, red below when it shrank. A running tally counts the hopeful years against the worrying ones as the bars build left to right.</p><ul><li><b>Motion</b>The bars grow in sequence on first view (about five seconds); Replay reruns it. Hover any bar for its year.</li><li><b>Reading</b>81 years up, 31 down. The deepest falls cluster after the two world wars and in 1979-81; the latest run is 2022-24.</li></ul></aside>
+    <div class="bo-head">
+      <div><div class="eyebrow">1914 to 2025 · annual change in real spending</div><h2 class="bo-title">Up years, <em>down years</em></h2></div>
+      <p class="bo-dek">Aaa aaaaa aaaaaaa aa aaaaaaaaa aaaaaaa aa aa aaaaa aaa. A aa aaaa aaaa aaaaaaa aaaa aa aa aaaaa aaa aaaaaaaa aaa aaaaaaaaa aaaaa aa aaaaaaaa.</p>
+    </div>
+    <div class="tally" id="spendTally"></div>
+    <div class="bo-viz" id="vizSpend" style="margin-top:14px"></div>
+    <div class="bo-foot">
+      <div class="key"><span><i style="background:var(--fine)"></i>Real spending grew (hope)</span><span><i style="background:var(--red-hi)"></i>Real spending shrank (concern)</span><button type="button" class="replay" data-replay="spend">Replay</button></div>
+      <div class="src">Source: Macro_US_Data.xlsx, real spending in 1913 dollars; annual change computed from consecutive years.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= THE VERDICT ======================= -->
+<section class="verdict" id="verdict">
+  <div class="wrap">
+    <div class="chapter-head">
+      <div class="case-no">The verdict · all five cases</div>
+      <h2>What was left</h2>
+      <p>Aaaaa aaaa aaaa aa aaa aaaaaa aa aaa aaa aaaaa aaaaaaa. Aaaaaaa aaaaa aaaaa aaaa aaa aaaaaaaa aaaa aaaaa aaaa aaaa aaaaa.</p>
+    </div>
+    <aside class="anno" aria-label="Annotation: The verdict"><div class="anno-tag">Annotation · The verdict · final summary</div><p>This replaces the comparison I cut from note V-e. Instead of forcing five measures onto one timeline, I measure every case against its own starting value (= 100%) and show three moments: the start, the lowest record and the last record. The red string runs from start to low; a silver bracket shows any recovery. I keep hope in fine silver, the "pure" end of my metal scale, so it never borrows verdigris, which means corrosion here.</p><p>The last row is the reason for hope from Case V: real spending, which is not a coin at all. It runs off the scale at 2,187% of its 1913 level, and I draw it that way on purpose.</p><ul><li><b>Interaction</b>Use Start / Lowest / Where it ended to move every coin together, or Play to run all three. Hover a row for the record behind each number.</li><li><b>Caution</b>Each row keeps its own measure (fineness, gold share, bronze per unit, silver per penny, purchasing power). Compare the share kept, not the metal.</li></ul></aside>
+    <div class="controls">
+      <span class="seg" id="verdictSeg"><button type="button" data-v="start" aria-pressed="false">Start</button><button type="button" data-v="low" aria-pressed="false">Lowest</button><button type="button" data-v="end" aria-pressed="true">Where it ended</button></span>
+      <button type="button" class="replay" data-replay="verdict">▶ Play</button>
+    </div>
+    <div class="viz" id="vizVerdict"></div>
+    <div class="bo-foot">
+      <div class="key"><span><i style="background:var(--red-hi)"></i>Start to lowest point</span><span><i style="background:var(--fine)"></i>Recovery after the low</span><span><i class="c" style="border:1px dashed var(--paper)"></i>Approximate or placed value</span></div>
+      <div class="src">Each case indexed to its own first record = 100%. Sources as in each case; Washington real spending from Macro_US_Data.xlsx.</div>
+    </div>
+  </div>
+</section>
+
 <!-- ======================= CLOSE ======================= -->
 <section class="close">
   <div class="wrap">
@@ -548,7 +633,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       <h2>Two coins with a thin skin</h2>
       <p>Aaaaaa aaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaa a aaaaaaaaa aaa aaa aaaaaaaaa aaaaaaaa aaaaa a aaaaa aaaa. Aaa aaaaa a aaaaaaa a aaa aa. Aaa aaa.</p>
     </div>
-    <aside class="anno" aria-label="Annotation: The last exhibit"><div class="anno-tag">Annotation · The last exhibit</div><p>Pairs Exhibit A with the modern US cent: one is bronze under a silver wash, the other zinc under a copper skin. A visual bookend that returns the reader to the coin they held at the start.</p></aside>
+    <aside class="anno" aria-label="Annotation: The last exhibit"><div class="anno-tag">Annotation · The last exhibit</div><p>I pair Exhibit A with the modern US cent: one is bronze under a silver wash, the other zinc under a copper skin. It's my visual bookend, returning you to the coin you held at the start.</p></aside>
     <div class="pair">
       <figure>
         <svg id="coinT" viewBox="-110 -110 220 220" role="img" aria-label="Sketch of the Tetricus antoninianus"></svg>
@@ -565,7 +650,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
 <!-- ======================= EPILOGUE ======================= -->
 <section class="note-sec">
   <div class="wrap">
-    <aside class="anno" aria-label="Annotation: Epilogue"><div class="anno-tag">Annotation · Epilogue</div><p>The author's closing narrative (placeholder), mirroring the prologue's letter format to bookend the piece. It is followed by the <b>Case closed</b> link into the Evidence Room and the full source list.</p></aside>
+    <aside class="anno" aria-label="Annotation: Epilogue"><div class="anno-tag">Annotation · Epilogue</div><p>My closing narrative (placeholder for now). I mirror the prologue's letter format so my voice bookends the piece. After it I hand you off through <b>Case closed</b> into the Evidence Room, followed by my full source list.</p></aside>
     <article class="letter paper">
       <div class="eyebrow">Epilogue</div>
       <h2>Aa Aaaaaaa Aaa Aa</h2>
@@ -646,6 +731,58 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     return lg;
   }
 
+  /* Hover/drag layer for every sticky chart: a crosshair that glides between records, a ring that pulses
+     when it lands on a new one, and a paper tooltip. o.find(mx, my) returns {key, px, py, html, col} or null;
+     o.enter(f) / o.leave() let each chart react (repaint its coin, highlight a series) and restore its step. */
+  function scrub(host, svg, o) {
+    const plate = host.querySelector(".plate") || host;
+    let tip = d3.select(plate).select(".ctip");
+    if (tip.empty()) tip = d3.select(plate).append("div").attr("class", "ctip paper");
+    const [x0, y0, x1, y1] = o.rect;
+    const g = svg.append("g").attr("class", "scrub").attr("opacity", 0).style("pointer-events", "none");
+    const vl = g.append("line").attr("y1", y0).attr("y2", y1);
+    const ring = g.append("circle").attr("class", "ring").attr("r", 7);
+    if (o.hint) svg.append("text").attr("class", "hint").attr("x", x1).attr("y", y1 + (o.hintDy || 30)).attr("text-anchor", "end").text(o.hint || "hover or drag to scrub");
+    let last = null;
+    function leave() {
+      g.attr("opacity", 0); tip.classed("on", false);
+      if (last != null) { last = null; o.leave && o.leave(); }
+    }
+    function move(ev) {
+      const [mx, my] = d3.pointer(ev, svg.node());
+      const f = o.find(mx, my);
+      if (!f) return leave();
+      g.attr("opacity", 1);
+      const d = last != null && !REDUCED ? 140 : 0;
+      vl.transition("pos").duration(d).ease(d3.easeCubicOut).attr("x1", f.px).attr("x2", f.px).attr("opacity", f.noLine ? 0 : 1);
+      ring.transition("pos").duration(d).ease(d3.easeCubicOut).attr("cx", f.px).attr("cy", f.py).attr("stroke", f.col || C.paper);
+      if (f.key !== last) {
+        last = f.key;
+        tip.html(f.html);
+        if (!REDUCED) ring.attr("r", 15).attr("stroke-width", 3).transition("pulse").duration(380).ease(d3.easeBackOut).attr("r", 7).attr("stroke-width", 1.6);
+        o.enter && o.enter(f);
+      }
+      const tw = tip.node().offsetWidth, th = tip.node().offsetHeight, W = plate.clientWidth;
+      let lx = f.px + 18; if (lx + tw > W - 8) lx = f.px - tw - 18;
+      let ly = f.py - th - 14; if (ly < 34) ly = f.py + 18;
+      tip.style("left", Math.max(6, lx) + "px").style("top", ly + "px").classed("on", true);
+    }
+    svg.append("rect").attr("class", "hit").attr("x", x0).attr("y", y0).attr("width", Math.max(0, x1 - x0)).attr("height", Math.max(0, y1 - y0))
+      .on("pointermove pointerdown", move).on("pointerleave pointercancel", leave);
+    return { hide: leave };
+  }
+  // nearest record, weighting horizontal distance more than vertical so the cursor tracks time
+  function nearest(list, mx, my, wy = 0.3, max = 80) {
+    const b = d3.least(list, p => Math.abs(p.px - mx) + wy * Math.abs(p.py - my));
+    return b && Math.abs(b.px - mx) + wy * Math.abs(b.py - my) < max ? b : null;
+  }
+  // pop newly revealed markers in, left to right
+  function popIn(sel, isNew, r, xOf) {
+    if (!DUR) return;
+    sel.filter(isNew).interrupt("pop").attr("r", 0).transition("pop").delay(d => 250 + Math.max(0, xOf(d)) * 1.1).duration(500).ease(d3.easeBackOut.overshoot(3)).attr("r", r);
+  }
+  const pct = v => (Math.round(v * 10) / 10) + "%";
+
   /* ======================= ROME ======================= */
   function buildRome(el) {
     const { svg, w, h, narrow } = mk(el);
@@ -667,8 +804,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     wGroup.append("path").datum(solid).attr("d", line).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 2.4);
     wGroup.append("path").datum(approx).attr("d", line).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 2.4).attr("stroke-dasharray", "3 4");
     wGroup.selectAll("line.rng").data(W.filter(d => d.lo != null)).join("line").attr("class", "rng").attr("x1", d => x(d.mid)).attr("x2", d => x(d.mid)).attr("y1", d => y(d.lo)).attr("y2", d => y(d.hi)).attr("stroke", C.fine).attr("stroke-width", 6).attr("opacity", .35);
-    wGroup.selectAll("circle").data(W).join("circle").attr("cx", d => x(d.mid)).attr("cy", d => y(d.pct)).attr("r", 2.8).attr("fill", d => P.silverScale(d.pct / 100)).attr("stroke", C.ground).attr("stroke-width", .8)
-      .append("title").text(d => `${d.ruler} (${P.fmtYear(d.s)}-${P.fmtYear(d.e)}): ${d.pct}%${d.note ? ". " + d.note : ""}`);
+    const rDots = wGroup.selectAll("circle").data(W).join("circle").attr("cx", d => x(d.mid)).attr("cy", d => y(d.pct)).attr("r", 2.8).attr("fill", d => P.silverScale(d.pct / 100)).attr("stroke", C.ground).attr("stroke-width", .8);
     const bp = svg.append("g").attr("opacity", 0);
     bp.selectAll("line.seg").data(P.romeBP).join("line").attr("class", "seg").attr("x1", d => x(d.s) - (d.s === d.e ? 2 : 0)).attr("x2", d => x(d.e) + (d.s === d.e ? 2 : 0)).attr("y1", d => y(d.pct)).attr("y2", d => y(d.pct)).attr("stroke", C.red).attr("stroke-width", 4).attr("stroke-linecap", "round");
     bp.selectAll("line.rg").data(P.romeBP.filter(d => d.lo != null)).join("line").attr("class", "rg").attr("x1", d => x(d.mid)).attr("x2", d => x(d.mid)).attr("y1", d => y(d.lo)).attr("y2", d => y(d.hi)).attr("stroke", C.red).attr("stroke-width", 1.4);
@@ -707,9 +843,32 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       { to: 305, v: .04,  lg: "GALLIENVS AVG", rd: "Gallienus · about 5%" },
       { to: 305, v: .04,  lg: "GALLIENVS AVG", rd: "Severus: 46% by drill" }
     ];
+    let cur = 0, prevTo = -40;
+    const rPts = W.map(d => ({ d, src: "w", px: x(d.mid), py: y(d.pct) })).concat(P.romeBP.map(d => ({ d, src: "bp", px: x(d.mid), py: y(d.pct) })));
+    const sc = scrub(el, svg, {
+      rect: [m.l, m.t, w - m.r, h - m.b],
+      find(mx, my) {
+        const vis = rPts.filter(p => (p.src === "w" ? p.d.mid <= S[cur].to : cur === 6));
+        const f = nearest(vis, mx, my, cur === 6 ? 0.8 : 0.3);
+        if (!f) return null;
+        const d = f.d, rng = d.lo != null ? `${d.lo}-${d.hi}%` : d.pct + "%";
+        return Object.assign(f, { key: f.src + d.ruler, col: f.src === "bp" ? C.red : C.fine,
+          html: `<b>${d.ruler}</b>${P.fmtYear(d.s)} to ${P.fmtYear(d.e)}<br>Fineness ${rng}${d.ag ? ` · ${d.ag} g silver` : ""}${d.wg ? ` in ${d.wg} g` : ""}` +
+            (d.note ? `<br><span class="s">${d.note}</span>` : "") + `<br><span class="s">${f.src === "bp" ? "Butcher & Ponting 2005, " + d.method : "Walker 1976-78, surface XRF"}</span>` });
+      },
+      enter(f) {
+        coin.set(f.d.pct / 100, REDUCED ? 0 : 350);
+        readout.text(`${f.d.ruler.replace(/ \(.*\)/, "")} · ${f.d.pct}%`);
+        rDots.transition("hl").duration(150).attr("r", d => (d === f.d ? 6 : 2.8));
+      },
+      leave() { coin.set(S[cur].v, REDUCED ? 0 : 350).legend(S[cur].lg); readout.text(S[cur].rd); rDots.transition("hl").duration(150).attr("r", 2.8); }
+    });
     return {
       render(i, anim) {
+        sc.hide(); cur = i;
         const s = S[i];
+        if (anim && s.to > prevTo) { const p0 = prevTo; popIn(rDots, d => d.mid > p0 && d.mid <= s.to, 2.8, d => x(d.mid) - x(p0)); }
+        prevTo = s.to;
         T(clip, anim, 1200).attr("width", x(s.to) + 4);
         T(silverPath, anim).attr("opacity", i >= 1 ? 0.9 : 0);
         T(lg.select(".lg-silver"), anim).attr("opacity", i >= 1 ? 1 : 0.25);
@@ -798,10 +957,47 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       { show: 5, to: -9, au: .47, rd: "After 50 BC · 45-50%", rd2: "5.4 g by c. 10 BC" },
       { show: 6, to: 35, au: .20, rd: "1st c. AD · 20% gold", rd2: "70% copper", lg: "VEP CORF" }
     ];
+    let cur = 0;
+    const colOp = (k, i) => (k < S[i].show ? (k === S[i].show - 1 || (i === 3 && k === 3) ? 1 : 0.55) : 0);
+    const bw = xb.bandwidth();
+    const barPts = comp.map((d, k) => ({ d, k, kind: "bar", px: xb(d.id) + bw / 2, py: y(d.au) }));
+    const wtPts = P.celtic.filter(d => d.wt != null).map(d => ({ d, kind: "wt", px: xw(d.year), py: yw(d.wt) }));
+    const sc = scrub(el, svg, {
+      rect: [m.l, m.t, cx1, h - m.b], hint: false,
+      find(mx, my) {
+        let f;
+        if (my < topB + 34) {
+          f = barPts.filter(p => p.k < S[cur].show && Math.abs(p.px - mx) < bw / 2 + 6)[0];
+          if (!f) return null;
+          const d = f.d, cu = d.cu != null ? d.cu + "%" : "not reported";
+          return Object.assign(f, { key: "b" + d.id, noLine: true, col: d.single ? C.red : C.paper,
+            html: `<b>${d.series} · ${d.label}</b>${d.type}<br>Gold ${d.au}% · silver ${d.ag}% · copper ${cu}<br><span class="s">${d.qual} · ${d.method}${d.single ? " · single coin" : ""}</span>` });
+        }
+        f = nearest(wtPts.filter(p => p.d.year <= S[cur].to), mx, my, 0.3, 60);
+        if (!f) return null;
+        return Object.assign(f, { key: "w" + f.d.id, col: f.d.single ? C.red : C.brass,
+          html: `<b>${f.d.series} · ${f.d.label}</b>Stater weight ${f.d.wt} g<br><span class="s">${f.d.qual}${f.d.single ? " · single coin" : ""}</span>` });
+      },
+      enter(f) {
+        if (f.kind === "bar") {
+          cols.transition("hl").duration(200).attr("opacity", (d, k) => (k === f.k ? 1 : colOp(k, cur) ? 0.22 : 0));
+          if (coin) { coin.set(f.d.au / 100, REDUCED ? 0 : 350); readout.text(`${f.d.label} · ${f.d.au}% gold`); read2.text(f.d.wt ? f.d.wt + " g" : f.d.series); }
+        } else if (coin) { read2.text(`${f.d.wt} g · ${f.d.label}`); }
+      },
+      leave() {
+        cols.transition("hl").duration(200).attr("opacity", (d, k) => colOp(k, cur));
+        if (coin) { coin.set(S[cur].au, REDUCED ? 0 : 350); readout.text(S[cur].rd); read2.text(S[cur].rd2); }
+      }
+    });
     return {
       render(i, anim) {
+        sc.hide(); cur = i;
         const s = S[i];
-        cols.each(function (d, k) { T(d3.select(this), anim, 600).attr("opacity", k < s.show ? (k === s.show - 1 || (i === 3 && k === 3) ? 1 : 0.55) : 0); });
+        cols.each(function (d, k) {
+          const sel = d3.select(this), was = +sel.attr("opacity"), op = colOp(k, i);
+          if (anim && DUR && !was && op) sel.selectAll("rect").each(function () { const r = d3.select(this); if (r.attr("data-y") == null) r.attr("data-y", r.attr("y")).attr("data-h", r.attr("height")); const y1 = +r.attr("data-y"), hh = +r.attr("data-h"); r.attr("y", topB).attr("height", 0).transition().delay(150).duration(700).ease(d3.easeCubicOut).attr("y", y1).attr("height", hh); });
+          T(sel, anim, 600).attr("opacity", op);
+        });
         T(wclip, anim, 1000).attr("width", xw(s.to) + 6);
         T(gw, anim).attr("opacity", s.gw ? 1 : 0);
         if (coin) { coin.set(s.au, anim ? DUR : 0).legend(s.lg || ""); readout.text(s.rd); read2.text(s.rd2); }
@@ -858,9 +1054,32 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       { on: [5, 6], rd: "Classes 2 & 3", rd2: "0.187 g per unit · low point", v: .49 },
       { on: [7, 8, 9], rd: "Classes 4 to 6", rd2: "0.21 to 0.24 g per unit", v: .57, mk: "Π", lg: "ΚΛΕΟΠΑΤΡΑΣ ΒΑΣΙΛΙΣΣΗΣ" }
     ];
-    let last = -1;
-    return {
-      render(i, anim) {
+    let last = -1, cur = 0, api;
+    const sc = scrub(el, svg, {
+      rect: [m.l, m.t, w - m.r, h - m.b],
+      find(mx, my) {
+        const vis = new Set(S.slice(0, cur + 1).flatMap(t => t.on)), list = [];
+        dots.each(function (d) { if (vis.has(d.o)) list.push({ d, px: +this.getAttribute("cx"), py: +this.getAttribute("cy") }); });
+        const f = d3.least(list, p => Math.hypot(p.px - mx, p.py - my));
+        if (!f || Math.hypot(f.px - mx, f.py - my) > 40) return null;
+        const d = f.d, sr = S5[d.o - 1];
+        return Object.assign(f, { key: d.o + d.ref + d.fv, noLine: true, col: "#F0C9A0",
+          html: `<b>${d.ref} · ${d.type}</b>${d.fv} units · ${d.wt} g mean · n=${d.n}<br>${(d.wt / d.fv).toFixed(3)} g per unit<br><span class="s">${sr.name} · ${sr.date}${sr.anchored ? "" : " (placed by series order)"}</span>` });
+      },
+      enter(f) {
+        const o = f.d.o;
+        lineSel.transition("hl").duration(200).attr("opacity", d => (d.o === o ? 1 : 0.08));
+        lineSel.select("text").attr("opacity", d => (d.o === o ? 1 : 0));
+        dots.transition("hl").duration(200).attr("opacity", d => (d.o === o ? (d === f.d ? 1 : 0.85) : 0.08));
+        coin.set(Math.min(1, S5[o - 1].gpu / 0.385), REDUCED ? 0 : 350);
+        readout.text(S5[o - 1].name.replace(/ \(.*\)/, "")); readout2.text(S5[o - 1].gpu.toFixed(3) + " g per unit");
+      },
+      leave() { lineSel.interrupt("hl"); dots.interrupt("hl"); api.render(cur, false, true); }
+    });
+    return api = {
+      render(i, anim, keep) {
+        if (!keep) sc.hide();
+        cur = i;
         const s = S[i];
         const past = new Set(S.slice(0, i).flatMap(t => t.on)), now = new Set(s.on);
         T(lineSel, anim, 600).attr("opacity", d => (now.has(d.o) ? 1 : past.has(d.o) ? 0.22 : 0));
@@ -874,6 +1093,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
         if (sliding) dots.filter(moved).attr("cx", x(100)).attr("opacity", 1).transition().delay(400).duration(1400).attr("cx", x(120));
         else dots.filter(moved).attr("cx", x(120));
         T(dots.filter(d => !(moved(d) && sliding)), anim, 600).attr("opacity", d => (now.has(d.o) ? 0.95 : past.has(d.o) ? 0.14 : 0));
+        if (anim && i > last) popIn(dots, d => now.has(d.o) && !(moved(d) && sliding), d => rS(d.n), d => x(d.fv) - m.l);
         T(drop, anim).attr("opacity", i === 1 ? 1 : 0);
         T(slide, anim).attr("opacity", i === 2 ? 1 : 0);
         annEls.forEach(({ a, el }) => T(el, anim, 500).attr("opacity", a.s === i ? 1 : 0));
@@ -912,8 +1132,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     g.append("path").datum(a.concat([{ t: 1546.5 + 0.001, pct: 33.33 }])).attr("d", step).attr("fill", "none").attr("stroke", TC).attr("stroke-width", 2.4);
     g.append("path").datum([{ t: 1546.5, pct: 33.33 }, { t: 1551.29, pct: 33.33 }]).attr("d", d3.line().x(d => x(d.t)).y(d => y(d.pct))).attr("fill", "none").attr("stroke", TC).attr("stroke-width", 2).attr("stroke-dasharray", "3 4");
     g.append("path").datum(b).attr("d", step).attr("fill", "none").attr("stroke", TC).attr("stroke-width", 2.4);
-    g.selectAll("circle.f").data(F).join("circle").attr("class", "f").attr("cx", d => x(d.t)).attr("cy", d => y(d.pct)).attr("r", 3.6).attr("fill", d => P.silverScale(d.pct / 100)).attr("stroke", C.ground)
-      .append("title").text(d => `${d.date}, ${d.mon}: ${d.ev}. ${d.oz} = ${d.pct}%${d.note ? ". " + d.note : ""}`);
+    const fDots = g.selectAll("circle.f").data(F).join("circle").attr("class", "f").attr("cx", d => x(d.t)).attr("cy", d => y(d.pct)).attr("r", 3.6).attr("fill", d => P.silverScale(d.pct / 100)).attr("stroke", C.ground);
     g.append("line").attr("x1", x(1542.37) - 6).attr("x2", x(1542.37) + 6).attr("y1", y(77.08)).attr("y2", y(77.08)).attr("stroke", C.red).attr("stroke-width", 2).append("title").text("Munro's reading of the 1542 indenture: 77.08%");
     const PN = P.tudor.filter(d => d.pg != null);
     svg.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y2(0.639)).attr("y2", y2(0.639)).attr("stroke", C.brass).attr("stroke-dasharray", "2 4").attr("opacity", .7);
@@ -921,8 +1140,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     const pl = d3.line().x(d => x(d.t)).y(d => y2(d.pg));
     g.append("path").datum(PN.slice(0, 2)).attr("d", pl).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 1.2).attr("stroke-dasharray", "2 5").attr("opacity", .5);
     g.append("path").datum(PN.slice(1)).attr("d", pl).attr("fill", "none").attr("stroke", C.fine).attr("stroke-width", 1.6).attr("opacity", .65);
-    g.selectAll("circle.p").data(PN).join("circle").attr("class", "p").attr("cx", d => x(d.t)).attr("cy", d => y2(d.pg)).attr("r", 4.5).attr("fill", d => P.silverScale(d.pg / 0.639)).attr("stroke", C.ground)
-      .append("title").text(d => `${d.date}, ${d.mon}: ${d.ev}. ${d.pg} g fine silver`);
+    const pDots = g.selectAll("circle.p").data(PN).join("circle").attr("class", "p").attr("cx", d => x(d.t)).attr("cy", d => y2(d.pg)).attr("r", 4.5).attr("fill", d => P.silverScale(d.pg / 0.639)).attr("stroke", C.ground);
     const annG = svg.append("g");
     const bounds = [m.l + 4, w - m.r - 4, m.t, h - m.b - 4];
     const maxc = narrow ? 20 : 28;
@@ -947,9 +1165,32 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       { to: 1553.55, v: .3, lg: "E D G ROSA SINE SPINA", rd: "1553 · base pennies" },
       { to: 1604, v: .925, lg: "E D G ROSA SINE SPINA", rd: "1560 · 92.5% again" }
     ];
+    let cur = 0, prevTo = 1520;
+    const tF = F.map(d => ({ d, kind: "f", px: x(d.t), py: y(d.pct) })), tP = PN.map(d => ({ d, kind: "p", px: x(d.t), py: y2(d.pg) }));
+    const sc = scrub(el, svg, {
+      rect: [m.l, m.t, w - m.r, h - m.b],
+      find(mx, my) {
+        const upper = my < topB + 26;
+        const f = nearest((upper ? tF : tP).filter(p => p.d.t <= S[cur].to + 0.01), mx, my, 0.15, 70);
+        if (!f) return null;
+        const d = f.d;
+        return Object.assign(f, { key: f.kind + d.t, col: upper ? "#5FA08E" : C.fine,
+          html: `<b>${d.mon} · ${d.date}</b>${d.ev}<br>` + (upper ? `Indenture ${d.oz} = ${d.pct}% silver` : `${d.pg} g fine silver · ${Math.round(d.pg / 0.639 * 100)}% of 1526`) + (d.note ? `<br><span class="s">${d.note}</span>` : "") });
+      },
+      enter(f) {
+        const v = f.kind === "f" ? f.d.pct / 100 : Math.min(1, (f.d.pg / 0.639) * 0.925);
+        coin.set(v, REDUCED ? 0 : 350).legend(f.d.mon.startsWith("Henry") ? "H D G ROSA SINE SPINA" : f.d.mon.startsWith("Edward") ? "E D G ROSA SINE SPINA" : f.d.mon.startsWith("Mary") ? "M D G ROSA SINE SPINA" : "E D G ROSA SINE SPINA");
+        readout.text(`${f.d.date.replace(/^\d+ /, "")} · ${f.kind === "f" ? f.d.pct + "%" : f.d.pg + " g"}`);
+        (f.kind === "f" ? fDots : pDots).transition("hl").duration(150).attr("r", d => (d === f.d ? 7 : f.kind === "f" ? 3.6 : 4.5));
+      },
+      leave() { coin.set(S[cur].v, REDUCED ? 0 : 350).legend(S[cur].lg); readout.text(S[cur].rd); fDots.transition("hl").duration(150).attr("r", 3.6); pDots.transition("hl").duration(150).attr("r", 4.5); }
+    });
     return {
       render(i, anim) {
+        sc.hide(); cur = i;
         const s = S[i];
+        if (anim && s.to > prevTo) { const p0 = prevTo; popIn(fDots, d => d.t > p0 && d.t <= s.to, 3.6, d => x(d.t) - x(p0)); popIn(pDots, d => d.t > p0 && d.t <= s.to, 4.5, d => x(d.t) - x(p0)); }
+        prevTo = s.to;
         T(clip, anim, 1200).attr("width", x(s.to) + 6);
         coin.set(s.v, anim ? DUR : 0).legend(s.lg);
         readout.text(s.rd);
@@ -961,7 +1202,6 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
   /* ======================= RED STRING + MACRO ======================= */
   const BOARD = [{ key: "rome", m: "fine" }, { key: "celtic", m: "gold" }, { key: "ptol", m: "gpu" }, { key: "tudor", m: "penny" }]
     .map(s => Object.assign(s, { pts: P.indexed(s.key, s.m), meta: P.SERIES[s.key] }));
-  const USPTS = P.indexed("us", "pp");
 
   function buildString(el) {
     const { svg, w, h, narrow } = mk(el);
@@ -989,8 +1229,26 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     tags.append("rect").attr("width", 50).attr("height", 18).attr("fill", C.paper).attr("transform", "rotate(-3)");
     tags.append("text").attr("x", 25).attr("y", 13).attr("text-anchor", "middle").attr("font-size", 11.5).attr("fill", "#1F2A2E").attr("transform", "rotate(-3)").text(e => Math.round(e.v));
     let drawn = false;
+    const fmtU = (v, u) => (u === "%" ? pct(v) : u === "g/unit" ? v.toFixed(3) + " g/unit" : u === "g" ? v.toFixed(3) + " g" : v.toFixed(1));
+    const sPts = BOARD.flatMap(b => b.pts.map(p => ({ b, p, px: x(p.el), py: y(p.y) })));
+    const sc = scrub(el, svg, {
+      rect: [m.l, m.t, w - m.r, h - m.b],
+      find(mx, my) {
+        const f = d3.least(sPts, q => Math.hypot(q.px - mx, q.py - my));
+        if (!f || Math.hypot(f.px - mx, f.py - my) > 45) return null;
+        const u = P.MEASURES[f.b.key][f.b.m].unit;
+        return Object.assign(f, { key: f.b.key + f.p.x, noLine: true, col: f.b.meta.color,
+          html: `<b>${f.b.meta.name} · ${f.p.label}</b>${P.fmtYear(f.p.x)} · year ${Math.round(f.p.el)} of the case<br>${fmtU(f.p.raw, u)} · index ${Math.round(f.p.y)}<br><span class="s">${f.p.src}</span>` });
+      },
+      enter(f) {
+        paths.interrupt("hl").transition("hl").duration(200).attr("opacity", d => (d === f.b ? 1 : 0.15)).attr("stroke-width", d => (d === f.b ? 3.4 : 2.2));
+        labels.transition("hl").duration(200).attr("opacity", e => (e.d === f.b ? 1 : 0.25));
+      },
+      leave() { paths.transition("hl").duration(250).attr("opacity", 1).attr("stroke-width", 2.2); labels.transition("hl").duration(250).attr("opacity", 1); }
+    });
     return {
       render(i, anim) {
+        sc.hide();
         if (!drawn && anim && DUR) paths.each(function (d, k) { const L = this.getTotalLength(); d3.select(this).attr("stroke-dashoffset", L).transition().delay(k * 250).duration(1600).attr("stroke-dashoffset", 0); });
         drawn = true;
         T(thread, anim, 1400).attr("stroke-dashoffset", i >= 1 ? 0 : TL);
@@ -1004,28 +1262,23 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
   function buildMacro(el) {
     const { svg, w, h, narrow } = mk(el);
     const m = { t: 40, r: narrow ? 64 : 104, b: 36, l: 44 };
-    const x = d3.scaleLinear([0, 112], [m.l, w - m.r]);
+    const x = d3.scaleLinear([1913, 2025], [m.l, w - m.r]);
     const y = d3.scaleLinear([0, 112], [h - m.b, m.t]);
     svg.append("g").attr("class", "grid").selectAll("line").data([25, 50, 75, 100]).join("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", y).attr("y2", y);
     svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 25, 50, 75, 100]).tickSize(0)).call(g => g.select(".domain").remove());
-    const xAxis = svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`);
-    const axTime = s => d3.axisBottom(s).tickValues(narrow ? [0, 30, 58, 87, 112] : [0, 17, 30, 58, 67, 87, 112]).tickFormat(d => 1913 + d).tickSizeOuter(0);
-    const axEl = s => d3.axisBottom(s).tickValues([0, 50, 100, 150, 200, 250, 300]).tickFormat(d => d + (d === 300 ? " yrs" : "")).tickSizeOuter(0);
-    xAxis.call(axTime(x));
-    const line = d3.line().x(d => x(d.el)).y(d => y(d.y));
-    const area = d3.area().x(d => x(d.el)).y0(y(0)).y1(d => y(d.y));
-    const clip = svg.append("defs").append("clipPath").attr("id", "macClip").append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", x(16));
-    const ancient = svg.append("g").attr("opacity", 0);
-    const anc = ancient.selectAll("path").data(BOARD).join("path").attr("fill", "none").attr("stroke", d => d.meta.color).attr("stroke-width", d => d.key === "rome" ? 2.4 : 1.6).attr("opacity", d => d.key === "rome" ? 1 : 0.45).attr("d", d => line(d.pts));
-    const ancLbl = ancient.selectAll("text").data(BOARD).join("text").attr("font-size", 11.5).attr("fill", d => d.meta.color).text(d => d.meta.name);
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`).call(d3.axisBottom(x).tickValues(narrow ? [1913, 1943, 1971, 2000, 2025] : [1913, 1930, 1945, 1971, 1980, 2000, 2025]).tickFormat(d3.format("d")).tickSizeOuter(0));
+    const pts = P.us.map(d => ({ d, px: x(d.year), py: y(d.idx) }));
+    const line = d3.line().x(p => p.px).y(p => p.py);
+    const clip = svg.append("defs").append("clipPath").attr("id", "macClip").append("rect").attr("x", 0).attr("y", 0).attr("height", h).attr("width", x(1929));
     const ug = svg.append("g").attr("clip-path", "url(#macClip)");
-    const uArea = ug.append("path").datum(USPTS).attr("d", area).attr("fill", "rgba(201,82,74,.14)");
-    const uLine = ug.append("path").datum(USPTS).attr("d", line).attr("fill", "none").attr("stroke", C.red).attr("stroke-width", 2.6);
-    const usLbl = svg.append("text").attr("fill", C.red).attr("font-size", 12).attr("opacity", 0).text("US dollar");
+    ug.append("path").datum(pts).attr("d", d3.area().x(p => p.px).y0(y(0)).y1(p => p.py)).attr("fill", "rgba(201,82,74,.14)");
+    ug.append("path").datum(pts).attr("d", line).attr("fill", "none").attr("stroke", C.red).attr("stroke-width", 2.6);
+    // a bead runs along the leading edge of the line as each note reveals more years
+    const bead = svg.append("circle").attr("r", 5).attr("fill", C.red).attr("stroke", C.paper).attr("stroke-width", 1.5);
     const annG = svg.append("g");
     const bounds = [m.l + 4, w - m.r - 4, m.t, h - m.b - 4];
     const maxc = narrow ? 22 : 30;
-    const byYear = yr => USPTS.find(d => +d.label === yr);
+    const byYear = yr => P.us.find(d => d.year === yr);
     const A = [
       { s: 0, yr: 1920, dx: 24, dy: -46, t: "1920: prices doubled since 1915" },
       { s: 1, yr: 1933, dx: 20, dy: -40, t: "1930-33: deflation" },
@@ -1033,8 +1286,8 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
       { s: 2, yr: 1971, dx: 18, dy: -70, t: "15 Aug 1971: gold window closes" },
       { s: 3, yr: 1980, dx: 16, dy: -66, t: "1980: 13.5% inflation" },
       { s: 3, yr: 2025, dx: -24, dy: -74, t: "2025: 3.1% of 1913 power" }
-    ].map(a => Object.assign(a, { x: a.yr - 1913, y: byYear(a.yr).y }));
-    const annEls = A.map(a => ({ a, el: ann(annG, a, x(a.x), y(a.y), bounds, maxc).attr("opacity", 0) }));
+    ];
+    const annEls = A.map(a => ({ a, el: ann(annG, a, x(a.yr), y(byYear(a.yr).idx), bounds, maxc).attr("opacity", 0) }));
     const R0 = Math.max(26, Math.min(56, w * 0.09));
     const pcx = w - m.r - R0 + (narrow ? 30 : 60), pcy = m.t + R0 + 10;
     const pg = svg.append("g").attr("transform", `translate(${pcx},${pcy})`);
@@ -1042,49 +1295,167 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     const pennyG = pg.append("g");
     P.makeCoin(pennyG, { r: R0, value: 1, metal: "zinc", legend: "IN GOD WE TRUST", seed: 53 });
     const pRead = svg.append("text").attr("class", "readout").attr("text-anchor", narrow ? "end" : "middle").attr("x", narrow ? w - 10 : pcx).attr("y", pcy + R0 + 22);
-    const cmpAnn = svg.append("g").attr("opacity", 0);
-    const S = [{ to: 1929 }, { to: 1945 }, { to: 1971 }, { to: 2025 }, { to: 2025, cmp: true }];
-    let mode = "time";
+    const S = [{ to: 1929 }, { to: 1945 }, { to: 1971 }, { to: 2025 }];
+    let cur = 0;
+    const penny = (yr, d) => { const v = byYear(yr).idx; T(pennyG, d > 0, d).attr("transform", `scale(${Math.sqrt(v / 100)})`); pRead.text(`${yr}: ${v.toFixed(0)}¢ of 1913 value`); };
+    const sc = scrub(el, svg, {
+      rect: [m.l, m.t, w - m.r, h - m.b],
+      find(mx, my) {
+        const f = nearest(pts.filter(p => p.d.year <= S[cur].to), mx, my, 0, 40);
+        if (!f) return null;
+        const d = f.d;
+        return Object.assign(f, { key: d.year, col: C.red,
+          html: `<b>${d.year}</b>${d.idx.toFixed(1)}¢ of a 1913 dollar's buying power<br>CPI-U ${d.cpi}${d.infl != null ? ` · inflation ${d.infl.toFixed(1)}%` : ""}<br><span class="s">$1 then = $${d.pp.toFixed(2)} in 2025</span>` });
+      },
+      enter(f) { penny(f.d.year, REDUCED ? 0 : 160); },
+      leave() { penny(S[cur].to, REDUCED ? 0 : 300); }
+    });
     return {
       render(i, anim) {
-        const s = S[i];
-        const yrIdx = byYear(s.to).y;
-        const cmp = !!s.cmp;
-        const x2 = d3.scaleLinear(cmp ? [0, 335] : [0, 112], [m.l, w - m.r]);
-        const l2 = d3.line().x(d => x2(d.el)).y(d => y(d.y));
-        const a2 = d3.area().x(d => x2(d.el)).y0(y(0)).y1(d => y(d.y));
-        const newMode = cmp ? "cmp" : "time";
-        if (newMode !== mode || !anim) {
-          T(xAxis, anim, 1200).call(cmp ? axEl(x2) : axTime(x2));
-          T(uLine, anim, 1200).attr("d", l2);
-          T(uArea, anim, 1200).attr("d", a2);
-          T(anc, anim, 1200).attr("d", d => l2(d.pts));
-          ancLbl.attr("x", d => x2(d.pts[d.pts.length - 1].el) + 6).attr("y", d => y(d.pts[d.pts.length - 1].y) + (d.key === "rome" ? 14 : 4));
-          mode = newMode;
-        }
-        T(clip, anim, 1200).attr("width", x2(s.to - 1913) + 6);
-        T(ancient, anim, 900).attr("opacity", cmp ? 1 : 0);
-        usLbl.attr("x", x2(112) + 6).attr("y", y(USPTS[USPTS.length - 1].y) - 6);
-        T(usLbl, anim).attr("opacity", cmp ? 1 : 0);
-        annEls.forEach(({ a, el }) => T(el, anim, 500).attr("opacity", !cmp && a.s === i ? 1 : 0));
-        cmpAnn.selectAll("*").remove();
-        if (cmp) {
-          const rEnd = BOARD[0].pts[BOARD[0].pts.length - 1];
-          [[x2(rEnd.el), y(rEnd.y), C.fine], [x2(112), y(USPTS[USPTS.length - 1].y), C.red]].forEach(([px, py, col]) =>
-            cmpAnn.append("circle").attr("cx", px).attr("cy", py).attr("r", 6).attr("fill", "none").attr("stroke", col).attr("stroke-width", 1.6));
-          const tw = narrow ? 168 : 214, tx = w - m.r - tw + (narrow ? 40 : 70), ty = m.t + 6;
-          const tag = cmpAnn.append("g").attr("transform", `translate(${tx},${ty}) rotate(-1.5)`);
-          tag.append("rect").attr("width", tw).attr("height", 62).attr("fill", C.paper);
-          tag.append("circle").attr("cx", 10).attr("cy", 31).attr("r", 3.5).attr("fill", C.ground2).attr("stroke", "#8C2F2B");
-          tag.append("text").attr("x", 22).attr("y", 24).attr("font-size", narrow ? 11 : 12.5).attr("fill", "#1F2A2E").text("Rome, ~300 yrs: 98% → ~5%");
-          tag.append("text").attr("x", 22).attr("y", 44).attr("font-size", narrow ? 11 : 12.5).attr("fill", "#8C2F2B").text("Dollar, 112 yrs: 100 → 3");
-        }
-        T(pg, anim).attr("opacity", cmp ? 0 : 1);
-        T(pRead, anim).attr("opacity", cmp ? 0 : 1);
-        T(cmpAnn, anim, 700).attr("opacity", cmp ? 1 : 0);
-        document.getElementById("macroTitle").textContent = cmp ? "The dollar on the red-string board · indexed to 100 · years elapsed" : "Purchasing power of the US dollar · 1913 = 100";
-        T(pennyG, anim).attr("transform", `scale(${Math.sqrt(yrIdx / 100)})`);
-        pRead.text(`${s.to}: ${yrIdx.toFixed(0)}¢ of 1913 value`);
+        sc.hide(); cur = i;
+        const s = S[i], bx = x(s.to), by = y(byYear(s.to).idx);
+        T(clip, anim, 1200).attr("width", bx + 6);
+        if (anim && DUR) {
+          const from = +bead.attr("data-yr") || 1913;
+          bead.interrupt().transition().duration(1200).tween("run", () => { const iy = d3.interpolateNumber(from, s.to); return t => { const yr = Math.round(iy(t)), d = byYear(yr); bead.attr("cx", x(yr)).attr("cy", y(d.idx)); penny(yr, 0); }; });
+        } else { bead.attr("cx", bx).attr("cy", by); penny(s.to, 0); }
+        bead.attr("data-yr", s.to);
+        annEls.forEach(({ a, el }) => T(el, anim, 500).attr("opacity", a.s === i ? 1 : 0));
+      }
+    };
+  }
+
+  /* ======================= CASE V CONTINUED: NOMINAL AND REAL SPENDING ======================= */
+  function buildSpend(el) {
+    const { svg, w, h, narrow } = mk(el);
+    const m = { t: 44, r: narrow ? 58 : 92, b: 36, l: 58 };
+    const U = P.us, NOM = C.brass, REAL = C.fine;
+    const by = yr => U.find(d => d.year === yr);
+    const fmt$ = v => "$" + (v >= 100 ? d3.format(",.0f")(v) : v >= 10 ? v.toFixed(1) : v.toFixed(2)) + " bn";
+    // scale presets per note
+    const S = [
+      { x: [1913, 2025], y: "lin", nom: 1, real: 0, gap: 0, focus: 2025 },
+      { x: [1913, 2025], y: "lin", nom: 1, real: 1, gap: 1, focus: 2025 },
+      { x: [1913, 2025], y: "log", nom: 1, real: 1, gap: 1, focus: 2025 },
+      { x: [1999, 2025], y: "zoom", nom: 0, real: 1, gap: 0, focus: 2024, band: 1 },
+      { x: [1913, 2025], y: "log", nom: 1, real: 1, gap: 1, focus: 2025, trend: 1 }
+    ];
+    const YS = {
+      lin: () => d3.scaleLinear([0, 2600], [h - m.b, m.t]),
+      log: () => d3.scaleLog([2, 4000], [h - m.b, m.t]),
+      zoom: () => d3.scaleLinear([25, 92], [h - m.b, m.t])
+    };
+    const TICKS = { lin: [0, 500, 1000, 1500, 2000, 2500], log: [3, 10, 30, 100, 300, 1000, 3000], zoom: [30, 45, 60, 75, 90] };
+    let x = d3.scaleLinear(S[0].x, [m.l, w - m.r]), y = YS.lin();
+    svg.append("defs").append("clipPath").attr("id", "spClip").append("rect").attr("x", m.l).attr("y", m.t - 30).attr("width", w - m.l - m.r + 2).attr("height", h - m.b - m.t + 30);
+    hatch(svg, "gapHatch", "rgba(201,82,74,.55)");
+    const gridG = svg.append("g").attr("class", "grid");
+    const yAx = svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`);
+    const xAx = svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`);
+    const plot = svg.append("g").attr("clip-path", "url(#spClip)");
+    const bandR = plot.append("rect").attr("fill", "rgba(201,82,74,.16)").attr("opacity", 0);
+    const gapP = plot.append("path").attr("fill", "url(#gapHatch)").attr("opacity", 0);
+    const trendP = plot.append("path").attr("fill", "none").attr("stroke", REAL).attr("stroke-width", 1.4).attr("stroke-dasharray", "2 5").attr("opacity", 0);
+    const nomP = plot.append("path").attr("fill", "none").attr("stroke", NOM).attr("stroke-width", 2.6).attr("stroke-linejoin", "round");
+    const realP = plot.append("path").attr("fill", "none").attr("stroke", REAL).attr("stroke-width", 2.6).attr("stroke-linejoin", "round").attr("opacity", 0);
+    const endN = plot.append("circle").attr("r", 4.5).attr("fill", NOM);
+    const endR = plot.append("circle").attr("r", 4.5).attr("fill", REAL).attr("opacity", 0);
+    const g0 = U[0].real, cagr = Math.pow(U[U.length - 1].real / g0, 1 / 112);
+    const lines = () => ({
+      nom: d3.line().x(d => x(d.year)).y(d => y(Math.max(y.domain()[0] * 0.5, d.nom)))(U),
+      real: d3.line().x(d => x(d.year)).y(d => y(d.real))(U),
+      gap: d3.area().x(d => x(d.year)).y0(d => y(d.real)).y1(d => y(d.nom))(U),
+      trend: d3.line().x(d => x(d.year)).y(d => y(g0 * Math.pow(cagr, d.year - 1913)))(U)
+    });
+    // legend and live readout
+    const lg = svg.append("g").attr("class", "legend-k").attr("transform", `translate(${m.l + 14},${m.t + (narrow ? 20 : 8)})`);
+    const lgN = lg.append("g"); lgN.append("line").attr("x2", 22).attr("stroke", NOM).attr("stroke-width", 2.6); lgN.append("text").attr("x", 30).attr("dy", "0.35em").text("Nominal dollars");
+    const lgR = lg.append("g").attr("transform", "translate(0,18)"); lgR.append("line").attr("x2", 22).attr("stroke", REAL).attr("stroke-width", 2.6); lgR.append("text").attr("x", 30).attr("dy", "0.35em").text("Real, in 1913 dollars");
+    const lgG = lg.append("g").attr("transform", "translate(0,36)"); lgG.append("rect").attr("width", 22).attr("height", 10).attr("y", -5).attr("fill", "url(#gapHatch)"); lgG.append("text").attr("x", 30).attr("dy", "0.35em").text("Taken by higher prices");
+    const rd = svg.append("g").attr("transform", `translate(${m.l + 14},${m.t + (narrow ? 90 : 78)})`);
+    const rdY = rd.append("text").style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", narrow ? 22 : 30).attr("fill", C.paper);
+    const rdN = rd.append("text").attr("y", 22).attr("font-size", 12.5).attr("fill", NOM);
+    const rdR = rd.append("text").attr("y", 40).attr("font-size", 12.5).attr("fill", REAL);
+    const rdI = rd.append("text").attr("y", 58).attr("font-size", 12);
+    function readout(yr) {
+      const d = by(yr);
+      rdY.text(yr);
+      rdN.text(`Nominal ${fmt$(d.nom)}`);
+      rdR.text(`Real ${fmt$(d.real)}` + (d.realChg != null ? ` (${d.realChg >= 0 ? "+" : ""}${d.realChg.toFixed(1)}%)` : ""));
+      rdI.text(d.infl != null ? `Inflation ${d.infl.toFixed(1)}%` : "Base year");
+    }
+    const annG = svg.append("g");
+    const bounds = [m.l + 4, w - m.r - 4, m.t, h - m.b - 4];
+    const maxc = narrow ? 22 : 30;
+    const ANN = [
+      [{ yr: 2025, k: "nom", dx: -30, dy: 40, t: "2025: $2,432 bn, 711 times 1913" }, { yr: 1913, k: "nom", dx: 30, dy: -60, t: "1913: $3.4 bn" }],
+      [{ yr: 2025, k: "real", dx: -30, dy: -70, t: "In 1913 dollars: $74.8 bn" }, { yr: 2012, k: "mid", dx: -60, dy: -70, t: "97 of every 100 dollars in 2025 is the rise in prices" }],
+      [{ yr: 2025, k: "real", dx: -26, dy: 50, t: "Real: 22 times 1913" }, { yr: 1945, k: "real", dx: 10, dy: 70, t: "1945: wartime peak, then six years of real decline" }],
+      [{ yr: 2020, k: "real", dx: -24, dy: -46, t: "2020: +14% real" }, { yr: 2024, k: "real", dx: -110, dy: 210, t: "2021-24: real -8.3% while nominal +6.2%" }],
+      [{ yr: 2025, k: "real", dx: -20, dy: 110, t: "2025: real up again, inflation down to 2.6% from 8% in 2022" }, { yr: 1975, k: "trend", dx: 20, dy: 110, t: "Trend: about 2.8% a year after inflation" }]
+    ];
+    function annotate(i, anim) {
+      annG.selectAll("*").interrupt().remove();
+      ANN[i].forEach(a => {
+        const d = by(a.yr);
+        const py = a.k === "nom" ? y(d.nom) : a.k === "real" ? y(d.real) : a.k === "trend" ? y(g0 * Math.pow(cagr, a.yr - 1913)) : (y(d.nom) + y(d.real)) / 2;
+        const el2 = ann(annG, a, x(a.yr), py, bounds, maxc);
+        if (anim && DUR) el2.attr("opacity", 0).transition().delay(900).duration(500).attr("opacity", 1);
+      });
+    }
+    let cur = 0, mode = null, realDrawn = false;
+    function apply(i, anim) {
+      const s = S[i], d = anim && DUR ? 1100 : 0;
+      x = d3.scaleLinear(s.x, [m.l, w - m.r]); y = YS[s.y]();
+      const L = lines();
+      const tr = sel => (d ? sel.transition().duration(d).ease(d3.easeCubicInOut) : sel);
+      gridG.selectAll("line").data(TICKS[s.y], v => v).join(
+        en => en.append("line").attr("x1", m.l).attr("x2", w - m.r).attr("y1", v => y(v)).attr("y2", v => y(v)).attr("opacity", 0),
+        up => up, ex => tr(ex).attr("opacity", 0).remove()).call(sel => tr(sel).attr("y1", v => y(v)).attr("y2", v => y(v)).attr("opacity", 1));
+      tr(yAx).call(d3.axisLeft(y).tickValues(TICKS[s.y]).tickFormat(v => "$" + d3.format(",")(v)).tickSize(0)).call(g => g.select(".domain").remove());
+      const span = s.x[1] - s.x[0];
+      tr(xAx).call(d3.axisBottom(x).ticks(narrow ? 4 : span < 40 ? 6 : 8).tickFormat(d3.format("d")).tickSizeOuter(0));
+      tr(nomP).attr("d", L.nom).attr("opacity", s.nom ? 1 : 0);
+      tr(gapP).attr("d", L.gap).attr("opacity", s.gap ? 1 : 0);
+      tr(trendP).attr("d", L.trend).attr("opacity", s.trend ? 0.9 : 0);
+      tr(endN).attr("cx", x(2025)).attr("cy", y(by(2025).nom)).attr("opacity", s.nom ? 1 : 0);
+      tr(endR).attr("cx", x(2025)).attr("cy", y(by(2025).real)).attr("opacity", s.real ? 1 : 0);
+      tr(bandR).attr("x", x(2021)).attr("width", x(2024) - x(2021)).attr("y", m.t).attr("height", h - m.b - m.t).attr("opacity", s.band ? 1 : 0);
+      tr(lgN).attr("opacity", s.nom ? 1 : 0.3); tr(lgG).attr("opacity", s.gap ? 1 : 0.3); tr(lgR).attr("opacity", s.real ? 1 : 0.3);
+      if (s.real && !realDrawn && d) {
+        // first time the real line appears it draws itself in from 1913
+        realDrawn = true;
+        realP.attr("d", L.real).attr("opacity", 1);
+        const len = realP.node().getTotalLength();
+        realP.attr("stroke-dasharray", `${len} ${len}`).attr("stroke-dashoffset", len).transition().delay(200).duration(1600).ease(d3.easeCubicInOut).attr("stroke-dashoffset", 0).on("end", () => realP.attr("stroke-dasharray", null));
+      } else {
+        if (s.real) realDrawn = true;
+        realP.interrupt().attr("stroke-dasharray", null);
+        tr(realP).attr("d", L.real).attr("opacity", s.real ? 1 : 0);
+      }
+      readout(s.focus);
+      annotate(i, anim);
+    }
+    const sc = scrub(el, svg, {
+      rect: [m.l, m.t, w - m.r, h - m.b],
+      find(mx, my) {
+        const s = S[cur];
+        const yr = Math.round(Math.max(s.x[0], Math.min(s.x[1], x.invert(mx))));
+        const d = by(yr); if (!d) return null;
+        const onNom = s.nom && Math.abs(y(d.nom) - my) < Math.abs(y(d.real) - my);
+        return { key: yr, d, px: x(yr), py: onNom ? y(Math.max(y.domain()[0], d.nom)) : y(d.real), col: onNom ? NOM : REAL,
+          html: `<b>${yr}</b>Nominal ${fmt$(d.nom)}<br>Real ${fmt$(d.real)} in 1913 dollars` + (d.realChg != null ? `<br>Real change ${d.realChg >= 0 ? "+" : ""}${d.realChg.toFixed(1)}% · inflation ${d.infl.toFixed(1)}%` : "") +
+            `<br><span class="s">${d.realChg == null ? "Base year" : d.realChg >= 0 ? "Grew after inflation" : "Shrank after inflation"}</span>` };
+      },
+      enter(f) { readout(f.d.year); },
+      leave() { readout(S[cur].focus); }
+    });
+    apply(0, false);
+    return {
+      render(i, anim) {
+        sc.hide(); cur = i;
+        apply(i, anim);
+        document.getElementById("spendTitle").textContent = S[i].y === "zoom" ? "US real spending, $ bn in 1913 dollars · 1999-2025" : "US spending, $ bn · nominal and 1913 dollars" + (S[i].y === "log" ? " · log" : "");
       }
     };
   }
@@ -1227,6 +1598,180 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     };
   };
 
+  // simple tooltip for breakout visuals (they're rebuilt on resize, so the tip is re-created with them)
+  function boTip(box) {
+    const tip = box.append("div").attr("class", "ctip paper");
+    return {
+      show(px, py, html) {
+        tip.html(html);
+        const W = box.node().clientWidth, tw = tip.node().offsetWidth, th = tip.node().offsetHeight;
+        let lx = px + 16; if (lx + tw > W - 4) lx = px - tw - 16;
+        let ly = py - th - 12; if (ly < 0) ly = py + 16;
+        tip.style("left", Math.max(0, lx) + "px").style("top", ly + "px").classed("on", true);
+      },
+      hide() { tip.classed("on", false); }
+    };
+  }
+
+  // Spending: one bar per year of real change, built left to right with a running tally
+  BO.spend = () => {
+    const rows = P.us.filter(d => d.realChg != null);
+    const box = d3.select("#vizSpend"); const w0 = Math.max(280, box.node().clientWidth);
+    const narrow = w0 < 620;
+    const h = narrow ? 260 : 330, m = { t: 56, r: 8, b: 44, l: 40 };
+    const { svg } = vizBox("vizSpend", h);
+    const tip = boTip(box);
+    const x = d3.scaleBand(rows.map(d => d.year), [m.l, w0 - m.r]).padding(0.18);
+    const y = d3.scaleLinear([-15, 30], [h - m.b, m.t]);
+    svg.append("g").attr("class", "grid").selectAll("line").data([-10, 10, 20, 30]).join("line").attr("x1", m.l).attr("x2", w0 - m.r).attr("y1", y).attr("y2", y);
+    svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([-10, 0, 10, 20, 30]).tickFormat(v => (v > 0 ? "+" : "") + v + "%").tickSize(0)).call(g => g.select(".domain").remove());
+    svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b + 4})`).call(d3.axisBottom(x).tickValues(rows.map(d => d.year).filter(yr => yr % (narrow ? 20 : 10) === 0)).tickSizeOuter(0)).call(g => g.select(".domain").remove());
+    svg.append("line").attr("x1", m.l).attr("x2", w0 - m.r).attr("y1", y(0)).attr("y2", y(0)).attr("stroke", C.paper).attr("stroke-opacity", .5);
+    const UP = C.fine, DN = C.red;
+    const bars = svg.append("g").selectAll("rect").data(rows).join("rect")
+      .attr("x", d => x(d.year)).attr("width", x.bandwidth()).attr("rx", Math.min(2, x.bandwidth() / 3))
+      .attr("y", d => y(Math.max(0, d.realChg))).attr("height", d => Math.abs(y(d.realChg) - y(0))).attr("fill", d => (d.realChg >= 0 ? UP : DN));
+    // clusters of concern, bracketed under the axis
+    const CL = [[1919, 1921, "after WWI"], [1946, 1951, "after WWII"], [1979, 1981, "1979-81"], [2022, 2024, "2022-24"]];
+    const cl = svg.append("g").attr("opacity", 0);
+    CL.forEach(([a, b, t]) => {
+      const x1 = x(a), x2 = x(b) + x.bandwidth(), yy = y(-13.5);
+      cl.append("path").attr("d", `M${x1},${yy - 5} V${yy} H${x2} V${yy - 5}`).attr("fill", "none").attr("stroke", DN).attr("stroke-width", 1.2);
+      if (!narrow || t === "2022-24" || t === "after WWII") cl.append("text").attr("x", (x1 + x2) / 2).attr("y", yy + 13).attr("text-anchor", "middle").attr("font-size", 10.5).attr("fill", "#E08A80").text(t);
+    });
+    const yr = svg.append("text").attr("x", m.l).attr("y", 34).style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", narrow ? 30 : 42).attr("fill", C.paper);
+    const lvl = svg.append("text").attr("x", m.l + (narrow ? 96 : 130)).attr("y", 30).attr("font-size", 13).attr("fill", C.muted);
+    const tally = d3.select("#spendTally");
+    function paintTally(n) {
+      const seen = rows.slice(0, n), up = seen.filter(d => d.realChg >= 0).length, dn = seen.length - up, last = seen[seen.length - 1];
+      tally.html(`<span><b style="color:var(--fine)">${up}</b>years grew after inflation</span><span><b style="color:#C9524A">${dn}</b>years shrank</span>` + (last ? `<span><b style="color:var(--paper)">${last.real.toFixed(1)}</b>$ bn real in ${last.year}, from 3.4 in 1913</span>` : ""));
+      if (last) { yr.text(last.year); lvl.text(`${last.realChg >= 0 ? "+" : ""}${last.realChg.toFixed(1)}% real`); }
+    }
+    bars.on("pointermove", function (ev, d) {
+      const [px, py] = d3.pointer(ev, box.node());
+      bars.attr("opacity", b => (b === d ? 1 : 0.45));
+      tip.show(px, py, `<b>${d.year}</b>Real spending ${d.realChg >= 0 ? "+" : ""}${d.realChg.toFixed(1)}% to $${d.real.toFixed(1)} bn (1913 $)<br>Nominal ${d.nomChg >= 0 ? "+" : ""}${d.nomChg.toFixed(1)}% · inflation ${d.infl.toFixed(1)}%`);
+    }).on("pointerleave", () => { bars.attr("opacity", 1); tip.hide(); });
+    paintTally(rows.length); cl.attr("opacity", 1);
+    let timer = null;
+    return () => {
+      if (timer) timer.stop();
+      if (REDUCED) return;
+      bars.interrupt().attr("y", y(0)).attr("height", 0); cl.attr("opacity", 0); paintTally(0); yr.text(1913); lvl.text("");
+      let shown = 0;
+      timer = d3.timer(el => {
+        const n = Math.min(rows.length, Math.floor(el / 42));
+        if (n > shown) {
+          bars.filter((d, i) => i >= shown && i < n).transition().duration(380).ease(d3.easeBackOut).attr("y", d => y(Math.max(0, d.realChg))).attr("height", d => Math.abs(y(d.realChg) - y(0)));
+          shown = n; paintTally(n);
+        }
+        if (n >= rows.length) { timer.stop(); cl.transition().delay(300).duration(600).attr("opacity", 1); }
+      });
+    };
+  };
+
+  // The verdict: every case against its own start, at three moments
+  const verdictState = { at: "end", go: null };
+  BO.verdict = () => {
+    const DEF = [
+      { key: "rome", m: "fine", metal: "silver", what: "silver fineness of the denarius", span: "27 BC to AD 301 · ~330 yrs" },
+      { key: "celtic", m: "gold", metal: "gold", what: "gold share of the stater", span: "c. 125 BC to 1st c. AD · ~150 yrs" },
+      { key: "ptol", m: "gpu", metal: "bronze", what: "bronze per unit of face value", span: "c. 205 to 30 BC · ~175 yrs" },
+      { key: "tudor", m: "penny", metal: "silver", what: "fine silver in one penny", span: "1526 to 1601 · 75 yrs" },
+      { key: "us", m: "pp", metal: "zinc", what: "what a 1913 dollar buys", span: "1913 to 2025 · 112 yrs" }
+    ];
+    const rows = DEF.map(v => {
+      const pts = P.indexed(v.key, v.m), first = pts[0], last = pts[pts.length - 1];
+      const low = d3.least(pts, p => p.y);
+      return Object.assign(v, { meta: P.SERIES[v.key], first, low, last, vals: { start: 100, low: low.y, end: last.y } });
+    });
+    const box = d3.select("#vizVerdict"); const w0 = Math.max(280, box.node().clientWidth);
+    const narrow = w0 < 700;
+    const lw = narrow ? 0 : 230, rowH = narrow ? 92 : 74, top = 30, hopeGap = 46;
+    const h = top + rows.length * rowH + hopeGap + rowH + 10;
+    const { svg } = vizBox("vizVerdict", h);
+    const tip = boTip(box);
+    const x = d3.scaleLinear([0, 100], [lw + 30, w0 - (narrow ? 70 : 200)]);
+    svg.append("g").attr("class", "grid").selectAll("line").data([0, 25, 50, 75, 100]).join("line").attr("x1", x).attr("x2", x).attr("y1", top - 8).attr("y2", top + rows.length * rowH);
+    svg.append("g").selectAll("text").data([0, 25, 50, 75, 100]).join("text").attr("x", x).attr("y", top - 14).attr("text-anchor", "middle").attr("font-size", 11).text(v => v + "%" + (v === 100 ? " = start" : ""));
+    const UP = C.fine;
+    const R = narrow ? 14 : 17;
+    const G = rows.map((r, i) => {
+      const cy = top + i * rowH + rowH / 2 + (narrow ? 12 : 0);
+      const g = svg.append("g");
+      const lx = narrow ? x(0) : 0, ly = narrow ? cy - 34 : cy - 6;
+      g.append("text").attr("x", lx).attr("y", ly).style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 17).attr("fill", r.meta.color).text(r.meta.name);
+      if (!narrow) g.append("text").attr("x", lx).attr("y", ly + 17).attr("font-size", 11.5).text(r.span);
+      if (!narrow) g.append("text").attr("x", lx).attr("y", ly + 32).attr("font-size", 10.5).attr("fill", "#8f846f").text(r.what);
+      g.append("line").attr("x1", x(0)).attr("x2", x(100)).attr("y1", cy).attr("y2", cy).attr("stroke", "rgba(239,228,204,.18)").attr("stroke-width", 6).attr("stroke-linecap", "round");
+      g.append("line").attr("x1", x(100)).attr("x2", x(100)).attr("y1", cy - 10).attr("y2", cy + 10).attr("stroke", C.paper).attr("stroke-opacity", .6);
+      const string = g.append("line").attr("x1", x(100)).attr("x2", x(100)).attr("y1", cy).attr("y2", cy).attr("stroke", C.red).attr("stroke-width", 3).attr("stroke-linecap", "round");
+      const lowDot = g.append("circle").attr("cx", x(r.low.y)).attr("cy", cy).attr("r", 4).attr("fill", C.red).attr("opacity", 0).attr("stroke", r.low.approx ? C.paper : "none").attr("stroke-dasharray", "2 2");
+      const rec = r.last.y - r.low.y > 0.5;
+      const bracket = g.append("path").attr("fill", "none").attr("stroke", UP).attr("stroke-width", 2).attr("opacity", 0)
+        .attr("d", `M${x(r.low.y)},${cy - 6} C${x(r.low.y)},${cy - 30} ${x(r.last.y)},${cy - 30} ${x(r.last.y)},${cy - 9}`).attr("marker-end", "url(#vArrow)");
+      const tokenG = g.append("g").attr("transform", `translate(${x(100)},${cy})`);
+      const coin = P.makeCoin(tokenG.append("g"), { r: R, value: 1, metal: r.metal, seed: 60 + i });
+      const val = g.append("text").attr("x", x(100)).attr("y", cy + R + 15).attr("text-anchor", "middle").attr("font-size", 12.5).attr("fill", C.paper).text("100%");
+      const note = g.append("text").attr("x", w0 - (narrow ? 0 : 4)).attr("y", narrow ? cy - 34 : cy + 4).attr("text-anchor", "end").attr("font-size", narrow ? 11 : 12).attr("fill", rec ? UP : "#E08A80");
+      g.append("rect").attr("x", 0).attr("y", cy - rowH / 2 - (narrow ? 12 : 0)).attr("width", w0).attr("height", rowH).attr("fill", "transparent")
+        .on("pointermove", ev => {
+          const [px, py] = d3.pointer(ev, box.node());
+          G.forEach(o => o.g.attr("opacity", o.g === g ? 1 : 0.35));
+          const u = P.MEASURES[r.key][r.m].unit;
+          const f = v => (u === "%" ? v + "%" : u === "g/unit" ? v.toFixed(3) + " g/unit" : u === "g" ? v.toFixed(3) + " g" : v.toFixed(1));
+          tip.show(px, py, `<b>${r.meta.full}</b>Start: ${r.first.label}, ${f(r.first.raw)}<br>Lowest: ${r.low.label}, ${f(r.low.raw)} (${pct(r.low.y)})<br>Last: ${r.last.label}, ${f(r.last.raw)} (${pct(r.last.y)})<br><span class="s">${r.what} · ${r.first.src}</span>`);
+        })
+        .on("pointerleave", () => { G.forEach(o => o.g.attr("opacity", 1)); tip.hide(); });
+      return { r, g, cy, string, lowDot, bracket, rec, tokenG, coin, val, note };
+    });
+    svg.append("defs").append("marker").attr("id", "vArrow").attr("viewBox", "0 0 10 10").attr("refX", 5).attr("refY", 5).attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto-start-reverse")
+      .append("path").attr("d", "M0,0 L10,5 L0,10 z").attr("fill", UP);
+    // hope row: real spending, which is not coin value and runs off the scale
+    const hy = top + rows.length * rowH + hopeGap + rowH / 2;
+    svg.append("line").attr("x1", 0).attr("x2", w0).attr("y1", hy - rowH / 2 - hopeGap / 2).attr("y2", hy - rowH / 2 - hopeGap / 2).attr("stroke", C.paper).attr("stroke-opacity", .25).attr("stroke-dasharray", "4 4");
+    svg.append("text").attr("x", narrow ? x(0) : 0).attr("y", hy - rowH / 2 - hopeGap / 2 + 18).attr("font-size", 11).attr("fill", UP).text(narrow ? "AND THE REASON FOR HOPE · real spending" : "AND THE REASON FOR HOPE · not a coin: what US spending buys after inflation");
+    const hg = svg.append("g");
+    const real = P.us[P.us.length - 1].real / P.us[0].real * 100;
+    hg.append("text").attr("x", narrow ? x(0) : 0).attr("y", narrow ? hy - 30 : hy - 6).style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", 17).attr("fill", UP).text("Washington, real");
+    if (!narrow) hg.append("text").attr("x", 0).attr("y", hy + 11).attr("font-size", 11.5).text("1913 to 2025 · 112 yrs");
+    hg.append("line").attr("x1", x(0)).attr("x2", x(100)).attr("y1", hy).attr("y2", hy).attr("stroke", "rgba(239,228,204,.18)").attr("stroke-width", 6).attr("stroke-linecap", "round");
+    hg.append("line").attr("x1", x(100)).attr("x2", x(100)).attr("y1", hy - 10).attr("y2", hy + 10).attr("stroke", C.paper).attr("stroke-opacity", .6);
+    const hopeLine = hg.append("line").attr("x1", x(100)).attr("x2", x(100)).attr("y1", hy).attr("y2", hy).attr("stroke", UP).attr("stroke-width", 3).attr("marker-end", "url(#vArrow)");
+    const hopeT = hg.append("text").attr("x", w0).attr("y", hy - 16).attr("text-anchor", "end").style("font-family", "var(--f-display)").style("font-weight", 700).attr("font-size", narrow ? 18 : 24).attr("fill", UP).text(d3.format(",")(Math.round(real)) + "% →").attr("opacity", 0);
+    hg.append("text").attr("x", w0).attr("y", hy + 24).attr("text-anchor", "end").attr("font-size", 11.5).text(narrow ? "22 times 1913" : "22 times 1913, about 2.8% a year");
+
+    function go(at, anim) {
+      verdictState.at = at;
+      d3.selectAll("#verdictSeg button").attr("aria-pressed", function () { return String(this.dataset.v === at); });
+      const d = anim && DUR ? 1100 : 0;
+      G.forEach((o, i) => {
+        const v = o.r.vals[at], tr = sel => (d ? sel.transition().delay(i * 110).duration(d).ease(d3.easeCubicInOut) : sel);
+        tr(o.tokenG).attr("transform", `translate(${x(v)},${o.cy})`);
+        if (d) tr(o.val).attr("x", x(v)).tween("txt", function () { const iv = d3.interpolateNumber(parseFloat(this.textContent) || 100, v); return t => { this.textContent = pct(iv(t)); }; });
+        else o.val.interrupt().attr("x", x(v)).text(pct(v));
+        o.coin.set(Math.max(0, Math.min(1, v / 100)), d);
+        tr(o.string).attr("x2", at === "start" ? x(100) : x(o.r.low.y));
+        tr(o.lowDot).attr("opacity", at === "start" ? 0 : 1);
+        tr(o.bracket).attr("opacity", at === "end" && o.rec ? 1 : 0);
+        o.note.text(at === "start" ? "" : at === "low" ? `lowest c. ${P.fmtYear(o.r.low.x)}` : o.rec ? `back to ${pct(o.r.last.y)} by ${P.fmtYear(o.r.last.x)}` : "no recovery");
+      });
+      const hd = d ? sel => sel.transition().delay(G.length * 110).duration(d * 1.2).ease(d3.easeCubicOut) : sel => sel;
+      hd(hopeLine).attr("x2", at === "start" ? x(100) : w0 - (narrow ? 104 : 150));
+      hd(hopeT).attr("opacity", at === "start" ? 0 : 1);
+    }
+    verdictState.go = go;
+    go(verdictState.at, false);
+    let timers = [];
+    return () => {
+      timers.forEach(clearTimeout); timers = [];
+      if (REDUCED) return go("end", false);
+      go("start", false);
+      timers.push(setTimeout(() => go("low", true), 500), setTimeout(() => go("end", true), 2600));
+    };
+  };
+  d3.selectAll("#verdictSeg button").on("click", function () { verdictState.go && verdictState.go(this.dataset.v, true); });
+
   /* ---------- sparklines in summaries ---------- */
   function sparks() {
     d3.selectAll("svg.spark").each(function () {
@@ -1264,7 +1809,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
   }
 
   /* ---------- scroll engine ---------- */
-  const BUILDERS = { rome: buildRome, celtic: buildCeltic, ptol: buildPtol, tudor: buildTudor, string: buildString, macro: buildMacro };
+  const BUILDERS = { rome: buildRome, celtic: buildCeltic, ptol: buildPtol, tudor: buildTudor, string: buildString, macro: buildMacro, spend: buildSpend };
   const chapters = [];
   document.querySelectorAll(".scrolly").forEach(sc => {
     const name = sc.dataset.chapter;
@@ -1291,7 +1836,7 @@ body.no-anno .anno, body.no-anno .anno-band { display: none; }
     const k = en.target.querySelector("[data-replay]").dataset.replay;
     if (en.isIntersecting && !seen.has(k) && !REDUCED) { seen.add(k); play[k] && play[k](); }
   }), { threshold: 0.35 });
-  document.querySelectorAll(".breakout").forEach(b => boIo.observe(b));
+  document.querySelectorAll(".breakout, .verdict").forEach(b => boIo.observe(b));
   document.querySelectorAll("[data-replay]").forEach(b => b.addEventListener("click", () => play[b.dataset.replay] && play[b.dataset.replay]()));
 
   function buildAll() { chapters.forEach(c => c.build()); buildBreakouts(); sparks(); }
