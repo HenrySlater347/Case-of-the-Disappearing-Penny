@@ -31,7 +31,7 @@ D3 v7.8.5 loads from cdnjs and the fonts (Cinzel, Special Elite, Crimson Pro) fr
 
 ## Editing the text
 
-All narrative text is currently placeholder copy made of the letter "a". Open `index.html` (story) or `explore.html` (explorer intros) in any text editor and replace the paragraphs inside the cards, prologue, epilogue and summaries. Headings, dates, chart labels and figures are real.
+All narrative text is written. Open `index.html` (story) or `explore.html` (explorer intros) in any text editor to revise the paragraphs inside the cards, prologue, epilogue and summaries. Every figure in the text is drawn from the case files in `data/` or the sources listed on the page.
 
 ## Preview locally
 
